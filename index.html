@@ -189,7 +189,7 @@ window.addEventListener('error',e=>{$('empty').hidden=false;$('empty').textConte
 if(!window.pdfjsLib||!window.PDFLib){$('empty').textContent='โหลดไลบรารีไม่สำเร็จ ('+(!window.pdfjsLib?'pdf.js ':'')+(!window.PDFLib?'pdf-lib':'')+') กรุณารีเฟรชหน้า'}
 const P=window.PDFLib;
 let cmMode=false;
-const TOOLS={text:'➕ เพิ่มข้อความ',edit:'✏️ แก้ไขข้อความ',hl:'🖍 Highlight ข้อความ',wm:'💧 ใส่ลายน้ำเอกสาร (Watermark)',sg:'✍️ เซ็นเอกสารออนไลน์',merge:'📎 รวมไฟล์',pw:'🔒 ใส่รหัสผ่าน',cmp:'🗜 บีบอัด PDF',img:'🖼 แทรกรูปภาพ',rmimg:'🧹 ลบรูปภาพ',rot:'🔄 หมุนหน้า',del:'🗑 ลบหน้าเอกสาร',num:'🔢 เพิ่มเลขหน้า',cover:'⬛ ปิดทับข้อความ',png:'📷 แปลง PDF เป็นรูปภาพ'};
+const TOOLS={text:'➕ เพิ่มข้อความ',edit:'✏️ แก้ไขข้อความ',hl:'🖍 Highlight ข้อความ',wm:'💧 คาดข้อความเอกสาร (Watermark)',sg:'✍️ เซ็นเอกสารออนไลน์',merge:'📎 รวมไฟล์',pw:'🔒 ใส่รหัสผ่าน',cmp:'🗜 บีบอัด PDF',img:'🖼 แทรกรูปภาพ',rmimg:'🧹 ลบรูปภาพ',rot:'🔄 หมุนหน้า',del:'🗑 ลบหน้าเอกสาร',num:'🔢 เพิ่มเลขหน้า',cover:'⬛ ปิดทับข้อความ',png:'📷 แปลง PDF เป็นรูปภาพ'};
 let selA=0,selH=false,annots=[],aid=0,bytes=null,hist=[],redo=[],pdf=null,pi=0,vp=null,tool='text',drag=null,imgFile=null,delMode=false;
 const cv=$('cv'),ov=$('ov'),ctx=cv.getContext('2d'),oc=ov.getContext('2d');
 pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
