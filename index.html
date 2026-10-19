@@ -40,7 +40,8 @@ input[type=number]{width:80px}#fsz{width:120px}#fi{color:var(--mu);font-size:13p
 #nav{display:flex;gap:8px;align-items:center;justify-content:center;padding:10px}#nav{position:sticky;top:calc(var(--hh,0px) + var(--oh,0px));z-index:50;background:var(--bg)}#main{padding-top:12px}#main>.opt{margin-top:0}
 #wrap{overflow-x:auto;padding:0 16px 24px;text-align:center}
 #thumbs{flex:none;width:124px;margin:12px 0 0 16px;position:sticky;top:calc(var(--hh,0px) + 8px);max-height:calc(100vh - var(--hh,0px) - 16px);overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding:8px;box-sizing:border-box;border:1px solid var(--bd);border-radius:10px;background:var(--card);align-items:center}#thumbs[hidden]{display:none}
-.th{width:100%;cursor:pointer;text-align:center;font-size:13px;color:var(--mu);line-height:1.4;flex:none}.th canvas{display:block;width:100%;height:auto;background:#fff;border:2px solid transparent;box-shadow:0 1px 4px #0003;box-sizing:border-box;margin-bottom:2px}.th:hover canvas{border-color:#1e3a8a88}.th.on canvas{border-color:#1e3a8a}.th.on{color:var(--tx);font-weight:600}
+.th{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}.th.dragging{opacity:.4}.th.drop canvas{border-color:#e97132!important;box-shadow:0 0 0 3px #e9713266}.th canvas{-webkit-user-drag:none}
+.th{width:100%;cursor:grab;text-align:center;font-size:13px;color:var(--mu);line-height:1.4;flex:none}.th canvas{display:block;width:100%;height:auto;background:#fff;border:2px solid transparent;box-shadow:0 1px 4px #0003;box-sizing:border-box;margin-bottom:2px}.th:hover canvas{border-color:#1e3a8a88}.th.on canvas{border-color:#1e3a8a}.th.on{color:var(--tx);font-weight:600}
 @media(max-width:760px){#thumbs{width:auto;max-height:none;flex-direction:row;overflow-x:auto;overflow-y:hidden;position:static;margin:12px 16px 0}.th{width:80px}}
 #stage{position:relative;display:inline-block;box-shadow:0 2px 12px #0003;background:#fff;max-width:100%;line-height:0}
 #stage canvas{max-width:100%;height:auto}
@@ -67,7 +68,7 @@ body{touch-action:pan-x pan-y}#work{display:flex;align-items:flex-start;gap:8px}
 .grp{position:relative;display:flex;flex-wrap:wrap;align-items:center;gap:8px;border:1px solid var(--bd);border-radius:10px;padding:16px 12px 10px}
 .grp::before{content:attr(data-h);position:absolute;top:-11px;left:10px;background:var(--card);padding:0 6px;font:bold 16px/1.2 "Sarabun","IBM Plex Sans Thai","Noto Sans Thai","Leelawadee UI","Thonburi",Tahoma,sans-serif;color:#c80000}
 .lbp{display:inline-block;background:var(--ac);color:#fff;border:1px solid var(--ac);border-radius:8px;padding:6px 12px;line-height:1.5;white-space:nowrap}
-.opt[data-t=num]{align-items:flex-end}.nfld{display:flex;flex-direction:column;align-items:flex-start;gap:4px}.nfld>span{line-height:1.5;background:var(--ac);color:#fff;border:1px solid var(--ac);border-radius:8px;padding:6px 12px;white-space:nowrap}.nfld>span:empty,.nfld>span.nb{background:transparent;border-color:transparent}.nbw{align-self:center}.nbw>.nb{display:none}#num{background:#e97132;border-color:#e97132;color:#fff}#rot,#delp,.opt[data-t=merge]>button{background:#1e3a8a;border-color:#1e3a8a;color:#fff}
+.opt[data-t=num]{align-items:flex-end}.nfld{display:flex;flex-direction:column;align-items:flex-start;gap:4px}.nfld>span{line-height:1.5;background:var(--ac);color:#fff;border:1px solid var(--ac);border-radius:8px;padding:6px 12px;white-space:nowrap}.nfld>span:empty,.nfld>span.nb{background:transparent;border-color:transparent}.nbw{align-self:center}.nbw>.nb{display:none}#num{background:#e97132;border-color:#e97132;color:#fff}#rot,#delp,#swgo,#swup,#swdn,.opt[data-t=merge]>button{background:#1e3a8a;border-color:#1e3a8a;color:#fff}
 .grp label{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
 
 /* smaller blue buttons / labels */
@@ -165,6 +166,7 @@ button,.btn,select,input,textarea,.lbp,label,.opt p{font-weight:500}
 <div class="opt" data-t="rot">
 <button id="rot">⟳ หมุนหน้านี้ 90°</button><label><input type="checkbox" id="rall"> หมุนทุกหน้า</label></div>
 <div class="opt" data-t="del"><button id="delp">🗑 ลบหน้านี้</button></div>
+<div class="opt" data-t="swp"><span>หน้า</span> <input id="swa" type="number" min="1" value="1" style="width:64px"> <span>สลับกับหน้า</span> <input id="swb" type="number" min="1" value="2" style="width:64px"> <button id="swgo" class="p">🔀 สลับหน้า</button><span style="color:var(--mu);font-size:13px;margin-left:8px">หรือ</span><button id="swup">⬆ เลื่อนหน้านี้ขึ้น</button><button id="swdn">⬇ เลื่อนหน้านี้ลง</button><span style="color:var(--mu);font-size:13px;margin-left:8px">หรือ</span><span style="color:var(--tx);font-size:14px">ใช้เมาส์ลากตัวอย่างหน้าทางซ้ายไปวางบนอีกหน้า เพื่อสลับหน้าเอกสาร</span><span id="swst" style="color:var(--mu);font-size:13px"></span></div>
 <div class="opt" data-t="merge"><button onclick="document.getElementById('mg').click()">รวมไฟล์ PDF</button><input id="mg" type="file" accept="application/pdf,.pdf" multiple style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none"></div>
 <div class="opt" data-t="num"><div class="nfld"><span>รูปแบบ</span><select id="nf"><option value="n">1</option><option value="nt">1 / N</option><option value="d">- 1 -</option></select></div>
 <div class="nfld"><span>ตำแหน่ง</span><select id="np"><option value="tr">บนขวา</option><option value="tl">บนซ้าย</option><option value="tc">บนกลาง</option><option value="br">ล่างขวา</option><option value="bl">ล่างซ้าย</option><option value="bc">ล่างกลาง</option></select></div>
@@ -189,7 +191,7 @@ window.addEventListener('error',e=>{$('empty').hidden=false;$('empty').textConte
 if(!window.pdfjsLib||!window.PDFLib){$('empty').textContent='โหลดไลบรารีไม่สำเร็จ ('+(!window.pdfjsLib?'pdf.js ':'')+(!window.PDFLib?'pdf-lib':'')+') กรุณารีเฟรชหน้า'}
 const P=window.PDFLib;
 let cmMode=false;
-const TOOLS={text:'➕ เพิ่มข้อความ',edit:'✏️ แก้ไขข้อความ',hl:'🖍 Highlight ข้อความ',wm:'💧 คาดข้อความเอกสาร (Watermark)',sg:'✍️ เซ็นเอกสารออนไลน์',merge:'📎 รวมไฟล์',pw:'🔒 ใส่รหัสผ่าน',cmp:'🗜 บีบอัด PDF',img:'🖼 แทรกรูปภาพ',rmimg:'🧹 ลบรูปภาพ',rot:'🔄 หมุนหน้า',del:'🗑 ลบหน้าเอกสาร',num:'🔢 เพิ่มเลขหน้า',cover:'⬛ ปิดทับข้อความ',png:'📷 แปลง PDF เป็นรูปภาพ'};
+const TOOLS={text:'➕ เพิ่มข้อความ',edit:'✏️ แก้ไขข้อความ',hl:'🖍 Highlight ข้อความ',wm:'💧 คาดข้อความเอกสาร (Watermark)',sg:'✍️ เซ็นเอกสารออนไลน์',merge:'📎 รวมไฟล์',pw:'🔒 ใส่รหัสผ่าน',cmp:'🗜 บีบอัด PDF',img:'🖼 แทรกรูปภาพ',rmimg:'🧹 ลบรูปภาพ',rot:'🔄 หมุนหน้า',del:'🗑 ลบหน้าเอกสาร',swp:'🔀 จัดเรียง/สลับหน้าเอกสาร',num:'🔢 เพิ่มเลขหน้า',cover:'⬛ ปิดทับข้อความ',png:'📷 แปลง PDF เป็นรูปภาพ'};
 let selA=0,selH=false,annots=[],aid=0,bytes=null,hist=[],redo=[],pdf=null,pi=0,vp=null,tool='text',drag=null,imgFile=null,delMode=false;
 const cv=$('cv'),ov=$('ov'),ctx=cv.getContext('2d'),oc=ov.getContext('2d');
 pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
@@ -218,7 +220,7 @@ async function show(){
   $('empty').hidden=true;$('stage').hidden=false;rmClear();cmClear();
   await p.render({canvasContext:ctx,viewport:vp}).promise;
   pageObj=p;const tcn=await p.getTextContent();tstyles=tcn.styles||{};items=tcn.items.filter(i=>i.str&&i.str.trim());hlLines=null;xsc.clear();closeEd();
-  $('pg').textContent=`หน้า ${pi+1} / ${pdf.numPages}`;thSel();renderAnnots();wmPrev();sgClear();
+  $('pg').textContent=`หน้า ${pi+1} / ${pdf.numPages}`;thSel();renderAnnots();wmPrev();sgClear();if(typeof swSync=='function')swSync();
 }
 const snap=()=>({b:bytes,a:JSON.parse(JSON.stringify(annots))});
 const pushH=()=>{hist.push(snap());redo=[]};
@@ -596,6 +598,23 @@ $('nx').onclick=async()=>{if(pdf&&pi<pdf.numPages-1){pi++;await show()}};
 // pages
 $('rot').onclick=()=>edit(async D=>{const ps=$('rall').checked?D.getPages():[D.getPage(pi)];ps.forEach(p=>p.setRotation(P.degrees((p.getRotation().angle+90)%360)))});
 $('delp').onclick=async()=>{if(!need())return;if(pdf.numPages<2)return alert('ลบหน้าสุดท้ายไม่ได้');if(await ask('ลบหน้า '+(pi+1)+' ?'))edit(async D=>D.removePage(pi))};
+// ===== สลับหน้า: หน้า A <-> หน้า B (และเลื่อนหน้านี้ขึ้น/ลง) ใช้ edit() เดิม จึงย้อนกลับ/ไปข้างหน้าได้
+function swSync(){if(!pdf)return;const n=pdf.numPages,a=$('swa'),b=$('swb');a.max=b.max=n;a.value=pi+1;b.value=pi+2<=n?pi+2:Math.max(1,pi);$('swst').textContent=''}
+function swapPages(a,b){ // a,b เริ่มที่ 0
+  return edit(async D=>{
+    if(a>b){const x=a;a=b;b=x}
+    const pa=D.getPage(a),pb=D.getPage(b);
+    D.removePage(b);D.removePage(a);D.insertPage(a,pb);D.insertPage(b,pa);
+    if(pi==a)pi=b;else if(pi==b)pi=a; // ให้หน้าที่กำลังดูอยู่ตามเนื้อหาไป
+  })
+}
+$('swgo').onclick=()=>{if(!need())return;const n=pdf.numPages;if(n<2)return alert('ต้องมีอย่างน้อย 2 หน้าจึงจะสลับได้');
+  const a=parseInt($('swa').value),b=parseInt($('swb').value);
+  if(!(a>=1&&a<=n&&b>=1&&b<=n))return alert('กรอกเลขหน้าให้ถูกต้อง (1 ถึง '+n+')');
+  if(a==b)return alert('เลือกหน้าที่ต่างกัน');
+  swapPages(a-1,b-1)};
+$('swup').onclick=()=>{if(!need())return;if(pi<=0)return alert('นี่คือหน้าแรกแล้ว');swapPages(pi,pi-1)};
+$('swdn').onclick=()=>{if(!need())return;if(pi>=pdf.numPages-1)return alert('นี่คือหน้าสุดท้ายแล้ว');swapPages(pi,pi+1)};
 $('mg').onchange=async e=>{
   const fs=[...e.target.files];e.target.value='';if(!fs.length)return;
   try{
@@ -998,9 +1017,45 @@ function buildThumbs(){
   box.innerHTML='';if(!pdf||pdf.numPages<2){box.hidden=true;return}
   box.hidden=false;const doc=pdf,n=doc.numPages;
   thObs=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){thObs.unobserve(en.target);renderTh(doc,en.target,tok)}}),{root:box,rootMargin:'300px'});
-  for(let i=0;i<n;i++){const d=document.createElement('div');d.className='th'+(i==pi?' on':'');d.dataset.i=i;d.title='หน้า '+(i+1);
+  for(let i=0;i<n;i++){const d=document.createElement('div');d.className='th'+(i==pi?' on':'');d.dataset.i=i;d.title='หน้า '+(i+1)+' — คลิกเพื่อดู / ลากไปวางบนอีกหน้าเพื่อสลับ';
     const c=document.createElement('canvas');c.width=96;c.height=136;d.append(c,document.createTextNode(i+1));
-    d.onclick=async()=>{if(pdf&&i!=pi){pi=i;await show()}};box.append(d);thObs.observe(d)}
+    d.onclick=async()=>{if(Date.now()<thSuppress)return;if(pdf&&i!=pi){pi=i;await show()}};
+    d.onpointerdown=e=>thDrag(d,i,e);
+    box.append(d);thObs.observe(d)}
+}
+// ลากตัวอย่างหน้าไปวางบนอีกหน้าเพื่อสลับตำแหน่ง (เมาส์: ลากได้ทันที / จอสัมผัส: กดค้างสักครู่แล้วลาก) ใช้ swapPages() เดิม จึงย้อนกลับ/ไปข้างหน้าได้
+let thSuppress=0;
+function thDrag(d,i,e){
+  if(e.button>0||!pdf||pdf.numPages<2||ed)return;
+  const box=$('thumbs'),touch=e.pointerType!=='mouse',sx=e.clientX,sy=e.clientY;
+  let on=false,gh=null,tgt=null,timer=0,cx=sx,cy=sy,raf=0;
+  if(!touch)e.preventDefault();
+  const clr=()=>box.querySelectorAll('.th.drop').forEach(z=>z.classList.remove('drop'));
+  const begin=()=>{on=true;d.classList.add('dragging');
+    const src=d.querySelector('canvas');gh=document.createElement('canvas');gh.width=src.width;gh.height=src.height;gh.getContext('2d').drawImage(src,0,0);
+    gh.style.cssText='position:fixed;z-index:10001;pointer-events:none;opacity:.8;width:72px;height:auto;transform:translate(-50%,-50%);box-shadow:0 4px 14px #0006;border:2px solid #e97132;background:#fff';
+    document.body.append(gh);place();loop()};
+  const place=()=>{gh.style.left=cx+'px';gh.style.top=cy+'px';
+    const el=document.elementFromPoint(cx,cy),t=el&&el.closest?el.closest('.th'):null,nt=t&&t!==d&&box.contains(t)?t:null;
+    if(nt!==tgt){clr();tgt=nt;if(tgt)tgt.classList.add('drop')}};
+  const loop=()=>{if(!on)return;const r=box.getBoundingClientRect(),col=getComputedStyle(box).flexDirection=='column',m=36;
+    if(col){if(cy<r.top+m)box.scrollTop-=12;else if(cy>r.bottom-m)box.scrollTop+=12}
+    else{if(cx<r.left+m)box.scrollLeft-=12;else if(cx>r.right-m)box.scrollLeft+=12}
+    raf=requestAnimationFrame(loop)};
+  const tm=ev=>{if(on)ev.preventDefault()};
+  const end=ev=>{clearTimeout(timer);cancelAnimationFrame(raf);
+    removeEventListener('pointermove',mv);removeEventListener('pointerup',end);removeEventListener('pointercancel',end);removeEventListener('touchmove',tm);
+    if(gh)gh.remove();clr();d.classList.remove('dragging');
+    if(!on)return;on=false;thSuppress=Date.now()+350;
+    if(ev.type=='pointerup'&&tgt)swapPages(i,+tgt.dataset.i)};
+  const mv=ev=>{cx=ev.clientX;cy=ev.clientY;
+    if(!on){const mvd=Math.hypot(cx-sx,cy-sy);
+      if(touch){if(mvd>8){clearTimeout(timer);end({type:'pointercancel'})}}
+      else if(mvd>6)begin();
+      return}
+    place()};
+  addEventListener('pointermove',mv);addEventListener('pointerup',end);addEventListener('pointercancel',end);addEventListener('touchmove',tm,{passive:false});
+  if(touch)timer=setTimeout(()=>{if(!on&&Math.hypot(cx-sx,cy-sy)<=8)begin()},350);
 }
 async function renderTh(doc,d,tok){
   try{const p=await doc.getPage(+d.dataset.i+1),v0=p.getViewport({scale:1}),sc=Math.min(2,Math.max(1,window.devicePixelRatio||1))*110/v0.width,v=p.getViewport({scale:sc}),c=d.querySelector('canvas');
