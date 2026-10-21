@@ -142,6 +142,13 @@ button.p:not(.up),.lbp,.nfld>span:not(:empty):not(.nb),#rot,#delp,.opt[data-t=me
 }
 
 button,.btn,select,input,textarea,.lbp,label,.opt p{font-weight:500}
+
+/* แถบเลื่อนซ้าย-ขวาลอยติดขอบล่างจอ */
+#wrap{scrollbar-width:none}
+#wrap::-webkit-scrollbar{display:none}
+#hbar{position:fixed;bottom:0;height:20px;overflow-x:scroll;overflow-y:hidden;z-index:70;background:var(--card);border-top:1px solid var(--bd);padding-bottom:env(safe-area-inset-bottom,0px);box-sizing:content-box}
+#hbar[hidden]{display:none}
+#hbar>div{height:1px}
 </style></head><body>
 <header><h1>📄 PDF Editor <span style="color:#ff0000;font-size:12px;font-weight:400">Powered by พี Yoona</span></h1>
 <button class="p up" onclick="document.getElementById('f').click()">Upload File</button><input id="f" type="file" accept="application/pdf,.pdf" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none">
@@ -1387,4 +1394,25 @@ function addCmAnnot(D,pg,m){
   if(document.fonts){document.fonts.ready.then(sched);document.fonts.addEventListener&&document.fonts.addEventListener('loadingdone',sched)}
   sched();
 });
+
+// ===== แถบเลื่อนซ้าย-ขวาลอยติดขอบล่างจอ (ใช้ตอนซูมแล้วหน้า PDF กว้างเกินจอ)
+(()=>{
+  const w=$('wrap'),b=document.createElement('div'),i=document.createElement('div');
+  b.id='hbar';b.hidden=true;b.append(i);document.body.append(b);
+  const upd=()=>{
+    const r=w.getBoundingClientRect(),over=w.scrollWidth>w.clientWidth+1;
+    b.hidden=!over;
+    document.body.style.paddingBottom=over?'24px':'';
+    if(!over)return;
+    b.style.left=r.left+'px';b.style.width=r.width+'px';
+    i.style.width=w.scrollWidth+'px';
+    if(b.scrollLeft!==w.scrollLeft)b.scrollLeft=w.scrollLeft;
+  };
+  w.addEventListener('scroll',()=>{if(b.scrollLeft!==w.scrollLeft)b.scrollLeft=w.scrollLeft});
+  b.addEventListener('scroll',()=>{if(w.scrollLeft!==b.scrollLeft)w.scrollLeft=b.scrollLeft});
+  addEventListener('resize',upd);
+  if(window.ResizeObserver){const ro=new ResizeObserver(upd);ro.observe(w);ro.observe($('stage'))}
+  new MutationObserver(upd).observe($('stage'),{attributes:true,attributeFilter:['style','hidden']});
+  upd();
+})();
 </script></body></html>
