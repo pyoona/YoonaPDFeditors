@@ -396,11 +396,13 @@ function joinRun(h){
   for(const it of items){if(covered(it))continue;const b=box(it);if(Math.abs(b.base-b0.base)<=b0.h*.3)L.push({it,b})}
   L.sort((p,q)=>p.b.x-q.b.x);const i=L.findIndex(o=>o.it===h.it);if(i<0)return h;
   const end=o=>o.b.x+o.b.w,gap=b0.h;let a=i,z=i;
-  while(a>0&&L[a].b.x-end(L[a-1])<=gap)a--;
-  while(z<L.length-1&&L[z+1].b.x-end(L[z])<=gap)z++;
+  const DOT=o=>/[.\u2026]{4,}/.test(o.it.str);
+  while(a>0&&!DOT(L[a-1])&&L[a].b.x-end(L[a-1])<=gap)a--;
+  while(z<L.length-1&&!DOT(L[z])&&L[z+1].b.x-end(L[z])<=gap)z++;
   if(a==z)return h;
   let str='';for(let k=a;k<=z;k++){const o=L[k];if(k>a&&o.b.x-end(L[k-1])>b0.h*.15&&!/\s$/.test(str)&&!/^\s/.test(o.it.str))str+=' ';str+=o.it.str}
   const it={...L[a].it,str,width:(end(L[z])-L[a].b.x)/vp.scale};return{it,b:box(it)}}
+const FIXTH=s=>s.replace(/(?<=[\u0E00-\u0E7F])[\u00C9-\u00CD]/g,c=>String.fromCharCode(0x0E48+c.charCodeAt(0)-0xC9));
 function closeEd(){if(ed)ed.cancel();oc.clearRect(0,0,ov.width,ov.height)}
 // dashed measuring guides, shown only while a text box is being moved:
 // a single blue dashed baseline of the moving text
@@ -442,7 +444,7 @@ function inlineEditor(o){
   t.onkeydown=e=>{if(e.isComposing)return;if(e.key=='Enter'&&!e.shiftKey){e.preventDefault();fin(true)}else if(e.key=='Escape')fin(false)};
   t.onblur=()=>setTimeout(()=>fin(true),0);
   ed={commit:()=>fin(true),cancel:()=>fin(false),guides:gd,del:()=>{if(o.del){t.value='';fin(true)}else fin(false)},size:()=>fs,bump:d=>{fs=Math.round(Math.min(300,Math.max(1,fs+d))*10)/10;t.style.fontSize=fs*vp.scale*k+'px';fit();gd();return fs}};
-  w.append(t,bar);$('stage').append(w);fit();gd();t.focus();t.select();
+  w.append(t,bar);$('stage').append(w);fit();gd();t.focus();{const n=t.value.length;try{t.setSelectionRange(n,n)}catch(e){}}
 }
 async function openEd(h){
   closeEd();await prepFont(h.it);
@@ -452,8 +454,8 @@ async function openEd(h){
   if(!us){try{await loadFam(fam,fs,h.it.str);const m=document.createElement('canvas').getContext('2d');m.font=`${fs*10}px ${fam}`;const w0=m.measureText(h.it.str).width/10;if(w0>0&&h.it.width>0)fs*=Math.min(1.3,Math.max(.4,h.it.width/w0))}catch(e){}}
   else await loadFam(fam,fs,h.it.str);
   const bgc=hexc(sm.bg),tcc=$('fca').checked?hexc(sm.tc):$('fcl').value,ty=b.base-baseOff(fs*vp.scale,fam).off,top=Math.min(y0,ty);
-  inlineEditor({left:x0,top,fs,color:tcc,bg:bgc,font:fam,ref:b,value:h.it.str,del:true,minW:w,minH:hg,padL:b.x-x0,padT:ty-top,
-    onDone:(txt,dx,dy,fz)=>{fz=fz||fs;if(Math.abs(dx)<.5&&Math.abs(dy)<.5){dx=dy=0}if(txt===h.it.str&&!dx&&!dy&&fz===fs)return;
+  inlineEditor({left:x0,top,fs,color:tcc,bg:bgc,font:fam,ref:b,value:FIXTH(h.it.str),del:true,minW:w,minH:hg,padL:b.x-x0,padT:ty-top,
+    onDone:(txt,dx,dy,fz)=>{fz=fz||fs;if(Math.abs(dx)<.5&&Math.abs(dy)<.5){dx=dy=0}if(txt===FIXTH(h.it.str)&&!dx&&!dy&&fz===fs)return;
       const pp=vp.convertToPdfPoint(b.x+dx,ty+dy);
       pushH();annots.push({id:++aid,pg:pi,x:pp[0],y:pp[1],size:fz,size0:fs,color:tcc,fam,fam0:fam,text:txt,cover:{x:r.x,y:r.y,w:r.w,h:r.h,color:bgc}});selA=aid;selH=false;renderAnnots()}});
 }
