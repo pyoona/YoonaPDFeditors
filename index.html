@@ -51,10 +51,8 @@ input[type=number]{width:80px}#fsz{width:120px}#fi{color:var(--mu);font-size:13p
 #imgs div{width:100%;font-size:14px}#imgs img{width:100%;border:1px solid var(--bd)}
 @font-face{font-family:SPC;src:local("Noto Sans Thai"),local("Tahoma"),local("Leelawadee UI"),local("Arial"),local("Helvetica"),local("Helvetica Neue"),local("Liberation Sans"),local("DejaVu Sans"),local("Roboto");unicode-range:U+0020,U+00A0}
 .cb{position:relative;display:inline-flex;vertical-align:middle}.cb #fsz{border-top-right-radius:0;border-bottom-right-radius:0;width:110px}.cb #fszb{border-left:0;border-radius:0 6px 6px 0;padding:4px 8px}#fszl{position:absolute;top:100%;left:0;z-index:30;min-width:100%;max-height:240px;overflow-y:auto;background:var(--card);border:1px solid var(--bd);border-radius:8px;box-shadow:0 6px 18px #0002;margin-top:2px}#fszl div{padding:6px 12px;cursor:pointer;white-space:nowrap}#fszl div:hover,#fszl div.cur{background:var(--ac);color:#fff}
-/* options bar stays put: pinned while scrolling, and its text never changes the bar height */
 .opt[data-t="text edit"] .rw{display:flex;flex-wrap:wrap;gap:18px 14px;align-items:stretch;flex:1 1 100%}.grp.nh::before{display:none}#ckg{flex:1 1 0;min-width:0;flex-wrap:nowrap}#ckg select{min-width:0;flex:1 1 90px}#ckg input[type=range]{width:70px;min-width:40px;flex:0 1 70px}.opt[data-t="text edit"]{font-size:14px}.opt[data-t="text edit"] .lbp,.opt[data-t="text edit"] button,.opt[data-t="text edit"] select,.opt[data-t="text edit"] input[type=text],.opt[data-t="text edit"] input[type=color]{height:36px;box-sizing:border-box;font-size:14px;line-height:1.2}.opt[data-t="text edit"] .lbp,.opt[data-t="text edit"] button{display:inline-flex;align-items:center;justify-content:center;padding:0 12px}.opt[data-t="text edit"] #fszb{padding:0 8px}.opt[data-t="text edit"] input[type=color]{width:36px;padding:0}.opt[data-t="text edit"] .grp{align-items:center}#fdg{flex:none}@media(max-width:1550px){#ckg{flex:1 1 100%;flex-wrap:wrap;order:2}}.grp.nh{padding:10px 12px}.opt[data-t="text edit"]{position:sticky;top:var(--hh,0px);z-index:55;justify-content:flex-start;align-items:stretch;gap:18px 14px;padding-top:18px}
 .opt[data-t="text edit"]{padding-bottom:16px}.opt[data-t="text edit"] #fi{position:absolute;right:16px;bottom:1px;margin:0;max-width:60%;font-size:13px;line-height:1.3;text-align:right;pointer-events:none}
-
 #fi{display:inline-block;max-width:240px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;vertical-align:middle;min-height:1.5em}
 #printArea{display:none}
 @media print{body>*:not(#printArea){display:none!important}html,body{background:#fff!important;margin:0}#printArea{display:block}#printArea img{display:block;break-after:page;page-break-after:always}#printArea img:last-child{break-after:auto;page-break-after:auto}}
@@ -70,15 +68,10 @@ body{touch-action:pan-x pan-y}#work{display:flex;align-items:flex-start;gap:8px}
 .lbp{display:inline-block;background:var(--ac);color:#fff;border:1px solid var(--ac);border-radius:8px;padding:6px 12px;line-height:1.5;white-space:nowrap}
 .opt[data-t=num]{align-items:flex-end}.nfld{display:flex;flex-direction:column;align-items:flex-start;gap:4px}.nfld>span{line-height:1.5;background:var(--ac);color:#fff;border:1px solid var(--ac);border-radius:8px;padding:6px 12px;white-space:nowrap}.nfld>span:empty,.nfld>span.nb{background:transparent;border-color:transparent}.nbw{align-self:center}.nbw>.nb{display:none}#num{background:#e97132;border-color:#e97132;color:#fff}#rot,#delp,#swgo,#swup,#swdn,.opt[data-t=merge]>button{background:#1e3a8a;border-color:#1e3a8a;color:#fff}
 .grp label{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
-
-/* smaller blue buttons / labels */
 button.p:not(.up),.lbp,.nfld>span:not(:empty):not(.nb),#rot,#delp,.opt[data-t=merge]>button{padding:1px 7px;font-size:13px;line-height:1.4;border-radius:5px}
 .opt[data-t="text edit"] .lbp,.opt[data-t="text edit"] button.p:not(.up){height:28px;padding:0 7px;font-size:13px;line-height:1.2;border-radius:5px}
-
-/* text-edit toolbar: card layout */
 .br{flex-basis:100%;height:0;margin-top:-8px}
 .opt[data-t="text edit"] #fdel.p{background:#c62828;border-color:#c62828;color:#fff}
-/* แถบแก้ไขข้อความ: 3 การ์ดเรียงแถวเดียว สูงเท่ากัน (ข้อความ | ลบ | วางเครื่องหมาย) */
 .opt[data-t="text edit"] .rw{flex-wrap:nowrap;align-items:stretch;gap:12px}
 .opt[data-t="text edit"] .grp:first-child{flex:2 1 560px;min-width:0}
 .opt[data-t="text edit"] #fdg{flex:0 0 auto}
@@ -88,7 +81,6 @@ button.p:not(.up),.lbp,.nfld>span:not(:empty):not(.nb),#rot,#delp,.opt[data-t=me
 #fdel{color:#c62828;border-color:#f0a8a8;background:var(--card);border-radius:8px;gap:6px;min-width:128px;padding-left:18px;padding-right:18px}
 #fdel:hover{background:#fdeeee}
 .opt[data-t="text edit"] #fdel.p{background:#c62828;border-color:#c62828;color:#fff}
-/* การ์ดข้อความ: ทุกอย่างอยู่บรรทัดเดียว (ปุ่มดึง Font ไม่ตกบรรทัดแม้ข้อความยาวขึ้น) ช่อง Font/Size ย่อได้ */
 .opt[data-t="text edit"] .grp:first-child{flex-wrap:nowrap}
 .opt[data-t="text edit"] #fsel{flex:1 1 auto;min-width:90px;max-width:260px}
 .opt[data-t="text edit"] .cb{flex:0 1 110px;min-width:64px}
@@ -96,8 +88,6 @@ button.p:not(.up),.lbp,.nfld>span:not(:empty):not(.nb),#rot,#delp,.opt[data-t=me
 .opt[data-t="text edit"] .grp:first-child .lbp,.opt[data-t="text edit"] .grp:first-child button,.opt[data-t="text edit"] .grp:first-child label{flex:none;white-space:nowrap}
 .opt[data-t="text edit"] .cb #fszl{white-space:nowrap}
 @media(max-width:640px){.opt[data-t="text edit"] .grp:first-child{flex-wrap:wrap}}
-
-/* แถบแก้ไขข้อความ: โน้ตบุ๊ก/แท็บเล็ตต้องอยู่บรรทัดเดียวเสมอ (พื้นที่ไม่พอ = ย่อทั้งแถบให้พอดี ไม่ตกบรรทัด) */
 @media(min-width:641px){
 .opt[data-t="text edit"] .rw{flex-wrap:nowrap}
 .opt[data-t="text edit"] .rw>.grp{flex:1 1 auto!important;flex-wrap:nowrap!important;min-width:max-content!important}
@@ -105,7 +95,6 @@ button.p:not(.up),.lbp,.nfld>span:not(:empty):not(.nb),#rot,#delp,.opt[data-t=me
 .opt[data-t="text edit"] #ckg select{flex:1 1 auto;min-width:0}
 .opt[data-t="text edit"] .rw label,.opt[data-t="text edit"] .rw .lbp{white-space:nowrap}
 }
-/* จอแคบลง: บีบช่องไฟ/ความกว้างช่องเลือกก่อน เพื่อให้ย่อทั้งแถบน้อยที่สุด */
 @media(min-width:641px) and (max-width:1700px){
 .opt[data-t="text edit"]{gap:8px;padding:14px 10px 12px}
 .opt[data-t="text edit"] .rw{gap:8px}
@@ -121,8 +110,6 @@ button.p:not(.up),.lbp,.nfld>span:not(:empty):not(.nb),#rot,#delp,.opt[data-t=me
 .opt[data-t="text edit"] #ckg input[type=range]{width:50px;flex:0 0 50px}
 .opt[data-t="text edit"] input[type=color]{width:30px}
 }
-
-/* แถบลายน้ำ: บรรทัดเดียวเสมอบนโน้ตบุ๊ก/แท็บเล็ต (เป็นค่าเริ่มต้น ไม่พึ่ง media query ฝั่งจอใหญ่) ส่วนมือถือ (<=640px) ให้ตกบรรทัดได้ */
 .opt[data-t=wm] .rw1{display:flex!important;flex-direction:column;flex-wrap:nowrap!important;align-items:flex-start;gap:8px;flex:1 1 100%;white-space:nowrap;font-size:14px}
 .opt[data-t=wm] .wr{display:flex!important;flex-wrap:nowrap!important;align-items:center;gap:5px;width:max-content;min-width:max-content}
 .opt[data-t=wm] .wr>*{flex:none}
@@ -140,10 +127,7 @@ button.p:not(.up),.lbp,.nfld>span:not(:empty):not(.nb),#rot,#delp,.opt[data-t=me
 .opt[data-t=wm] .wr>span[style]{margin-left:28px!important}
 .opt[data-t=wm] .rw1 label{gap:normal}
 }
-
 button,.btn,select,input,textarea,.lbp,label,.opt p{font-weight:500}
-
-/* แถบเลื่อนซ้าย-ขวาลอยติดขอบล่างจอ */
 #wrap{scrollbar-width:none}
 #wrap::-webkit-scrollbar{display:none}
 #hbar{position:fixed;bottom:0;height:20px;overflow-x:scroll;overflow-y:hidden;z-index:70;background:var(--card);border-top:1px solid var(--bd);padding-bottom:env(safe-area-inset-bottom,0px);box-sizing:content-box}
@@ -220,7 +204,7 @@ async function load(b,push=true){
   bytes=b;pdf=await pdfjsLib.getDocument({data:b.slice()}).promise;
   if(pi>=pdf.numPages)pi=pdf.numPages-1;buildThumbs();await show();
 }
-// Annotation (เช่น FreeText ที่เพิ่มจาก Edge) วาดบนชั้นของมันเอง วางเหนือแผ่นสีปิดทับ จะได้ไม่ถูกบังตอนแก้ข้อความ
+
 let cva=null;
 async function renderPageLayers(p){
   if(!cva){cva=document.createElement('canvas');cva.id='cva';cva.style.cssText='position:absolute;left:0;top:0;z-index:6;pointer-events:none';cv.after(cva)}
@@ -235,6 +219,7 @@ async function renderPageLayers(p){
   for(let i=0;i<a.length;i+=4){if(a[i]===b[i]&&a[i+1]===b[i+1]&&a[i+2]===b[i+2]&&a[i+3]===b[i+3])b[i+3]=0}
   cva.getContext('2d').putImageData(B,0,0);cva.hidden=false;
 }
+
 async function show(){
   const p=await pdf.getPage(pi+1);vp=p.getViewport({scale:Math.min(3,Math.max(2,1.5*(window.devicePixelRatio||1)))});
   cv.width=ov.width=vp.width;cv.height=ov.height=vp.height;
@@ -242,8 +227,56 @@ async function show(){
   $('empty').hidden=true;$('stage').hidden=false;rmClear();cmClear();
   await renderPageLayers(p);
   pageObj=p;const tcn=await p.getTextContent();tstyles=tcn.styles||{};items=tcn.items.filter(i=>i.str&&i.str.trim());hlLines=null;xsc.clear();closeEd();
+
+  // === ดึง FreeText Annotations จากไฟล์ PDF มาแปลงเป็น Object ให้แก้ไข/ย้ายได้ ===
+  try {
+    const originalAnnots = await p.getAnnotations();
+    for (const a of originalAnnots) {
+      if (a.subtype === 'FreeText' && a.rect) {
+        const annotId = 'ft-' + (a.id || (a.rect.join('_') + '_' + (a.contents || '')));
+        const alreadyAdded = annots.some(item => item.ftId === annotId);
+        
+        if (!alreadyAdded) {
+          const r = a.rect;
+          const pdfX = Math.min(r[0], r[2]);
+          const pdfY = Math.max(r[1], r[3]);
+          
+          let fontSize = 14;
+          let fontColor = '#000000';
+          if (a.defaultAppearanceData) {
+            if (a.defaultAppearanceData.fontSize) fontSize = a.defaultAppearanceData.fontSize;
+            if (a.defaultAppearanceData.fontColor) {
+              const c = a.defaultAppearanceData.fontColor;
+              if (c.length === 3) {
+                fontColor = '#' + c.map(v => Math.round(v).toString(16).padStart(2, '0')).join('');
+              }
+            }
+          }
+
+          annots.push({
+            id: ++aid,
+            ftId: annotId,
+            origAnnotObjId: a.id,
+            pg: pi,
+            x: pdfX,
+            y: pdfY,
+            size: fontSize,
+            size0: fontSize,
+            color: fontColor,
+            fam: BASEFB,
+            fam0: BASEFB,
+            text: a.contents || (a.contentsObj ? a.contentsObj.str : '') || ''
+          });
+        }
+      }
+    }
+  } catch(e) {
+    console.warn("Error parsing FreeText annotations:", e);
+  }
+
   $('pg').textContent=`หน้า ${pi+1} / ${pdf.numPages}`;thSel();renderAnnots();wmPrev();sgClear();if(typeof swSync=='function')swSync();
 }
+
 const snap=()=>({b:bytes,a:JSON.parse(JSON.stringify(annots))});
 const pushH=()=>{hist.push(snap());redo=[]};
 function need(){if(!bytes){alert('กรุณา Upload File PDF ก่อน');return false}return true}
@@ -285,7 +318,6 @@ async function putText(d,pg,t,size,color,x,y,fam){
   pg.drawImage(im,{x:pt[0],y:pt[1]-o.h,width:o.w,height:o.h});
 }
 
-// pointer handling
 const pos=e=>{const r=ov.getBoundingClientRect(),k=ov.width/r.width;return[(e.clientX-r.left)*k,(e.clientY-r.top)*k]};
 ov.onpointerdown=e=>{if(!need())return;if(ed){ed.commit();return}const[x,y]=pos(e);drag={x0:x,y0:y,x1:x,y1:y};ov.setPointerCapture(e.pointerId)};
 ov.onpointermove=e=>{
@@ -295,9 +327,8 @@ ov.onpointermove=e=>{
     if($('hltip').value=='pencil'){(drag.p=drag.p||[[drag.x0,drag.y0]]).push([drag.x1,drag.y1]);const q=linePath(drag,bd);oc.strokeStyle=$('hc').value;oc.lineWidth=hlW()*vp.scale;oc.lineCap='round';oc.lineJoin='round';oc.beginPath();q.forEach((a,i)=>i?oc.lineTo(a[0],a[1]):oc.moveTo(a[0],a[1]));oc.stroke()}
     else{oc.fillStyle=$('hc').value;oc.fillRect(Math.min(drag.x0,drag.x1),bd.yc-bd.hh/2,Math.abs(drag.x1-drag.x0),bd.hh)}oc.restore()}}else if($('hlmode').value!='none'){oc.save();oc.globalAlpha=.4;oc.fillStyle=$('hc').value;hlSel(drag).forEach(r=>oc.fillRect(r.l,r.t,r.r-r.l,r.b-r.t));oc.restore()}}};
 ov.onpointerup=async()=>{if(!drag)return;const d=drag;drag=null;oc.clearRect(0,0,ov.width,ov.height);await act(d)};
-// ---- font / size / colour helpers (default = same as original text in the file)
+
 const hexc=c=>'#'+[0,1,2].map(j=>c[j].toString(16).padStart(2,'0')).join('');
-// Fallback face (Sarabun) scaled with size-adjust so glyphs missing from the embedded subset font come out the same size as the original text
 let gfCss=null;const fbMap={},fbThai={};
 async function prepFont(it){
   if(!it||fbMap[it.fontName])return;
@@ -314,7 +345,6 @@ async function prepFont(it){
     const name='FB'+key,st=document.createElement('style');
     st.textContent=gfCss.replace(/font-family:\s*'Sarabun'/g,`font-family:'${name}'`).replace(/@font-face\s*\{/g,`@font-face{size-adjust:${(f*100).toFixed(1)}%;`);
     document.head.append(st);fbMap[key]=`"${name}"`;
-    // Thai-only copy: one font with proper mark positioning (GSUB/GPOS) - PDF subset fonts lack it, so tone marks stack on vowels
     const mt=gfCss.match(/\/\*\s*thai\s*\*\/\s*@font-face\s*\{[^}]*\}/);
     if(mt){const tn='FT'+key,s2=document.createElement('style');s2.textContent=mt[0].replace(/font-family:\s*'Sarabun'/,`font-family:'${tn}'`).replace(/@font-face\s*\{/,`@font-face{size-adjust:${(f*100).toFixed(1)}%;`);document.head.append(s2);fbThai[key]=`"${tn}"`}
   }catch(e){}
@@ -326,7 +356,6 @@ function famOf(it){
   const g=(tstyles[it.fontName]&&tstyles[it.fontName].fontFamily)||'sans-serif';
   return `"SPC","${it.fontName}",${fbMap[it.fontName]||'"Sarabun"'},${g},"Noto Sans Thai"${fbThai[it.fontName]?','+fbThai[it.fontName]:''}`;
 }
-// text with tone marks / nikhahit: render the whole Thai run with one properly-shaped font so marks don't overlap
 const NEEDTH=/[\u0E48-\u0E4D]/;
 function thaiFirst(fam,text){if(!fam||!text||!NEEDTH.test(text))return fam;const m=fam.match(/,?"FT[^"]*"/);if(!m)return fam;return fam.replace(m[0],'').replace('"SPC",','"SPC",'+m[0].replace(/^,/,'')+',')}
 function fontLabel(it){try{const f=pageObj.commonObjs.get(it.fontName);return String(f.name||'').replace(/^[A-Z]{6}\+/,'')||it.fontName}catch(e){return it.fontName}}
@@ -337,7 +366,6 @@ function sample(b){
   const bg=ctx.getImageData(Math.max(0,x0-1),Math.max(0,y0-1),1,1).data,dat=ctx.getImageData(x0,y0,w,hg).data;
   let best=0,tc=[0,0,0];
   for(let i=0;i<dat.length;i+=4){const d=Math.abs(dat[i]-bg[0])+Math.abs(dat[i+1]-bg[1])+Math.abs(dat[i+2]-bg[2]);if(d>best){best=d;tc=[dat[i],dat[i+1],dat[i+2]]}}
-  // thin strokes are anti-aliased, so the sampled pixel is lighter than the real ink: push contrast to full strength (keeps the hue)
   const v=[0,1,2].map(j=>tc[j]-bg[j]);let sc=Infinity;
   for(let j=0;j<3;j++){if(v[j]>0)sc=Math.min(sc,(255-bg[j])/v[j]);else if(v[j]<0)sc=Math.min(sc,(0-bg[j])/v[j])}
   if(isFinite(sc)&&sc>1)sc=Math.min(sc,3),tc=[0,1,2].map(j=>Math.max(0,Math.min(255,Math.round(bg[j]+v[j]*sc))));
@@ -352,7 +380,7 @@ async function newText(d,drag){
   const bx=Math.min(d.x0,d.x1),by=Math.min(d.y0,d.y1);
   await loadFam(fam,size,'กA');
   let y0=d.y0-size*vp.scale*.75;
-  if(!drag&&near&&$('fsn').checked){const nb=box(near);if(Math.abs(d.y0-nb.base)<=nb.h*1.5)y0=nb.base-baseOff(size*vp.scale,fam).off}   // snap onto the nearest original line
+  if(!drag&&near&&$('fsn').checked){const nb=box(near);if(Math.abs(d.y0-nb.base)<=nb.h*1.5)y0=nb.base-baseOff(size*vp.scale,fam).off}
   const x=drag?bx:d.x0,y=drag?by:y0,bgc=drag?$('eb').value:null;
   inlineEditor({left:x,top:y,fs:size,color,font:fam,bg:bgc,ref:near?box(near):null,minW:drag?Math.abs(d.x1-d.x0):0,minH:drag?Math.abs(d.y1-d.y0):0,placeholder:'พิมพ์ข้อความ...',
     onDone:(v,dx,dy,fz)=>{
@@ -361,7 +389,7 @@ async function newText(d,drag){
       else if(!v.trim())return;
       pushH();annots.push(an);selA=an.id;selH=false;renderAnnots()}});
 }
-// ลบข้อความเดิมในไฟล์ PDF: ปิดทับด้วยสีพื้นหลัง (เหมือนปุ่ม 🗑 ลบ ในกล่องแก้ไข) คลิก = ลบข้อความตรงนั้น, ลาก = ลบทั้งพื้นที่
+
 function setDel(v){delMode=!!v;const b=$('fdel');if(b)b.classList.toggle('p',delMode);if(ov)ov.style.cursor=delMode?'crosshair':(tool=='text'?'text':'crosshair');if(!delMode)oc.clearRect(0,0,ov.width,ov.height)}
 function delOrig(d,big){
   let r,c,p,size=12;
@@ -398,14 +426,12 @@ async function act(d){
   if(tool=='edit')return newText(d,true);
 }
 
-// click-to-edit existing text
 let items=[],ed=null,orig=null,pageObj=null,tstyles={};
 function box(it){const t=pdfjsLib.Util.transform(vp.transform,it.transform),h=Math.hypot(t[2],t[3]);return{x:t[4],base:t[5],h,w:it.width*vp.scale,t:t[5]-h,b:t[5]+h*.3,size:Math.hypot(it.transform[2],it.transform[3])||12}}
 function hit(x,y){
   for(const it of items){if(covered(it))continue;const b=box(it),tx=Math.max(3,b.h*.35);
     if(x>=b.x-tx&&x<=b.x+b.w+tx&&y>=b.t-3&&y<=b.b+3)return tool=='edit'&&!$('fjn').checked?{it,b}:joinRun({it,b})}
   return null}
-// รวมชิ้นข้อความที่ติดกันบนบรรทัดเดียวกันให้เป็นแถบเดียว (PDF ภาษาไทยมักแตกเป็นคำ/ตัวอักษร)
 function joinRun(h){
   const b0=h.b,L=[];
   for(const it of items){if(covered(it))continue;const b=box(it);if(Math.abs(b.base-b0.base)<=b0.h*.3)L.push({it,b})}
@@ -419,8 +445,7 @@ function joinRun(h){
   const it={...L[a].it,str,width:(end(L[z])-L[a].b.x)/vp.scale};return{it,b:box(it)}}
 const FIXTH=s=>s.replace(/(?<=[\u0E00-\u0E7F])[\u00C9-\u00CD]/g,c=>String.fromCharCode(0x0E48+c.charCodeAt(0)-0xC9));
 function closeEd(){if(ed)ed.cancel();oc.clearRect(0,0,ov.width,ov.height)}
-// dashed measuring guides, shown only while a text box is being moved:
-// a single blue dashed baseline of the moving text
+
 function drawGuides(g){
   oc.clearRect(0,0,ov.width,ov.height);if(!$('fg').checked)return;
   const fsPx=g.fs*vp.scale,m=document.createElement('canvas').getContext('2d');m.font=`${fsPx}px ${g.font||BASEFB}`;
@@ -429,7 +454,7 @@ function drawGuides(g){
     if(lbl){oc.setLineDash([]);oc.font='bold 12px "Noto Sans Thai",sans-serif';oc.textAlign='right';oc.fillText(lbl,ov.width-4,y-3)}oc.restore()};
   line(T+bo,'#ff0000',null,true);
 }
-// inline editor: a textarea placed right on the page (coords & fs in canvas px / PDF pt)
+
 function inlineEditor(o){
   closeEd();
   let fs=o.fs;
@@ -475,13 +500,58 @@ async function openEd(h){
       pushH();annots.push({id:++aid,pg:pi,x:pp[0],y:pp[1],size:fz,size0:fs,color:tcc,fam,fam0:fam,text:txt,cover:{x:r.x,y:r.y,w:r.w,h:r.h,color:bgc}});selA=aid;selH=false;renderAnnots()}});
 }
 
-// ---- added text lives as movable/editable objects until it is baked into the PDF (save / other tools)
 async function bake(D){
-  for(const a of annots){const pg=D.getPage(a.pg);if(a.cm)addCmAnnot(D,pg,a.cm);if(a.mk)drawMark(pg,a.mk);
-    if(a.im){const e=a.im.type=='image/png'?await D.embedPng(Uint8Array.from(atob(a.im.u.split(',')[1]),c=>c.charCodeAt(0))):await D.embedJpg(Uint8Array.from(atob(a.im.u.split(',')[1]),c=>c.charCodeAt(0)));pg.drawImage(e,{x:a.im.x,y:a.im.y,width:a.im.w,height:a.im.h})}
+  // === ลบ FreeText Annotation ดั้งเดิมที่นำมาแก้ไขออกจากโครงสร้างไฟล์ PDF เพื่อไม่ให้แสดงซ้อน ===
+  for(const a of annots){
+    if (a.ftId || a.origAnnotObjId) {
+      try {
+        const pg = D.getPage(a.pg);
+        const annotsArr = pg.node.lookupMaybe(NM('Annots'), P.PDFArray);
+        if (annotsArr) {
+          for (let i = annotsArr.size() - 1; i >= 0; i--) {
+            const ref = annotsArr.get(i);
+            if (ref instanceof P.PDFRef) {
+              const refStr = ref.objectNumber + 'R' + (ref.generationNumber ? ref.generationNumber : '');
+              if (refStr === a.origAnnotObjId) {
+                annotsArr.remove(i);
+              } else {
+                const dict = annotsArr.lookup(i);
+                if (dict && dict.get(NM('Subtype')) === NM('FreeText')) {
+                  const contents = dict.get(NM('Contents'));
+                  let textStr = '';
+                  if (contents) {
+                    textStr = contents.decodeText ? contents.decodeText() : contents.asString();
+                  }
+                  if (textStr === a.text || a.origAnnotObjId === refStr) {
+                    annotsArr.remove(i);
+                  }
+                }
+              }
+            }
+          }
+        }
+      } catch(e) {
+        console.warn("Error removing original FreeText annotation:", e);
+      }
+    }
+  }
+
+  for(const a of annots){
+    const pg=D.getPage(a.pg);
+    if(a.cm)addCmAnnot(D,pg,a.cm);
+    if(a.mk)drawMark(pg,a.mk);
+    if(a.im){
+      const e=a.im.type=='image/png'?await D.embedPng(Uint8Array.from(atob(a.im.u.split(',')[1]),c=>c.charCodeAt(0))):await D.embedJpg(Uint8Array.from(atob(a.im.u.split(',')[1]),c=>c.charCodeAt(0)));
+      pg.drawImage(e,{x:a.im.x,y:a.im.y,width:a.im.w,height:a.im.h});
+    }
     if(a.cover)pg.drawRectangle({x:a.cover.x,y:a.cover.y,width:a.cover.w,height:a.cover.h,color:rgbOf(a.cover.color)});
-    if(a.text&&a.text.trim()){const o=await txtPng(a.text,a.size,a.color,a.fam),im=await D.embedPng(o.buf);pg.drawImage(im,{x:a.x,y:a.y-o.h,width:o.w,height:o.h})}}
+    if(a.text&&a.text.trim()){
+      const o=await txtPng(a.text,a.size,a.color,a.fam),im=await D.embedPng(o.buf);
+      pg.drawImage(im,{x:a.x,y:a.y-o.h,width:o.w,height:o.h});
+    }
+  }
 }
+
 async function bakedBytes(){if(!bytes)return bytes;const f1=!wmAllDone&&tool=='wm';if(!annots.length&&!f1)return bytes;const D=await P.PDFDocument.load(bytes,{ignoreEncryption:true});await bake(D);if(f1)await wmStamp(D,true);return await D.save()}
 function covered(it){
   if(!vp||!annots.length)return false;const b=box(it),cx=b.x+b.w/2;
@@ -531,7 +601,6 @@ function editAnnot(a){selA=a.id;
 }
 let rzT=0;window.addEventListener('resize',()=>{clearTimeout(rzT);rzT=setTimeout(()=>{applyZoom();if(!ed)renderAnnots()},150)});
 
-// ---- zoom: scales only the PDF page (canvas + overlay + added text); toolbar buttons keep their size
 let zm=1,zraf=0;const ZMIN=.5,ZMAX=3;
 function applyZoom(){const zr=$('zr');if(zr)zr.textContent=Math.round(zm*100)+'%';if(!vp)return;
   const avail=Math.max(200,$('wrap').clientWidth-32),W=Math.round(Math.min(vp.width,avail)*zm);
@@ -545,11 +614,9 @@ $('wrap').addEventListener('wheel',e=>{if(!(e.ctrlKey||e.metaKey))return;e.preve
   w.addEventListener('touchmove',e=>{if(e.touches.length==2&&d0){e.preventDefault();setZoom(z0*td(e)/d0)}},{passive:false});
   w.addEventListener('touchend',e=>{if(e.touches.length<2)d0=0},{passive:true})})();
 
-// file open / undo / save
 $('f').onchange=async e=>{const f=e.target.files[0];if(!f)return;hist=[];redo=[];annots=[];bytes=null;pi=0;
   try{let b=new Uint8Array(await f.arrayBuffer());b=await unlockIfEncrypted(b);await load(b,false);orig=bytes;$('f').dataset.name=f.name}catch(x){alert('เปิดไฟล์ไม่ได้: '+(x.message||x))}e.target.value=''};
-// ไฟล์ที่ถูกเข้ารหัส/ล็อกการแก้ไข: pdf-lib แก้แล้วบันทึกกลับไม่ได้ (pdf.js จะขอรหัสผ่าน -> 'No password given')
-// จึงเปิดด้วย pdf.js (ถามรหัสผ่านถ้าจำเป็น) แล้วแปลงแต่ละหน้าเป็นภาพ สร้างเป็น PDF ใหม่ที่ไม่เข้ารหัส
+
 async function unlockIfEncrypted(b){
   let enc=false;try{enc=!!(await P.PDFDocument.load(b,{ignoreEncryption:true})).isEncrypted}catch(e){enc=true}
   if(!enc)return b;
@@ -585,13 +652,11 @@ $('reset').onclick=async()=>{
     else el.value=el.defaultValue;
   });
   const bx=$('dlbox');if(bx)bx.remove();$('fi').textContent='';$('imgs').innerHTML='';
-  // ล้างรายการลายเซ็น (เครื่องมือ 1) และรูปที่เลือกไว้ (เครื่องมือ 2)
   sigs.length=0;sgRender();sgClear();sx.clearRect(0,0,sc.width,sc.height);
   {const t=$('sgtabs')&&$('sgtabs').querySelector('button[data-k="0"]');if(t)t.click()}
   imgList=[];imgSel=0;$('im').value='';
   $('imp').innerHTML='<span>รูปที่เลือกจะแสดงตรงนี้ — ลากรูปลงบนหน้าเพื่อวาง (เลือกได้หลายรูป)</span>';
   setTool('text');pi=0;
-  // remove the uploaded file and everything derived from it
   bytes=null;orig=null;pdf=null;pageObj=null;items=[];tstyles={};vp=null;pi=0;zm=1;applyZoom();buildThumbs();
   document.querySelectorAll('#stage .an,#stage .cvr').forEach(e=>e.remove());
   cv.width=cv.height=ov.width=ov.height=1;
@@ -599,7 +664,7 @@ $('reset').onclick=async()=>{
   $('pg').textContent='–';delete $('f').dataset.name;$('f').value='';
 };
 $('save').onclick=async()=>{if(!need())return;const base=($('f').dataset.name||'').replace(/\.pdf$/i,'').trim();dl((base?base+'_edited':'edited')+'.pdf',await bakedBytes())};
-// Print: no blob/iframe (blocked in sandboxed pages) - render pages to images in a print-only area, then window.print()
+
 $('print').onclick=async()=>{if(!need())return;const btn=$('print');btn.disabled=true;
   try{
     const doc=await pdfjsLib.getDocument({data:(await bakedBytes()).slice()}).promise;
@@ -619,17 +684,16 @@ $('print').onclick=async()=>{if(!need())return;const btn=$('print');btn.disabled
 $('pv').onclick=async()=>{if(pdf&&pi>0){pi--;await show()}};
 $('nx').onclick=async()=>{if(pdf&&pi<pdf.numPages-1){pi++;await show()}};
 
-// pages
 $('rot').onclick=()=>edit(async D=>{const ps=$('rall').checked?D.getPages():[D.getPage(pi)];ps.forEach(p=>p.setRotation(P.degrees((p.getRotation().angle+90)%360)))});
 $('delp').onclick=async()=>{if(!need())return;if(pdf.numPages<2)return alert('ลบหน้าสุดท้ายไม่ได้');if(await ask('ลบหน้า '+(pi+1)+' ?'))edit(async D=>D.removePage(pi))};
-// ===== สลับหน้า: หน้า A <-> หน้า B (และเลื่อนหน้านี้ขึ้น/ลง) ใช้ edit() เดิม จึงย้อนกลับ/ไปข้างหน้าได้
+
 function swSync(){if(!pdf)return;const n=pdf.numPages,a=$('swa'),b=$('swb');a.max=b.max=n;a.value=pi+1;b.value=pi+2<=n?pi+2:Math.max(1,pi);$('swst').textContent=''}
-function swapPages(a,b){ // a,b เริ่มที่ 0
+function swapPages(a,b){
   return edit(async D=>{
     if(a>b){const x=a;a=b;b=x}
     const pa=D.getPage(a),pb=D.getPage(b);
     D.removePage(b);D.removePage(a);D.insertPage(a,pb);D.insertPage(b,pa);
-    if(pi==a)pi=b;else if(pi==b)pi=a; // ให้หน้าที่กำลังดูอยู่ตามเนื้อหาไป
+    if(pi==a)pi=b;else if(pi==b)pi=a;
   })
 }
 $('swgo').onclick=()=>{if(!need())return;const n=pdf.numPages;if(n<2)return alert('ต้องมีอย่างน้อย 2 หน้าจึงจะสลับได้');
@@ -656,7 +720,6 @@ $('num').onclick=()=>edit(async D=>{
   });
 });
 
-// password
 $('pwb').onclick=async()=>{
   if(!need())return;const pw=$('pw').value;if(!pw)return alert('กรอกรหัสผ่านก่อน');
   if(!window.jspdf)return alert('โหลดไลบรารีเข้ารหัสไม่สำเร็จ กรุณารีเฟรชหน้า');
@@ -676,7 +739,6 @@ $('pwb').onclick=async()=>{
   btn.disabled=false;btn.textContent='ใส่รหัสผ่านและบันทึก';
 };
 
-// to images
 $('pngb').onclick=async()=>{
   if(!need())return;$('imgs').innerHTML='';alert('กำลังแปลงเป็นรูปภาพ...');
   const doc=await pdfjsLib.getDocument({data:(await bakedBytes()).slice()}).promise;const blobs=[];
@@ -697,7 +759,6 @@ function zipStore(files){const enc=new TextEncoder(),parts=[],cd=[];let off=0;
   const cs=cd.reduce((a,b)=>a+b.byteLength,0),e=new DataView(new ArrayBuffer(22));e.setUint32(0,0x06054b50,true);e.setUint16(8,files.length,true);e.setUint16(10,files.length,true);e.setUint32(12,cs,true);e.setUint32(16,off,true);
   return new Blob([...parts,...cd,e.buffer],{type:'application/zip'})}
 
-// ===== helpers: GC / ลบรูป / บีบอัด / ไฮไลต์
 const NM=s=>P.PDFName.of(s),num=o=>o&&o.asNumber?o.asNumber():0;
 function gc(D){const c=D.context,T=c.trailerInfo,seen=new Set(),st=[];if(!T.Root)return;
   const add=o=>{if(!o)return;if(o instanceof P.PDFRef){if(seen.has(o.tag))return;seen.add(o.tag);const t=c.lookup(o);if(t)st.push(t)}else st.push(o)};
@@ -756,7 +817,6 @@ $('cmpb').onclick=async()=>{if(!need())return;const m=$('cmode').value,b=$('cmpb
     else{pushH();annots=[];await load(nb,false);st.textContent=sz(A)+' → '+sz(nb.length)+' (ลด '+Math.round(100-nb.length*100/A)+'%)'}
   }catch(e){st.textContent='ผิดพลาด: '+e.message}b.disabled=false};
 
-// ไฮไลต์: เลือกข้อความระดับตัวอักษร -> Highlight annotation (QuadPoints + AP แบบ Multiply) พร้อมชื่อผู้ไฮไลต์ใน /T
 let hlLines=null;const xsc=new Map();
 function itemXs(o){let v=xsc.get(o.it);if(v)return v;const it=o.it,s=it.str,m=itemXs.m||(itemXs.m=document.createElement('canvas').getContext('2d'));
   m.font='100px "SPC","'+it.fontName+'",'+((tstyles[it.fontName]&&tstyles[it.fontName].fontFamily)||'sans-serif')+',"Sarabun","Noto Sans Thai"';
@@ -795,7 +855,6 @@ async function doHL(d){const md=$('hlmode').value;if(cmMode)return cmClick(d);if
         an.set(NM('Subj'),P.PDFHexString.fromText('Highlight'));an.set(NM('M'),P.PDFString.fromDate(new Date()));an.set(NM('NM'),P.PDFString.of('hl-'+Date.now().toString(36)+Math.random().toString(36).slice(2,6)));
     let ar=p.node.lookupMaybe(NM('Annots'),P.PDFArray);if(!ar){ar=c.obj([]);p.node.set(NM('Annots'),ar)}ar.push(c.register(an))})}
 
-// ===== ลายน้ำ (Watermark) — โค้ดวาดลายน้ำจากไฟล์ที่อัปโหลด
 const WMF={'Angsana New':1.3};
 function drawWM(ctx,w,h,o){
   const lines=[o.text,o.text2].filter(t=>t.trim());if(!lines.length)return;
@@ -842,7 +901,6 @@ $('wmall').onchange=async()=>{const cb=$('wmall'),st=$('wmst');
 $('undo').addEventListener('click',()=>{if(wmAllDone&&hist.length<wmHL){wmHL=0;wmAllDone=false;$('wmall').checked=false;$('wmst').textContent=''}});
 $('f').addEventListener('change',()=>{wmHL=0;wmAllDone=false;$('wmall').checked=false;$('wmst').textContent=''});
 
-// ===== เซ็นเอกสาร (สร้างลายเซ็น วาง ลาก ปรับขนาด แล้วฝังลงหน้า)
 const sigs=[];
 function sgClear(){document.querySelectorAll('#stage .sgo').forEach(e=>e.remove())}
 function sgRender(){const g=$('sgl');g.innerHTML='';if(!sigs.length){g.textContent='ยังไม่มีลายเซ็น';return}
@@ -904,7 +962,6 @@ function sgPlace(u,pos){if(!need())return;sgClear();const im=new Image();im.onlo
   if(pos)ok.onclick();
 };im.src=u}
 
-// ===== เครื่องหมายติ๊ก/กากบาท/กล่อง: เป็นวัตถุที่ย้าย/ลบได้ จนกว่าจะบันทึกหรือใช้เครื่องมืออื่น (แล้วจึงฝังลงไฟล์)
 function stampCk(d,big){
   closeEd();let cx,cy,sz;
   if(big){const r=rectPts(d);sz=Math.min(r.w,r.h);cx=r.x+r.w/2;cy=r.y+r.h/2}
@@ -933,7 +990,6 @@ function renderMark(a){
       else d.classList.toggle('sel')}};
   $('stage').append(d)}
 
-// ===== ล็อกการซูมของเบราว์เซอร์: ซูมได้เฉพาะหน้า PDF (ปุ่ม − 100% + / Ctrl+ล้อเมาส์ / Ctrl + - 0 / นิ้วสองนิ้วบนหน้า PDF) ปุ่มฟังก์ชันและแถบเครื่องมือขนาดคงที่
 (()=>{
   const wrap=$('wrap');
   addEventListener('wheel',e=>{
@@ -952,7 +1008,6 @@ function renderMark(a){
   addEventListener('dblclick',e=>{if(e.target.closest&&e.target.closest('button'))e.preventDefault()});
 })();
 
-// ===== หัวเครื่องมือ (แผงตัวเลือก) + แถบเลื่อนหน้า/ซูม ตรึงไว้ ไม่ขยับตอนเลื่อนเอกสาร: แถบเลื่อนหน้าจะอยู่ใต้แผงตัวเลือกพอดี
 (()=>{
   const ps=[...document.querySelectorAll('#main>.opt')];
   const u=()=>{const o=document.querySelector('#main>.opt.on');document.documentElement.style.setProperty('--oh',(o?o.offsetHeight:0)+'px')};
@@ -961,7 +1016,6 @@ function renderMark(a){
   if(window.MutationObserver){const mo=new MutationObserver(u);ps.forEach(p=>mo.observe(p,{attributes:true,attributeFilter:['class','style','hidden']}))}
 })();
 
-// ===== เปลี่ยน Font / Size ของข้อความที่วางแล้วได้ภายหลัง: คลิกข้อความ (มีกรอบเส้นประสีน้ำเงิน) แล้วเปลี่ยน Font หรือ Size ที่แถบด้านบน
 (()=>{
   const cur=()=>selA?annots.find(a=>a.id===selA&&a.pg==pi&&typeof a.text==='string'&&!a.cm&&!a.mk&&!a.im):null;
   const touch=()=>{if(!selH){pushH();selH=true}};
@@ -996,7 +1050,6 @@ function renderMark(a){
   $('fdel').onclick=()=>{if(ed)closeEd();setDel(!delMode);if(delMode){clearTimeout(ckTm);$('ckt').value=''}};
 })();
 
-// ===== ฟอนต์ในเครื่องคอม: Chrome/Edge ดึงรายชื่อฟอนต์ที่ติดตั้งไว้ (ต้องกดอนุญาต) ; เบราว์เซอร์อื่นให้เลือกไฟล์ฟอนต์ (.ttf/.otf/.woff) แทน
 (()=>{
   const sels=[$('fsel'),$('wmf')],btn=$('fload'),fi=document.createElement('input');
   fi.type='file';fi.accept='.ttf,.otf,.woff,.woff2';fi.multiple=true;fi.hidden=true;document.body.append(fi);
@@ -1009,7 +1062,6 @@ function renderMark(a){
     return names.length;
   }
   let loaded=false;
-  // auto=true: เงียบ ไม่มี alert (ใช้ตอนดึงอัตโนมัติ)
   async function loadLocal(auto){
     if(!window.queryLocalFonts){if(!auto)fi.click();return false}
     try{const fl=await window.queryLocalFonts(),n=addFams(fl.map(f=>f.family));
@@ -1019,7 +1071,6 @@ function renderMark(a){
     catch(e){if(!auto)alert('อ่านฟอนต์ในเครื่องไม่ได้ ('+(e.name=='SecurityError'?'ยังไม่ได้อนุญาต':(e.message||e.name))+') — ลองกดอนุญาต หรือใช้ Chrome/Edge');return false}
   }
   btn.onclick=()=>loadLocal(false);
-  // ดึงอัตโนมัติ: ถ้าเคยอนุญาตแล้ว ดึงทันทีตอนเปิดหน้า ; ถ้ายังไม่เคย จะขออนุญาตครั้งเดียวตอนผู้ใช้คลิก/แตะครั้งแรก (เบราว์เซอร์บังคับให้ต้องมีการคลิกก่อน)
   (async()=>{
     if(!window.queryLocalFonts)return;
     let st='prompt';
@@ -1034,7 +1085,6 @@ function renderMark(a){
     fi.value='';if(names.length){addFams(names);const t=sels[0];t.value=names[0];t.dispatchEvent(new Event('change',{bubbles:true}))}};
 })();
 
-// ===== ตัวอย่างหน้า (Thumbnails) ด้านซ้าย: แสดงเมื่อเอกสารมีมากกว่า 1 หน้า คลิกเพื่อไปหน้านั้น
 let thTok=0,thObs=null;
 function buildThumbs(){
   const box=$('thumbs'),tok=++thTok;if(thObs){thObs.disconnect();thObs=null}
@@ -1047,7 +1097,6 @@ function buildThumbs(){
     d.onpointerdown=e=>thDrag(d,i,e);
     box.append(d);thObs.observe(d)}
 }
-// ลากตัวอย่างหน้าไปวางบนอีกหน้าเพื่อสลับตำแหน่ง (เมาส์: ลากได้ทันที / จอสัมผัส: กดค้างสักครู่แล้วลาก) ใช้ swapPages() เดิม จึงย้อนกลับ/ไปข้างหน้าได้
 let thSuppress=0;
 function thDrag(d,i,e){
   if(e.button>0||!pdf||pdf.numPages<2||ed)return;
@@ -1090,7 +1139,6 @@ function thSel(){const box=$('thumbs');if(box.hidden)return;let on=null;
   box.querySelectorAll('.th').forEach(d=>{const o=+d.dataset.i==pi;d.classList.toggle('on',o);if(o)on=d});
   if(on&&box.scrollHeight>box.clientHeight&&getComputedStyle(box).flexDirection=='column'&&(on.offsetTop<box.scrollTop||on.offsetTop+on.offsetHeight>box.scrollTop+box.clientHeight))box.scrollTop=Math.max(0,on.offsetTop-8)}
 
-// ===== เลื่อนเมาส์/ทัชแพดลงสุดหน้า -> ไปหน้าถัดไปต่อเนื่อง (เลื่อนขึ้นสุดหน้า -> กลับหน้าก่อนหน้า)
 (()=>{let acc=0,last=0,busy=false,cool=0;
   const dEl=document.documentElement,atBottom=()=>window.innerHeight+window.scrollY>=dEl.scrollHeight-3,atTop=()=>window.scrollY<=2;
   addEventListener('wheel',async e=>{
@@ -1107,7 +1155,6 @@ function thSel(){const box=$('thumbs');if(box.hidden)return;let on=null;
   },{passive:true});
 })();
 
-// ===== แทรกรูปภาพ: กรอบแสดงรูป (ลากลงหน้าได้) + รูปที่วางแล้วย้าย/ปรับขนาด/ลบได้ จนกว่าจะบันทึกหรือใช้เครื่องมืออื่น
 let imgList=[],imgSel=0;
 const readImg=f=>new Promise((r,j)=>{const fr=new FileReader();fr.onerror=j;fr.onload=()=>{const u=fr.result,i=new Image();i.onerror=j;i.onload=()=>r({f,u,type:f.type=='image/png'?'image/png':'image/jpeg',w:i.naturalWidth,h:i.naturalHeight});i.src=u};fr.readAsDataURL(f)});
 async function curImg(){return imgList[imgSel]||imgList[0]||null}
@@ -1137,7 +1184,7 @@ function renderImg(a){
     h.onpointerup=h.onpointercancel=()=>{h.onpointermove=h.onpointerup=h.onpointercancel=null;if(nw!==W)commit(l0,t0,nw,nw*r)}};
   $('stage').append(d);
 }
-// กรอบแสดงรูป: เลือกไฟล์ (ได้หลายไฟล์) แล้วแสดงตัวอย่าง + ลากตัวอย่างรูปไหนก็ได้ลงหน้าเพื่อวาง (ใช้ได้ทั้งเมาส์และนิ้ว)
+
 $('im').addEventListener('change',async()=>{
   const box=$('imp');box.innerHTML='';imgList=[];imgSel=0;
   try{imgList=await Promise.all([...$('im').files].map(readImg))}catch(e){alert('เปิดรูปบางไฟล์ไม่ได้')}
@@ -1159,11 +1206,10 @@ $('im').addEventListener('change',async()=>{
       g.onpointerup=g.onpointercancel=end}});
 });
 
-// ===== ลบรูปภาพแบบคลิก: คลิกที่รูป -> ขึ้นกล่อง ลบ / ยกเลิก
 const L1=b=>{let t='';for(let i=0;i<b.length;i+=8192)t+=String.fromCharCode.apply(null,b.subarray(i,i+8192));return t};
 const mmul=(m,c)=>[m[0]*c[0]+m[1]*c[2],m[0]*c[1]+m[1]*c[3],m[2]*c[0]+m[3]*c[2],m[2]*c[1]+m[3]*c[3],m[4]*c[0]+m[5]*c[2]+c[4],m[4]*c[1]+m[5]*c[3]+c[5]];
 const csBytes=st=>st instanceof P.PDFRawStream?P.decodePDFRawStream(st).decode():(st.getUnencodedContents?st.getUnencodedContents():st.getContents());
-// อ่านคำสั่งวาดหน้า (รวมใน Form XObject) หา 'Do' ของรูปที่ครอบจุด pt (พิกัด PDF) ; hits เรียงจากล่างขึ้นบน
+
 function walkImgs(D,pt,hits){
   const c=D.context,pg=D.getPage(pi);
   const cs=pg.node.Contents(),arr=cs instanceof P.PDFArray?cs.asArray().map(r=>c.lookup(r)):(cs?[cs]:[]);
@@ -1223,7 +1269,6 @@ function rmShow(box,doDel,label){
 async function rmImgClick(d){
   rmClear();if(!need())return;
   if(Math.abs(d.x1-d.x0)>8&&Math.abs(d.y1-d.y0)>8){
-    // ลากกรอบ = ลบพื้นที่นั้นโดยปิดทับด้วยสีพื้นหลัง (ใช้เมื่อรูปติดอยู่กับภาพพื้นหลังของหน้า หรือคลิกแล้วหารูปแยกไม่เจอ)
     const bb={x:Math.min(d.x0,d.x1),t:Math.min(d.y0,d.y1),w:Math.abs(d.x1-d.x0),b:Math.max(d.y0,d.y1)},r=rectPts(d),col=hexc(sample(bb).bg),tl=vp.convertToPdfPoint(bb.x,bb.t);
     return rmShow([r.x,r.y,r.x+r.w,r.y+r.h],()=>{pushH();annots.push({id:++aid,pg:pi,x:tl[0],y:tl[1],size:12,size0:12,color:'#000000',fam:BASEFB,fam0:BASEFB,text:'',cover:{x:r.x,y:r.y,w:r.w,h:r.h,color:col}});selA=0;selH=false;renderAnnots()},'ลบพื้นที่นี้?');
   }
@@ -1237,7 +1282,6 @@ async function rmImgClick(d){
   rmShow(hit.box,()=>edit(async D=>{const hs=[];walkImgs(D,p,hs);const h=hs[hs.length-1];if(!h)throw Object.assign(new Error('ไม่พบรูปภาพ'),{skip:1});dropRange(D,h);gc(D)}));
 }
 
-// ===== Highlight แบบลากอิสระ (หัวไฮไลต์แบน / หัวดินสอกลม + เลือก Size) และเคอร์เซอร์ตามหัวปากกา
 const hexRGB=h=>[1,3,5].map(i=>+(parseInt(h.substr(i,2),16)/255).toFixed(3));
 const hlW=()=>+($('hltip').value=='pencil'?$('hlp').value:$('hls').value)||14;
 function hlUI(){const pc=$('hltip').value=='pencil',cm=cmMode;$('hlsw').hidden=pc;$('hlpw').hidden=!pc;$('cmw').hidden=!cm;$('hlpanel').hidden=cm;$('hclbl').textContent=cm?'สีไอคอน':'สี';$('hlb').classList.toggle('a',!cm);$('cmb').classList.toggle('a',cm)}
@@ -1266,7 +1310,6 @@ async function doInk(d,szo){const raw=d.p||[];if(raw.length<2)return;
         an.set(NM('Subj'),P.PDFHexString.fromText('Highlight'));an.set(NM('M'),P.PDFString.fromDate(new Date()));an.set(NM('NM'),P.PDFString.of('hl-'+Date.now().toString(36)+Math.random().toString(36).slice(2,6)));
     let ar=p.node.lookupMaybe(NM('Annots'),P.PDFArray);if(!ar){ar=c.obj([]);p.node.set(NM('Annots'),ar)}ar.push(c.register(an))})}
 
-// ===== ตัวเลือกสีแบบพาเลต (Colors) สำหรับ Highlight
 const HC=['#000000','#595959','#808285','#a6a6a6','#d0d0d0','#ffffff','#b0125f','#e8212b','#ff5a00','#ffa400','#ffc800','#ffe600','#a8e61d','#27e61b','#0d7d5a','#00a9c5','#0050e6','#3b00b8','#6a00d4','#5a0073','#f8d8c8','#c49a6c','#8b5028','#5e3a28','#ff80ff','#ffc78a','#ffff80','#80ff9a','#80d4ff','#bfb0ff'];
 function hcSync(){const v=$('hc').value.toLowerCase();$('hcb').style.background=v;[...$('hcg').children].forEach(b=>b.classList.toggle('sel',b.dataset.c==v))}
 HC.forEach(c=>{const b=document.createElement('button');b.type='button';b.dataset.c=c;b.setAttribute('aria-label',c);b.style.cssText='width:20px;height:20px;min-width:0;border-radius:50%;padding:0;border:1px solid #888;background:'+c;
@@ -1276,7 +1319,7 @@ $('hcn').oninput=()=>{$('hc').value=$('hcn').value;$('hc').dispatchEvent(new Eve
 $('hcn').onchange=()=>{$('hcp').hidden=true};
 $('hcb').onclick=e=>{e.stopPropagation();hcSync();$('hcp').hidden=!$('hcp').hidden};
 document.addEventListener('click',e=>{if(!$('hcw').contains(e.target))$('hcp').hidden=true});hcSync();
-// ปุ่มสีแบบจานสี + More colors สำหรับ "สี" ของข้อความ (#fcl) และเครื่องหมาย (#ckc)
+
 (function(){
   const d=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value'),pops=[];
   function mk(inp){
@@ -1310,7 +1353,6 @@ document.addEventListener('click',e=>{if(!$('hcw').contains(e.target))$('hcp').h
   document.addEventListener('click',()=>pops.forEach(q=>q.hidden=true));
 })();
 
-// ===== Comment: ไอคอนโน้ตบนหน้า (แก้/ลบ/ย้ายได้จนกว่าจะบันทึก) -> ฝังเป็น Text annotation มาตรฐานของ PDF
 const CMS=18;
 function cmClear(){document.querySelectorAll('#stage .cmpop').forEach(e=>e.remove())}
 function cmPop(o){
@@ -1346,7 +1388,6 @@ function cmEditPending(a){
     onSave:v=>{pushH();if(!v.trim())annots=annots.filter(z=>z!==a);else{m.text=v;m.d=Date.now()}renderAnnots()},
     onDelete:()=>{pushH();annots=annots.filter(z=>z!==a);renderAnnots()}});
 }
-// Comment ที่ฝังอยู่ในไฟล์แล้ว (หรือมาจากโปรแกรมอื่น): หา annotation ด้วย id ของ pdf.js แล้วแก้/ลบด้วย pdf-lib
 function cmFind(D,pg,id){
   const ar=pg.node.lookupMaybe(NM('Annots'),P.PDFArray);if(!ar)return null;
   for(let i=0;i<ar.size();i++){const r=ar.get(i);
@@ -1386,7 +1427,6 @@ function addCmAnnot(D,pg,m){
   let ar=pg.node.lookupMaybe(NM('Annots'),P.PDFArray);if(!ar){ar=c.obj([]);pg.node.set(NM('Annots'),ar)}ar.push(c.register(an));
 }
 
-// ===== แถบแก้ไขข้อความ: ย่อให้พอดีความกว้างในบรรทัดเดียว (โน้ตบุ๊ก/แท็บเล็ต)
 [['text edit','.rw'],['wm','.rw1']].forEach(([t,q])=>{
   const bar=document.querySelector('.opt[data-t="'+t+'"]'),rw=bar&&bar.querySelector(q);if(!rw)return;
   let raf=0;
@@ -1412,7 +1452,6 @@ function addCmAnnot(D,pg,m){
   sched();
 });
 
-// ===== แถบเลื่อนซ้าย-ขวาลอยติดขอบล่างจอ (ใช้ตอนซูมแล้วหน้า PDF กว้างเกินจอ)
 (()=>{
   const w=$('wrap'),b=document.createElement('div'),i=document.createElement('div');
   b.id='hbar';b.hidden=true;b.append(i);document.body.append(b);
