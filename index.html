@@ -223,7 +223,7 @@ async function load(b,push=true){
 // Annotation (เช่น FreeText ที่เพิ่มจาก Edge) วาดบนชั้นของมันเอง วางเหนือแผ่นสีปิดทับ จะได้ไม่ถูกบังตอนแก้ข้อความ
 let cva=null;
 async function renderPageLayers(p){
-  if(!cva){cva=document.createElement('canvas');cva.id='cva';cva.style.cssText='position:absolute;left:0;top:0;z-index:3;pointer-events:none';cv.after(cva)}
+  if(!cva){cva=document.createElement('canvas');cva.id='cva';cva.style.cssText='position:absolute;left:0;top:0;z-index:6;pointer-events:none';cv.after(cva)}
   cva.width=cv.width;cva.height=cv.height;cva.getContext('2d').clearRect(0,0,cva.width,cva.height);cva.style.width=cv.style.width;cva.hidden=true;
   let has=false;
   try{const an=await p.getAnnotations();has=an.some(a=>a.subtype&&!['Link','Popup','Widget'].includes(a.subtype))}catch(e){}
