@@ -220,12 +220,27 @@ async function load(b,push=true){
   bytes=b;pdf=await pdfjsLib.getDocument({data:b.slice()}).promise;
   if(pi>=pdf.numPages)pi=pdf.numPages-1;buildThumbs();await show();
 }
+// Annotation (เช่น FreeText ที่เพิ่มจาก Edge) วาดบนชั้นของมันเอง วางเหนือแผ่นสีปิดทับ จะได้ไม่ถูกบังตอนแก้ข้อความ
+let cva=null;
+async function renderPageLayers(p){
+  if(!cva){cva=document.createElement('canvas');cva.id='cva';cva.style.cssText='position:absolute;left:0;top:0;z-index:3;pointer-events:none';cv.after(cva)}
+  cva.width=cv.width;cva.height=cv.height;cva.getContext('2d').clearRect(0,0,cva.width,cva.height);cva.style.width=cv.style.width;cva.hidden=true;
+  let has=false;
+  try{const an=await p.getAnnotations();has=an.some(a=>a.subtype&&!['Link','Popup','Widget'].includes(a.subtype))}catch(e){}
+  if(!has){await p.render({canvasContext:ctx,viewport:vp}).promise;return}
+  await p.render({canvasContext:ctx,viewport:vp,annotationMode:0}).promise;
+  const t=document.createElement('canvas');t.width=cv.width;t.height=cv.height;const tx=t.getContext('2d');
+  await p.render({canvasContext:tx,viewport:vp,annotationMode:1}).promise;
+  const A=ctx.getImageData(0,0,cv.width,cv.height),B=tx.getImageData(0,0,cv.width,cv.height),a=A.data,b=B.data;
+  for(let i=0;i<a.length;i+=4){if(a[i]===b[i]&&a[i+1]===b[i+1]&&a[i+2]===b[i+2]&&a[i+3]===b[i+3])b[i+3]=0}
+  cva.getContext('2d').putImageData(B,0,0);cva.hidden=false;
+}
 async function show(){
   const p=await pdf.getPage(pi+1);vp=p.getViewport({scale:Math.min(3,Math.max(2,1.5*(window.devicePixelRatio||1)))});
   cv.width=ov.width=vp.width;cv.height=ov.height=vp.height;
   applyZoom();
   $('empty').hidden=true;$('stage').hidden=false;rmClear();cmClear();
-  await p.render({canvasContext:ctx,viewport:vp}).promise;
+  await renderPageLayers(p);
   pageObj=p;const tcn=await p.getTextContent();tstyles=tcn.styles||{};items=tcn.items.filter(i=>i.str&&i.str.trim());hlLines=null;xsc.clear();closeEd();
   $('pg').textContent=`หน้า ${pi+1} / ${pdf.numPages}`;thSel();renderAnnots();wmPrev();sgClear();if(typeof swSync=='function')swSync();
 }
@@ -520,7 +535,7 @@ let rzT=0;window.addEventListener('resize',()=>{clearTimeout(rzT);rzT=setTimeout
 let zm=1,zraf=0;const ZMIN=.5,ZMAX=3;
 function applyZoom(){const zr=$('zr');if(zr)zr.textContent=Math.round(zm*100)+'%';if(!vp)return;
   const avail=Math.max(200,$('wrap').clientWidth-32),W=Math.round(Math.min(vp.width,avail)*zm);
-  for(const c of [cv,ov,$('wmv')]){c.style.maxWidth='none';c.style.width=W+'px'}$('stage').style.maxWidth='none'}
+  for(const c of [cv,ov,$('wmv'),cva].filter(Boolean)){c.style.maxWidth='none';c.style.width=W+'px'}$('stage').style.maxWidth='none'}
 function setZoom(z){const o=zm;zm=Math.min(ZMAX,Math.max(ZMIN,Math.round(z*100)/100));if(zm===o)return;
   closeEd();applyZoom();cancelAnimationFrame(zraf);zraf=requestAnimationFrame(()=>{if(!ed)renderAnnots()})}
 $('zi').onclick=()=>setZoom(zm+.1);$('zo').onclick=()=>setZoom(zm-.1);$('zr').onclick=()=>setZoom(1);
