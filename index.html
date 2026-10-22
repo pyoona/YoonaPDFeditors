@@ -44,7 +44,7 @@ input[type=number]{width:80px}#fsz{width:120px}#fi{color:var(--mu);font-size:13p
 .th{width:100%;cursor:grab;text-align:center;font-size:13px;color:var(--mu);line-height:1.4;flex:none}.th canvas{display:block;width:100%;height:auto;background:#fff;border:2px solid transparent;box-shadow:0 1px 4px #0003;box-sizing:border-box;margin-bottom:2px}.th:hover canvas{border-color:#1e3a8a88}.th.on canvas{border-color:#1e3a8a}.th.on{color:var(--tx);font-weight:600}
 @media(max-width:760px){#thumbs{width:auto;max-height:none;flex-direction:row;overflow-x:auto;overflow-y:hidden;position:static;margin:12px 16px 0}.th{width:80px}}
 #stage{position:relative;display:inline-block;box-shadow:0 2px 12px #0003;background:#fff;max-width:100%;line-height:0}
-#stage canvas{max-width:100%;height:auto}
+#stage[hidden]{display:none}#stage canvas{max-width:100%;height:auto}
 #ov{position:absolute;left:0;top:0;cursor:crosshair;touch-action:none}
 #empty{padding:60px 16px;color:var(--mu)}
 #side{flex:none;width:max-content;max-width:100%;align-self:stretch}#imgs{display:flex;flex-direction:column;gap:12px;padding:0 12px 24px}#imgs:empty{display:none}@media(max-width:640px){#imgs{flex-direction:row;flex-wrap:wrap}#imgs div{width:140px!important}}
@@ -736,7 +736,7 @@ $('reset').onclick=async()=>{
   // remove the uploaded file and everything derived from it
   bytes=null;orig=null;pdf=null;pageObj=null;items=[];tstyles={};vp=null;pi=0;zm=1;applyZoom();buildThumbs();
   document.querySelectorAll('#stage .an,#stage .cvr').forEach(e=>e.remove());
-  cv.width=cv.height=ov.width=ov.height=1;
+  cv.width=cv.height=ov.width=ov.height=1;ftList=[];if(cva){cva.width=cva.height=1;cva.hidden=true}   // ล้างเลเยอร์ annotation (FreeText) ด้วย
   $('stage').hidden=true;$('empty').hidden=false;$('empty').textContent='กด "Upload File" เพื่อเริ่มต้น';
   $('pg').textContent='–';delete $('f').dataset.name;$('f').value='';
 };
