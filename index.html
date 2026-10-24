@@ -181,6 +181,7 @@ body.vecmode #thumbs,body.vecmode #nav,body.vecmode #wrap{display:none!important
 #main{padding-top:8px}
 }
 @media (max-height:920px) and (min-width:641px){#tabs{gap:3px;padding:8px 12px}#tabs button{padding:3px 10px;font-size:14px}}
+#vdownOpts.off{opacity:.45}#vdownOpts.off,#vdownOpts.off *{color:var(--mu)}.vchk:has(#vdown:not(:checked))+#vdownOpts{opacity:.45;pointer-events:none}
 </style></head><body>
 <header><h1>📄 PDF Editor <span style="color:#ff0000;font-size:12px;font-weight:400">Powered by พี Yoona</span></h1>
 <button class="p up" onclick="document.getElementById('f').click()">Upload File</button><input id="f" type="file" accept="application/pdf,.pdf" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none">
@@ -1206,7 +1207,7 @@ const cv=$('cv'),ov=$('ov'),ctx=cv.getContext('2d'),oc=ov.getContext('2d');
 pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
 for(const k in TOOLS){const b=document.createElement('button');b.textContent=TOOLS[k];b.dataset.t=k;b.onclick=()=>setTool(k);$('tabs').append(b)}
-function setTool(t){document.body.classList.toggle('vecmode',t=='vec');if(t=='vec'&&window.vName)vName();const prevTool=tool;if(typeof setDel=='function'&&delMode)setDel(false);if((prevTool=='text'||prevTool=='edit')&&(t=='text'||t=='edit')&&t!==prevTool){$('fsel').value='auto';$('fsz').value='';$('fszl').hidden=true;$('fi').textContent=''}if(selA){selA=0;selH=false;if(vp)renderAnnots()}tool=t;if(t!='hl')cmMode=false;$('stage').classList.toggle('noan',t!='text'&&t!='edit');ov.style.cursor=(t=='text'||t=='hl')?'text':'crosshair';document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.t==t));document.querySelectorAll('.opt').forEach(o=>o.classList.toggle('on',o.dataset.t.split(' ').includes(t)));cmClear();wmPrev();hlCur();if(t!='sg')sgClear();rmClear();if(t!='wm'){try{wmLeave()}catch(e){}}try{ftHint()}catch(e){}}
+function setTool(t){document.body.classList.toggle('vecmode',t=='vec');if(t=='vec'&&window.vName){vName();if(window.vSync)vSync()}const prevTool=tool;if(typeof setDel=='function'&&delMode)setDel(false);if((prevTool=='text'||prevTool=='edit')&&(t=='text'||t=='edit')&&t!==prevTool){$('fsel').value='auto';$('fsz').value='';$('fszl').hidden=true;$('fi').textContent=''}if(selA){selA=0;selH=false;if(vp)renderAnnots()}tool=t;if(t!='hl')cmMode=false;$('stage').classList.toggle('noan',t!='text'&&t!='edit');ov.style.cursor=(t=='text'||t=='hl')?'text':'crosshair';document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.t==t));document.querySelectorAll('.opt').forEach(o=>o.classList.toggle('on',o.dataset.t.split(' ').includes(t)));cmClear();wmPrev();hlCur();if(t!='sg')sgClear();rmClear();if(t!='wm'){try{wmLeave()}catch(e){}}try{ftHint()}catch(e){}}
 (()=>{const h=document.querySelector('header'),u=()=>document.documentElement.style.setProperty('--hh',h.offsetHeight+'px');u();addEventListener('resize',u);if(window.ResizeObserver)new ResizeObserver(u).observe(h)})();
 (()=>{const i=$('fsz'),b=$('fszb'),l=$('fszl');
 const show=()=>{[...l.children].forEach(d=>d.classList.toggle('cur',d.dataset.v===i.value.trim()));l.hidden=false;const c=l.querySelector('.cur');if(c)l.scrollTop=c.offsetTop-l.clientHeight/2};
@@ -2583,7 +2584,7 @@ function addCmAnnot(D,pg,m){
 
 // ---------- ลดขนาดไฟล์ PDF-Vector ----------
 window.vName=(n,z)=>{const el=$('vfile');n=n||$('f').dataset.name||'';z=z||(bytes?bytes.length:0);if(!n&&!z){el.innerHTML='<span class="vfe">ยังไม่ได้อัพโหลดไฟล์ — กด "Upload File" ด้านบน</span>';return}el.innerHTML='📄 <b></b> <span></span>';el.querySelector('b').textContent=n||'ไฟล์ PDF';el.querySelector('span').textContent=z?'· '+(z>=1048576?(z/1048576).toFixed(2)+' MB':(z/1024).toFixed(1)+' KB'):''};
-(()=>{const sy=()=>{const on=$('vdown').checked;$('vppi').disabled=$('vtext').disabled=!on;$('vdownOpts').style.opacity=on?1:.45};$('vdown').onchange=sy;sy();
+(()=>{const sy=()=>{const on=$('vdown').checked;$('vppi').disabled=$('vtext').disabled=!on;$('vdownOpts').classList.toggle('off',!on)};window.vSync=sy;$('vdown').addEventListener('input',sy);addEventListener('pageshow',sy);$('vdown').onchange=sy;sy();
 $('f').addEventListener('change',e=>{const f=e.target.files[0];if(f)vName(f.name,f.size);$('vres').hidden=true;$('verr').hidden=true;$('vst').textContent=''});
 const fmt=b=>b>=1048576?(b/1048576).toFixed(2)+' MB':(b/1024).toFixed(1)+' KB',fmtN=n=>n.toLocaleString('th-TH');let url=null;vName();
 $('vgo').onclick=async()=>{if(!need())return;const err=$('verr');err.hidden=true;
