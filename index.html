@@ -1247,6 +1247,8 @@ async function show(){
   pageObj=p;const tcn=await p.getTextContent();tstyles=tcn.styles||{};items=tcn.items.filter(i=>i.str&&i.str.trim());hlLines=null;xsc.clear();closeEd();
   $('pg').textContent=`หน้า ${pi+1} / ${pdf.numPages}`;try{ftHint()}catch(e){}thSel();renderAnnots();wmPrev();sgClear();if(typeof swSync=='function')swSync();
 }
+// วาดหน้าทีละครั้ง: ถ้ามีการเรียก show() ซ้อนกัน (เช่นเปิดไฟล์แล้วกดลดขนาดทันที) ให้รอรอบก่อนเสร็จ จะได้ไม่ชนกันบน canvas เดียว
+{const s0=show;let q=Promise.resolve();show=function(...a){const r=q.then(()=>s0.apply(this,a));q=r.catch(()=>{});return r}}
 const snap=()=>({b:bytes,a:JSON.parse(JSON.stringify(annots))});
 const pushH=()=>{hist.push(snap());redo=[]};
 function need(){if(!bytes){alert('กรุณา Upload File PDF ก่อน');return false}return true}
