@@ -149,6 +149,23 @@ button,.btn,select,input,textarea,.lbp,label,.opt p{font-weight:500}
 #hbar{position:fixed;bottom:0;height:20px;overflow-x:scroll;overflow-y:hidden;z-index:70;background:var(--card);border-top:1px solid var(--bd);padding-bottom:env(safe-area-inset-bottom,0px);box-sizing:content-box}
 #hbar[hidden]{display:none}
 #hbar>div{height:1px}
+.vbig{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap}.vbig .n{font-size:28px;font-weight:700}.vbig .pct{color:#1f7a4d;font-weight:700;font-size:17px}
+.vbars div{display:flex;align-items:center;gap:10px;margin:5px 0;font-size:13px}.vbars .l{width:40px}.vbars .t{height:10px;background:var(--bd);border-radius:6px;flex:1;max-width:520px;overflow:hidden}.vbars i{display:block;height:100%;background:#c8102e;border-radius:6px}.vbars i.after{background:#1f7a4d}.vbars .v{width:80px;text-align:right}
+.vtab{border-collapse:collapse;font-size:13px;margin-top:6px;min-width:min(100%,560px)}.vtab td,.vtab th{padding:4px 6px;border-bottom:1px solid var(--bd);text-align:right}.vtab td:first-child,.vtab th:first-child{text-align:left}#vwarns p{color:#9a6200;font-size:13px;margin:6px 0 0}
+#vres[hidden]{display:none}
+.opt[data-t=vec].on{display:block;position:relative;top:auto;background:transparent;border:0;padding:0}
+.vcols{display:grid;grid-template-columns:minmax(0,560px) minmax(0,1fr);gap:16px;align-items:start}@media(max-width:1000px){.vcols{grid-template-columns:minmax(0,1fr)}}
+.vcard{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:20px;font-size:15px;line-height:1.55}.vcard[hidden]{display:none}
+
+
+.vrow{margin:18px 0}.vlbl{display:block;color:#0066ff;font-weight:700;margin-bottom:6px}.vchk .vlbl{display:inline;margin:0}
+.vcard select{width:100%;padding:8px 10px;border-radius:8px}.vhint{color:var(--mu);opacity:.75;font-size:13px;margin-top:6px}
+.vq{display:flex;align-items:center;gap:8px}.vq input[type=number]{font-size:18px;font-weight:600;width:110px;padding:8px 10px;border-radius:8px;text-align:right}.vq span{font-size:18px;font-weight:600}
+.vchk{display:flex!important;gap:10px;align-items:flex-start;margin:16px 0;white-space:normal!important}.vchk input{margin-top:5px}
+#vdownOpts{margin-left:24px;transition:opacity .15s}.vsub{display:block;font-weight:600;margin-bottom:6px}
+#vgo{width:100%;margin-top:10px;padding:12px 20px;border:0;border-radius:10px;background:#c8102e;color:#fff;font-weight:600;font-size:16px}#vgo:disabled{opacity:.45;cursor:not-allowed}
+#vst{color:var(--mu);font-size:13px;margin-top:8px;min-height:1em}#verr{color:#c8102e;font-size:14px;margin:8px 0 0}
+.vdl{display:block;text-align:center;text-decoration:none;font-weight:600;border-radius:10px;padding:12px 20px;background:#1f7a4d;color:#fff;margin-top:16px}.vdl[hidden]{display:none}
 </style></head><body>
 <header><h1>📄 PDF Editor <span style="color:#ff0000;font-size:12px;font-weight:400">Powered by พี Yoona</span></h1>
 <button class="p up" onclick="document.getElementById('f').click()">Upload File</button><input id="f" type="file" accept="application/pdf,.pdf" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none">
@@ -168,6 +185,25 @@ button,.btn,select,input,textarea,.lbp,label,.opt p{font-weight:500}
 
 <div class="opt" data-t="rmimg"><button id="rmi">🧹 ลบรูปทั้งหมด</button><label><input type="checkbox" id="rmall"> ทุกหน้า</label><span id="rmst"></span><span style="color:var(--mu);font-size:13px;flex:1 1 200px">ลบเฉพาะรูป: คลิกที่รูปแล้วกด 🗑 ลบ  ·  ถ้าคลิกไม่ติด (รูปติดกับพื้นหลังหน้า) ให้ลากเป็นกรอบสี่เหลี่ยมครอบรูปนั้น</span></div>
 <div class="opt" data-t="cmp"><select id="cmode"><option value="q100">คุณภาพ 100% – ไม่ย่อรูป, JPEG 100%</option><option value="max" selected>คมชัดสูงสุด – รูป ≤3000px, JPEG 90%</option><option value="mid">สมดุล (แนะนำ) – รูป ≤1600px, JPEG 65%</option><option value="hi">คุณภาพสูง – รูป ≤2400px, JPEG 80%</option><option value="low">เล็กที่สุด – รูป ≤1100px, JPEG 45%</option><option value="lossless">ไม่กระทบคุณภาพ – บีบข้อมูลโครงสร้างอย่างเดียว</option><option value="rx">แปลงเป็นรูปทุกหน้า – 300 dpi, JPEG 100%</option><option value="rh">แปลงเป็นรูปทุกหน้า – คมชัดสูง (JPEG 90%)</option><option value="rm">แปลงเป็นรูปทุกหน้า – ละเอียดกลาง</option><option value="rs">แปลงเป็นรูปทุกหน้า – เล็กมาก</option></select><button id="cmpb" class="p">🗜 บีบอัด</button><span id="cmst"></span></div>
+<div class="opt" data-t="vec"><div class="vcols">
+<div class="vcard">
+
+<div class="vrow"><div class="vlbl">ลดขนาดเส้นเวกเตอร์</div><select id="vtol"><option value="0.02">ละเอียดมาก: 0.02 pt (≈0.007 มม.)</option><option value="0.05">ละเอียด: 0.05 pt (≈0.018 มม.)</option><option value="0.1" selected>สมดุล: 0.1 pt (≈0.035 มม.) แนะนำ</option><option value="0.25">เล็กสุด: 0.25 pt (≈0.09 มม.)</option></select>
+<div class="vhint">ค่าความคลาดเคลื่อนเป็นระยะที่เส้นอาจเลื่อนไปจากเดิมได้มากที่สุด ระดับ "สมดุล" มองไม่เห็นความต่างทั้งบนจอและงานพิมพ์ทั่วไป</div></div>
+<div class="vrow"><label for="vq" class="vlbl">คุณภาพของภาพ</label><div class="vq"><input id="vq" type="number" min="1" max="100" step="1" value="100" inputmode="numeric"><span>%</span></div>
+<div class="vhint">100% = ภาพเหมือนต้นฉบับทุกพิกเซล (ลดขนาดด้วยการปรับตาราง Huffman อย่างเดียว)<br>ต่ำกว่า 100% = บันทึกภาพ JPEG ใหม่ที่คุณภาพนี้ ใช้เฉพาะภาพที่ไฟล์เล็กลงจริง ถ้าค่าที่พิมพ์สูงกว่าคุณภาพของภาพต้นฉบับ ภาพจะคงเดิม</div><div class="vhint" id="vqnote"></div></div>
+<label class="vchk"><input type="checkbox" id="vdown"><span class="vlbl">ลดความละเอียด (ความคมชัด) ของภาพ</span></label>
+<div id="vdownOpts"><label for="vppi" class="vsub">ความละเอียดภาพเป้าหมาย</label><div class="vq"><input id="vppi" type="number" min="36" max="1200" step="1" value="150" inputmode="numeric" disabled><span>PPI</span></div>
+<div class="vhint">72 = ดูบนจอ · 150 = อ่านทั่วไป / ส่งอีเมล · 200–300 = งานพิมพ์</div>
+<label class="vchk"><input type="checkbox" id="vtext" checked disabled><span>คงตัวหนังสือในภาพให้คมชัดเหมือนต้นฉบับ</span></label></div>
+<label class="vchk"><input type="checkbox" id="vstruct" checked><span>โครงสร้าง PDF<br><span class="vhint">รวม object เล็กเป็นกลุ่ม (object stream) รวมภาพที่ซ้ำกันให้เหลือชุดเดียว ตัดข้อมูลที่ไม่จำเป็นใน dictionary ของภาพ บีบอัด stream ใหม่เมื่อทำให้เล็กลง และลบ object ที่ไม่ได้ใช้ ต้องใช้โปรแกรมที่รองรับ PDF 1.5 ขึ้นไป</span></span></label>
+<button id="vgo" type="button">ลดขนาดไฟล์</button><div id="vst"></div><p id="verr" hidden></p>
+</div>
+<div class="vcard" id="vres" hidden><div class="vbig"><span class="n" id="vrNew"></span><span class="pct" id="vrPct"></span></div>
+<div class="vbars"><div><span class="l">เดิม</span><span class="t"><i style="width:100%"></i></span><span class="v" id="vvOld"></span></div><div><span class="l">ใหม่</span><span class="t"><i id="vbNew" class="after"></i></span><span class="v" id="vvNew"></span></div></div>
+<table class="vtab"><thead><tr><th>รายการ</th><th>ก่อน</th><th>หลัง</th></tr></thead><tbody id="vstats"></tbody></table><div id="vwarns"></div>
+<a id="vdl" class="vdl" download>ดาวน์โหลดไฟล์ที่ลดขนาดแล้ว</a></div>
+</div></div>
 <div class="opt" data-t="cover">สี <input id="cc" type="color" value="#000000"></div>
 <div class="opt" data-t="img"><button type="button" class="p" onclick="document.getElementById('im').click()">🖼 อัพโหลดรูปภาพ</button><input id="im" type="file" accept="image/png,image/jpeg" multiple style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none"> กว้าง <input id="iw" type="number" value="150"> <div id="imp"><span>รูปที่เลือกจะแสดงตรงนี้ — ลากรูปลงบนหน้าเพื่อวาง (เลือกได้หลายรูป)</span></div></div>
 <div class="opt" data-t="rot">
@@ -190,6 +226,957 @@ button,.btn,select,input,textarea,.lbp,label,.opt p{font-weight:500}
 </main></div>
 
 <script>
+// CORE-START
+const PDFSlim = (() => {
+'use strict';
+const WS = new Uint8Array(256); [0,9,10,12,13,32].forEach(c => WS[c] = 1);
+const DL = new Uint8Array(256); '()<>[]{}/%'.split('').forEach(ch => DL[ch.charCodeAt(0)] = 1);
+const isWS = c => c < 256 && WS[c] === 1;
+const isDL = c => c < 256 && DL[c] === 1;
+
+function u8ToStr(u8){ let s = ''; const CH = 0x8000;
+  for (let i = 0; i < u8.length; i += CH) s += String.fromCharCode.apply(null, u8.subarray(i, i + CH));
+  return s; }
+function strToU8(s){ const u = new Uint8Array(s.length); for (let i = 0; i < s.length; i++) u[i] = s.charCodeAt(i) & 255; return u; }
+function concat(chunks){ let n = 0; for (const c of chunks) n += c.length; const o = new Uint8Array(n); let p = 0; for (const c of chunks){ o.set(c, p); p += c.length; } return o; }
+
+async function runStream(u8, ts){
+  const writer = ts.writable.getWriter();
+  writer.write(u8).catch(() => {}); writer.close().catch(() => {});
+  const reader = ts.readable.getReader(); const chunks = []; let ok = true;
+  try { for (;;){ const { done, value } = await reader.read(); if (done) break; chunks.push(value); } }
+  catch (e){ ok = false; }
+  return { data: concat(chunks), ok };
+}
+async function inflate(u8){
+  let r = await runStream(u8, new DecompressionStream('deflate'));
+  if (r.ok || r.data.length) return r.data;
+  r = await runStream(u8, new DecompressionStream('deflate-raw'));
+  if (r.ok || r.data.length) return r.data;
+  throw new Error('inflate failed');
+}
+async function deflate(u8){ const r = await runStream(u8, new CompressionStream('deflate')); if (!r.ok) throw new Error('deflate failed'); return r.data; }
+
+// ---------- PDF object syntax ----------
+function skipWS(s, i){
+  for (;;){ const c = s.charCodeAt(i);
+    if (c === 37){ while (i < s.length){ const d = s.charCodeAt(i); if (d === 10 || d === 13) break; i++; } }
+    else if (isWS(c)) i++; else return i; }
+}
+function readRegular(s, i){ let j = i; while (j < s.length){ const c = s.charCodeAt(j); if (isWS(c) || isDL(c)) break; j++; } return j; }
+function scanString(s, i){ let depth = 0, j = i;
+  for (; j < s.length; j++){ const c = s.charCodeAt(j);
+    if (c === 92){ j++; continue; }
+    if (c === 40) depth++; else if (c === 41){ depth--; if (depth === 0) return j + 1; } }
+  return j; }
+const NUMRE = /^[+-]?(\d+\.?\d*|\.\d+)$/, INTRE = /^\d+$/;
+function parseValue(s, i){
+  i = skipWS(s, i); const c = s.charCodeAt(i);
+  if (c === 60){
+    if (s.charCodeAt(i + 1) === 60){ i += 2; const m = new Map();
+      for (;;){ i = skipWS(s, i);
+        if (s.charCodeAt(i) === 62 && s.charCodeAt(i + 1) === 62) return [{ t: 'd', v: m }, i + 2];
+        if (i >= s.length) throw new Error('unterminated dict');
+        if (s.charCodeAt(i) !== 47){ const r = parseValue(s, i); i = r[1]; continue; } // tolerate junk
+        const ke = readRegular(s, i + 1); const key = s.slice(i, ke);
+        const r = parseValue(s, ke); m.set(key, r[0]); i = r[1]; } }
+    const e = s.indexOf('>', i); return [{ t: 's', raw: s.slice(i, e + 1) }, e + 1]; }
+  if (c === 91){ i++; const a = [];
+    for (;;){ i = skipWS(s, i); if (s.charCodeAt(i) === 93) return [{ t: 'a', v: a }, i + 1];
+      if (i >= s.length) throw new Error('unterminated array');
+      const r = parseValue(s, i); a.push(r[0]); i = r[1]; } }
+  if (c === 40){ const e = scanString(s, i); return [{ t: 's', raw: s.slice(i, e) }, e]; }
+  if (c === 47){ const e = readRegular(s, i + 1); return [{ t: 'n', raw: s.slice(i, e) }, e]; }
+  const e = readRegular(s, i); if (e === i) throw new Error('unexpected char at ' + i);
+  const w = s.slice(i, e);
+  if (NUMRE.test(w)){
+    if (INTRE.test(w)){ const j = skipWS(s, e); const e2 = readRegular(s, j);
+      if (e2 > j && INTRE.test(s.slice(j, e2))){ const k = skipWS(s, e2);
+        if (s.charCodeAt(k) === 82 && (k + 1 >= s.length || isWS(s.charCodeAt(k + 1)) || isDL(s.charCodeAt(k + 1))))
+          return [{ t: 'r', n: +w, g: +s.slice(j, e2) }, k + 1]; } }
+    return [{ t: '#', raw: w }, e]; }
+  if (w === 'true' || w === 'false') return [{ t: 'b', raw: w }, e];
+  if (w === 'null') return [null, e];
+  return [{ t: 'k', raw: w }, e];
+}
+let REMAP = null;
+function ser(v){
+  if (v === null || v === undefined) return 'null';
+  switch (v.t){
+    case 'd': { let o = '<<'; for (const [k, x] of v.v){ o += k; const sx = ser(x); const f = sx.charCodeAt(0);
+      o += (f === 47 || f === 40 || f === 60 || f === 91) ? sx : ' ' + sx; } return o + '>>'; }
+    case 'a': { let o = '['; let first = true; for (const x of v.v){ const sx = ser(x);
+      if (!first){ const f = sx.charCodeAt(0), l = o.charCodeAt(o.length - 1);
+        if (!(f === 47 || f === 40 || f === 60 || f === 91 || l === 41 || l === 62 || l === 93)) o += ' '; }
+      o += sx; first = false; } return o + ']'; }
+    case 'r': { const t = REMAP && REMAP.get(v.n); return t ? t.n + ' ' + t.g + ' R' : v.n + ' ' + v.g + ' R'; }
+    default: return v.raw;
+  }
+}
+const D = (d, k) => (d && d.t === 'd') ? d.v.get(k) : undefined;
+const num = v => v && v.t === '#' ? +v.raw : NaN;
+const nameOf = v => v && v.t === 'n' ? v.raw : null;
+function dictClone(d){ return { t: 'd', v: new Map(d.v) }; }
+
+function unpredict(d, pred, colors, bpc, cols){
+  if (pred < 10) throw new Error('unsupported predictor ' + pred);
+  const bpp = Math.max(1, (colors * bpc) >> 3), rowLen = Math.ceil(colors * bpc * cols / 8);
+  const rows = Math.floor(d.length / (rowLen + 1)); const out = new Uint8Array(rows * rowLen);
+  let prev = new Uint8Array(rowLen);
+  for (let r = 0; r < rows; r++){
+    const t = d[r * (rowLen + 1)], base = r * (rowLen + 1) + 1, cur = out.subarray(r * rowLen, (r + 1) * rowLen);
+    for (let i = 0; i < rowLen; i++){
+      const a = i >= bpp ? cur[i - bpp] : 0, b = prev[i], c = i >= bpp ? prev[i - bpp] : 0; let x = d[base + i];
+      if (t === 1) x += a; else if (t === 2) x += b; else if (t === 3) x += (a + b) >> 1;
+      else if (t === 4){ const pa = Math.abs(b - c), pb = Math.abs(a - c), pc = Math.abs(a + b - 2 * c); x += (pa <= pb && pa <= pc) ? a : (pb <= pc ? b : c); }
+      cur[i] = x & 255; }
+    prev = cur; }
+  return out;
+}
+
+// ---------- Document reader ----------
+class Doc {
+  constructor(u8){ this.u8 = u8; this.s = u8ToStr(u8); this.xref = new Map(); this.cache = new Map(); this.stmCache = new Map(); this.trailer = null; this.warnings = []; }
+  async load(){
+    try { await this.loadXref(); if (!this.trailer || !D(this.trailer, '/Root')) throw new Error('no root'); }
+    catch (e){ this.warnings.push('ตาราง xref ของไฟล์เดิมอ่านไม่ได้ จึงสร้างใหม่จากการสแกนไฟล์'); this.xref.clear(); this.cache.clear(); await this.scan(); }
+  }
+  async loadXref(){
+    const s = this.s; const sx = s.lastIndexOf('startxref'); if (sx < 0) throw new Error('no startxref');
+    let off = parseInt(s.slice(sx + 9, sx + 40).trim(), 10); const seen = new Set();
+    while (off != null && !isNaN(off) && !seen.has(off)){
+      seen.add(off); let i = skipWS(s, off); let trailer;
+      if (s.startsWith('xref', i)){
+        i += 4; const tbl = [];
+        for (;;){ i = skipWS(s, i); if (s.startsWith('trailer', i)){ i += 7; break; }
+          let e = readRegular(s, i); const start = +s.slice(i, e); i = skipWS(s, e); e = readRegular(s, i); const cnt = +s.slice(i, e); i = e;
+          if (isNaN(start) || isNaN(cnt) || e === i - 0 && cnt < 0) throw new Error('bad xref');
+          for (let k = 0; k < cnt; k++){ const t = []; for (let z = 0; z < 3; z++){ i = skipWS(s, i); const e3 = readRegular(s, i); t.push(s.slice(i, e3)); i = e3; }
+            tbl.push([start + k, t[2] === 'n' ? { t: 1, off: +t[0], g: +t[1] } : { t: 0 }]); } }
+        trailer = parseValue(s, i)[0];
+        const xs = D(trailer, '/XRefStm'); if (xs) { try { await this.readXrefStream(num(xs)); } catch (e) {} }
+        for (const [n, en] of tbl) if (!this.xref.has(n)) this.xref.set(n, en);
+      } else trailer = await this.readXrefStream(i);
+      if (!this.trailer) this.trailer = trailer;
+      const p = D(trailer, '/Prev'); off = p ? num(p) : null;
+    }
+  }
+  async readXrefStream(off){
+    const o = await this.parseObjAt(off); const d = o.val;
+    if (nameOf(D(d, '/Type')) !== '/XRef') throw new Error('not xref stream');
+    const data = await this.decode(d, o.raw); if (!data) throw new Error('xref decode');
+    const W = D(d, '/W').v.map(num); const ix = D(d, '/Index'); const idx = ix ? ix.v.map(num) : [0, num(D(d, '/Size'))];
+    let p = 0; const rd = w => { let v = 0; for (let k = 0; k < w; k++) v = v * 256 + data[p++]; return v; };
+    for (let a = 0; a < idx.length; a += 2) for (let k = 0; k < idx[a + 1]; k++){
+      if (p >= data.length) break;
+      const t = W[0] ? rd(W[0]) : 1, f2 = rd(W[1]), f3 = rd(W[2]), n = idx[a] + k;
+      if (this.xref.has(n)) continue;
+      this.xref.set(n, t === 1 ? { t: 1, off: f2, g: f3 } : t === 2 ? { t: 2, stm: f2, idx: f3 } : { t: 0 }); }
+    return d;
+  }
+  async scan(){
+    const re = /(\d+)\s+(\d+)\s+obj\b/g; let m; const s = this.s;
+    while ((m = re.exec(s))){ const n = +m[1]; this.xref.set(n, { t: 1, off: m.index, g: +m[2] }); }
+    const stms = [];
+    for (const [n, e] of this.xref){ try { const o = await this.get(n); if (!o) continue;
+      const ty = nameOf(D(o.val, '/Type'));
+      if (ty === '/ObjStm') stms.push(n);
+      if (ty === '/XRef' && D(o.val, '/Root')) this.trailer = o.val;
+      if (ty === '/Catalog' && !this.trailer) this.trailer = { t: 'd', v: new Map([['/Root', { t: 'r', n, g: e.g }]]) }; } catch (e){} }
+    const tp = s.lastIndexOf('trailer'); if (tp >= 0){ try { const t = parseValue(s, tp + 7)[0]; if (D(t, '/Root')) this.trailer = t; } catch (e){} }
+    for (const sn of stms){ try { const st = await this.loadStm(sn); for (const n of st.map.keys()) if (!this.xref.has(n)) this.xref.set(n, { t: 2, stm: sn }); } catch (e){} }
+    if (!this.trailer) throw new Error('ไม่พบ Catalog ของไฟล์');
+  }
+  async parseObjAt(off){
+    const s = this.s; let i = skipWS(s, off);
+    const m = /^(\d+)\s+(\d+)\s+obj/.exec(s.slice(i, i + 40)); if (!m) throw new Error('no object at ' + off);
+    i += m[0].length; let [val, j] = parseValue(s, i); j = skipWS(s, j); let raw = null;
+    if (s.startsWith('stream', j)){
+      j += 6; if (s.charCodeAt(j) === 13) j++; if (s.charCodeAt(j) === 10) j++;
+      const lv = D(val, '/Length'); let L = -1;
+      if (lv && lv.t === 'r'){ const lo = await this.get(lv.n); L = lo ? num(lo.val) : -1; } else if (lv) L = num(lv);
+      let end = j + L;
+      if (!(L >= 0) || !/^\s*endstream/.test(s.slice(end, end + 40))){
+        end = s.indexOf('endstream', j); if (end < 0) end = s.length;
+        if (s.charCodeAt(end - 1) === 10) end--; if (s.charCodeAt(end - 1) === 13) end--; }
+      raw = this.u8.subarray(j, end); }
+    return { num: +m[1], g: +m[2], val, raw };
+  }
+  async loadStm(sn){
+    let st = this.stmCache.get(sn); if (st) return st;
+    const so = await this.get(sn); const data = await this.decode(so.val, so.raw); if (!data) throw new Error('objstm decode');
+    const str = u8ToStr(data); const N = num(D(so.val, '/N')), F = num(D(so.val, '/First'));
+    const hdr = str.slice(0, F).trim().split(/\s+/).map(Number); const map = new Map();
+    for (let k = 0; k < N; k++) map.set(hdr[2 * k], F + hdr[2 * k + 1]);
+    st = { str, map }; this.stmCache.set(sn, st); return st;
+  }
+  async get(n){
+    if (this.cache.has(n)) return this.cache.get(n);
+    const e = this.xref.get(n); let o = null;
+    try {
+      if (e && e.t === 1) o = await this.parseObjAt(e.off);
+      else if (e && e.t === 2){ const st = await this.loadStm(e.stm); const p = st.map.get(n); if (p != null) o = { num: n, g: 0, val: parseValue(st.str, p)[0], raw: null }; }
+    } catch (err){ this.warnings.push('อ่าน object ' + n + ' ไม่ได้ (' + err.message + ')'); o = null; }
+    this.cache.set(n, o); return o;
+  }
+  async resolve(v){ if (v && v.t === 'r'){ const o = await this.get(v.n); return o ? o.val : null; } return v; }
+  // returns decoded bytes, or null when a filter is not supported
+  async decode(d, raw){
+    let f = await this.resolve(D(d, '/Filter')), p = await this.resolve(D(d, '/DecodeParms'));
+    if (!f) return raw;
+    const fl = f.t === 'a' ? f.v : [f]; const pl = p ? (p.t === 'a' ? p.v : [p]) : [];
+    let data = raw;
+    for (let k = 0; k < fl.length; k++){
+      const nm = nameOf(fl[k]);
+      if (nm !== '/FlateDecode' && nm !== '/Fl') return null;
+      data = await inflate(data);
+      const pp = await this.resolve(pl[k]);
+      if (pp && pp.t === 'd'){ const pr = num(D(pp, '/Predictor'));
+        if (pr > 1){ const g = (k2, dv) => { const x = num(D(pp, k2)); return isNaN(x) ? dv : x; };
+          data = unpredict(data, pr, g('/Colors', 1), g('/BitsPerComponent', 8), g('/Columns', 1)); } }
+    }
+    return data;
+  }
+}
+
+// ---------- Content stream optimizer ----------
+const STATE_ONLY = new Set(['cm','rg','RG','g','G','k','K','cs','CS','sc','scn','SC','SCN','w','J','j','M','d','ri','i','gs']);
+const PAINT = new Set(['S','s','f','F','f*','B','B*','b','b*','n']);
+function fmtNum(v){
+  let t = String(v);
+  if (t.indexOf('e') >= 0) t = v.toFixed(6).replace(/\.?0+$/, '');
+  if (t.startsWith('0.')) t = t.slice(1); else if (t.startsWith('-0.')) t = '-' + t.slice(2);
+  if (t === '-0') t = '0';
+  return t;
+}
+function dp(P, tol){
+  const N = P.length / 2; const keep = new Uint8Array(N); keep[0] = 1; keep[N - 1] = 1;
+  if (N < 3) return keep; const stack = [0, N - 1]; const t2 = tol * tol;
+  while (stack.length){
+    const b = stack.pop(), a = stack.pop();
+    const ax = P[2 * a], ay = P[2 * a + 1], dx = P[2 * b] - ax, dy = P[2 * b + 1] - ay, L2 = dx * dx + dy * dy;
+    let maxd = -1, idx = -1;
+    for (let k = a + 1; k < b; k++){
+      const px = P[2 * k] - ax, py = P[2 * k + 1] - ay; let d;
+      if (L2 === 0) d = px * px + py * py;
+      else { let t = (px * dx + py * dy) / L2; if (t < 0) t = 0; else if (t > 1) t = 1; const ex = px - t * dx, ey = py - t * dy; d = ex * ex + ey * ey; }
+      if (d > maxd){ maxd = d; idx = k; } }
+    if (maxd > t2){ keep[idx] = 1; stack.push(a, idx, idx, b); }
+  }
+  return keep;
+}
+function segDist2(px, py, ax, ay, bx, by){
+  const dx = bx - ax, dy = by - ay, L2 = dx * dx + dy * dy; px -= ax; py -= ay;
+  if (L2 === 0) return px * px + py * py;
+  let t = (px * dx + py * dy) / L2; if (t < 0) t = 0; else if (t > 1) t = 1;
+  const ex = px - t * dx, ey = py - t * dy; return ex * ex + ey * ey;
+}
+
+function optimizeContent(s, tol, st){
+  const out = [], outOp = [];
+  const emit = (str, op) => { out.push(str); outOp.push(op); };
+  const opr = []; let i = 0; const n = s.length;
+  let ctm = [1, 0, 0, 1, 0, 0]; const ctmStack = [], qIdx = [];
+  let tolL = tol, mul = 100;
+  const upd = () => { const sc = Math.sqrt(Math.abs(ctm[0] * ctm[3] - ctm[1] * ctm[2])) || 1; tolL = tol / sc;
+    const dec = Math.max(0, Math.min(6, Math.ceil(-Math.log10(tolL)))); mul = Math.pow(10, dec); };
+  upd();
+  const R = v => fmtNum(Math.round(v * mul) / mul);
+  let pathStart = -1, clip = false, cx = 0, cy = 0, startKey = '', lastPt = '';
+  const run = []; // [ax,ay, x1,y1, ...]
+  const flush = closing => {
+    if (run.length < 4){ run.length = 0; return; }
+    const keep = dp(run, tolL * 0.5); const N = run.length / 2;
+    for (let k = 1; k < N; k++){
+      if (!keep[k]) continue;
+      const xs = R(run[2 * k]), ys = R(run[2 * k + 1]), key = xs + ' ' + ys;
+      if (key === lastPt) continue;
+      if (closing && k === N - 1 && key === startKey) continue;
+      emit(key + ' l', 'l'); lastPt = key; st.segOut++; }
+    run.length = 0;
+  };
+  const addLine = (x, y) => { if (run.length === 0) run.push(cx, cy); run.push(x, y); cx = x; cy = y; };
+  const rawOp = w => { let o = ''; for (let k = 0; k < opr.length; k++){ const t = opr[k]; const c0 = t.charCodeAt(0);
+      if ((c0 >= 48 && c0 <= 57) || c0 === 45 || c0 === 46 || c0 === 43){ const v = +t; o += (isNaN(v) ? t : fmtNum(v)) + ' '; } else o += t + ' '; }
+    return o + w; };
+  const nums = k => { const a = new Array(k); for (let z = 0; z < k; z++){ const v = +opr[opr.length - k + z]; if (isNaN(v)) return null; a[z] = v; } return a; };
+
+  const handle = w => {
+    st.opsIn++;
+    switch (w){
+      case 'l': { const a = opr.length >= 2 && nums(2); if (!a){ flush(false); emit(rawOp(w), w); return; }
+        st.segIn++; addLine(a[0], a[1]); return; }
+      case 'c': case 'v': case 'y': {
+        const need = w === 'c' ? 6 : 4; const a = opr.length >= need && nums(need);
+        if (!a){ flush(false); emit(rawOp(w), w); return; }
+        st.segIn++;
+        let x1, y1, x2, y2, x3, y3;
+        if (w === 'c'){ [x1, y1, x2, y2, x3, y3] = a; } else if (w === 'v'){ x1 = cx; y1 = cy; [x2, y2, x3, y3] = a; } else { [x1, y1, x3, y3] = a; x2 = x3; y2 = y3; }
+        const t2 = (tolL * 0.5) * (tolL * 0.5);
+        if (segDist2(x1, y1, cx, cy, x3, y3) <= t2 && segDist2(x2, y2, cx, cy, x3, y3) <= t2){ st.curveToLine++; addLine(x3, y3); return; }
+        flush(false);
+        const endKey = R(x3) + ' ' + R(y3);
+        if (w === 'c') emit(R(x1) + ' ' + R(y1) + ' ' + R(x2) + ' ' + R(y2) + ' ' + endKey + ' c', 'c');
+        else if (w === 'v') emit(R(x2) + ' ' + R(y2) + ' ' + endKey + ' v', 'v');
+        else emit(R(x1) + ' ' + R(y1) + ' ' + endKey + ' y', 'y');
+        st.segOut++; lastPt = endKey; cx = x3; cy = y3; return; }
+      case 'm': { const a = opr.length >= 2 && nums(2); flush(false); if (!a){ emit(rawOp(w), w); return; }
+        if (pathStart < 0) pathStart = out.length;
+        const key = R(a[0]) + ' ' + R(a[1]);
+        if (outOp.length && outOp[outOp.length - 1] === 'm' && out.length - 1 >= pathStart){ out.pop(); outOp.pop(); }
+        emit(key + ' m', 'm'); cx = a[0]; cy = a[1]; startKey = key; lastPt = key; return; }
+      case 're': { const a = opr.length >= 4 && nums(4); flush(false); if (!a){ emit(rawOp(w), w); return; }
+        if (pathStart < 0) pathStart = out.length;
+        emit(R(a[0]) + ' ' + R(a[1]) + ' ' + R(a[2]) + ' ' + R(a[3]) + ' re', 're');
+        cx = a[0]; cy = a[1]; startKey = lastPt = R(a[0]) + ' ' + R(a[1]); return; }
+      case 'h': flush(true); if (outOp[outOp.length - 1] !== 'h') emit('h', 'h'); lastPt = startKey; return;
+      case 'W': case 'W*': flush(false); clip = true; emit(w, w); return;
+      case 'q': flush(false); ctmStack.push(ctm.slice()); qIdx.push(out.length); emit('q', 'q'); return;
+      case 'Q': { flush(false); if (ctmStack.length){ ctm = ctmStack.pop(); upd(); }
+        const qi = qIdx.pop();
+        if (qi != null && pathStart < 0){ let pure = true; for (let k = qi + 1; k < out.length; k++) if (!STATE_ONLY.has(outOp[k])){ pure = false; break; }
+          if (pure){ st.emptyBlocks++; out.length = qi; outOp.length = qi; return; } }
+        emit('Q', 'Q'); return; }
+      case 'cm': { const a = opr.length >= 6 && nums(6); emit(rawOp(w), w);
+        if (a){ const c = ctm; ctm = [a[0] * c[0] + a[1] * c[2], a[0] * c[1] + a[1] * c[3], a[2] * c[0] + a[3] * c[2], a[2] * c[1] + a[3] * c[3],
+          a[4] * c[0] + a[5] * c[2] + c[4], a[4] * c[1] + a[5] * c[3] + c[5]]; upd(); }
+        return; }
+      default:
+        if (PAINT.has(w)){
+          flush(false);
+          if (w === 'n' && !clip && pathStart >= 0){ st.emptyPaths++; out.length = pathStart; outOp.length = pathStart; }
+          else emit(w, w);
+          pathStart = -1; clip = false; return; }
+        if (w === 'Do' && st.doList && opr.length) st.doList.push({ name: opr[opr.length - 1], m: ctm.slice() });
+        flush(false); emit(rawOp(w), w);
+    }
+  };
+
+  while (true){
+    i = skipWS(s, i); if (i >= n) break;
+    const c = s.charCodeAt(i);
+    if (c === 40){ const e = scanString(s, i); opr.push(s.slice(i, e)); i = e; continue; }
+    if (c === 60 || c === 91){ const e = parseValue(s, i)[1]; opr.push(s.slice(i, e)); i = e; continue; }
+    if (c === 47){ const e = readRegular(s, i + 1); opr.push(s.slice(i, e)); i = e; continue; }
+    const e = readRegular(s, i); if (e === i){ i++; continue; }
+    const w = s.slice(i, e); const c0 = w.charCodeAt(0);
+    if ((c0 >= 48 && c0 <= 57) || c0 === 43 || c0 === 45 || c0 === 46 || w === 'true' || w === 'false' || w === 'null'){ opr.push(w); i = e; continue; }
+    if (w === 'BI'){ // inline image: copy verbatim
+      flush(false);
+      const id = s.indexOf('ID', e); let p = id + 3, end = -1;
+      while (id >= 0 && p < n){ const q = s.indexOf('EI', p); if (q < 0) break;
+        if (isWS(s.charCodeAt(q - 1)) && (q + 2 >= n || isWS(s.charCodeAt(q + 2)))){ end = q + 2; break; } p = q + 2; }
+      if (end < 0) throw new Error('inline image');
+      emit(s.slice(i, end), 'BI'); st.opsIn++; opr.length = 0; i = end; continue; }
+    handle(w); opr.length = 0; i = e;
+  }
+  flush(false);
+  st.opsOut += out.length;
+  return out.join('\n');
+}
+
+// ---------- Lossless JPEG Huffman optimizer (like jpegtran -optimize) ----------
+// Re-encodes the same DCT coefficients with Huffman tables built for this image.
+// Decoded pixels stay bit-identical. Baseline single-scan JPEGs only; anything else is left untouched.
+function buildDecoder(counts, syms){
+  const maxcode = new Int32Array(18).fill(-1), valptr = new Int32Array(17), mincode = new Int32Array(17);
+  let code = 0, k = 0;
+  for (let l = 1; l <= 16; l++){ valptr[l] = k; mincode[l] = code; code += counts[l - 1]; k += counts[l - 1];
+    maxcode[l] = counts[l - 1] ? code - 1 : -1; code <<= 1; }
+  maxcode[17] = 0x7fffffff; return { maxcode, valptr, mincode, syms };
+}
+function genOptimal(freqIn){
+  const freq = new Float64Array(257); for (let i = 0; i < 256; i++) freq[i] = freqIn[i]; freq[256] = 1;
+  const codesize = new Int32Array(257), others = new Int32Array(257).fill(-1);
+  let used = 0; for (let i = 0; i < 256; i++) if (freq[i]) used++;
+  if (!used){ return { counts: [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], syms: [0] }; }
+  for (;;){
+    let c1 = -1, v = Infinity; for (let i = 0; i <= 256; i++) if (freq[i] && freq[i] <= v){ v = freq[i]; c1 = i; }
+    let c2 = -1; v = Infinity; for (let i = 0; i <= 256; i++) if (freq[i] && freq[i] <= v && i !== c1){ v = freq[i]; c2 = i; }
+    if (c2 < 0) break;
+    freq[c1] += freq[c2]; freq[c2] = 0;
+    codesize[c1]++; while (others[c1] >= 0){ c1 = others[c1]; codesize[c1]++; }
+    others[c1] = c2; codesize[c2]++; while (others[c2] >= 0){ c2 = others[c2]; codesize[c2]++; }
+  }
+  const bits = new Int32Array(40);
+  for (let i = 0; i <= 256; i++) if (codesize[i]){ if (codesize[i] > 39) throw new Error('huff'); bits[codesize[i]]++; }
+  for (let i = 39; i > 16; i--) while (bits[i] > 0){ let j = i - 2; while (bits[j] === 0) j--; bits[i] -= 2; bits[i - 1]++; bits[j + 1] += 2; bits[j]--; }
+  let i = 16; while (bits[i] === 0) i--; bits[i]--;
+  const syms = []; for (let l = 1; l <= 39; l++) for (let s = 0; s < 256; s++) if (codesize[s] === l) syms.push(s);
+  return { counts: Array.from(bits.subarray(1, 17)), syms };
+}
+function jpegScan(u8){
+  // parse header segments
+  if (u8[0] !== 0xFF || u8[1] !== 0xD8) return null;
+  let p = 2; const segs = []; const dht = {}; let sof = null, sos = null, dri = 0, scans = 0;
+  while (p < u8.length - 1){
+    if (u8[p] !== 0xFF) return null;
+    let m = u8[p + 1]; if (m === 0xFF){ p++; continue; }
+    if (m === 0xD9) break;
+    const L = (u8[p + 2] << 8) | u8[p + 3]; const seg = u8.subarray(p, p + 2 + L);
+    if (m >= 0xC1 && m <= 0xCF && m !== 0xC4 && m !== 0xC8 && m !== 0xCC) return null; // only SOF0 baseline
+    if (m === 0xC4){ let q = 4; while (q < seg.length){ const tc = seg[q] >> 4, th = seg[q] & 15; const counts = Array.from(seg.subarray(q + 1, q + 17));
+        const n = counts.reduce((a, b) => a + b, 0); dht[tc * 16 + th] = { counts, syms: Array.from(seg.subarray(q + 17, q + 17 + n)) }; q += 17 + n; } }
+    else if (m === 0xC0){ const nc = seg[9]; const comps = [];
+      for (let k = 0; k < nc; k++){ const b = 10 + k * 3; comps.push({ id: seg[b], h: seg[b + 1] >> 4, v: seg[b + 1] & 15 }); }
+      sof = { H: (seg[5] << 8) | seg[6], W: (seg[7] << 8) | seg[8], comps, prec: seg[4] }; if (seg[4] !== 8) return null; }
+    else if (m === 0xDD) dri = (seg[4] << 8) | seg[5];
+    if (m === 0xDA){ scans++; if (scans > 1) return null;
+      const ns = seg[4]; const sc = [];
+      for (let k = 0; k < ns; k++){ sc.push({ id: seg[5 + k * 2], td: seg[6 + k * 2] >> 4, ta: seg[6 + k * 2] & 15 }); }
+      if (seg[5 + ns * 2] !== 0 || seg[6 + ns * 2] !== 63 || seg[7 + ns * 2] !== 0) return null;
+      sos = { seg, comps: sc, dataStart: p + 2 + L, tables: Object.assign({}, dht) };
+      // find end of entropy data (EOI)
+      let q = sos.dataStart; while (q < u8.length - 1 && !(u8[q] === 0xFF && u8[q + 1] !== 0 && !(u8[q + 1] >= 0xD0 && u8[q + 1] <= 0xD7))) q++;
+      sos.dataEnd = q; segs.push({ m, seg }); p = q; continue; }
+    segs.push({ m, seg }); p += 2 + L;
+  }
+  if (!sof || !sos) return null;
+  return { segs, sof, sos, dri };
+}
+function jpegSymbols(u8, info){
+  const { sof, sos, dri } = info; const Hmax = Math.max(...sof.comps.map(c => c.h)), Vmax = Math.max(...sof.comps.map(c => c.v));
+  const sc = sos.comps.map(s => { const c = sof.comps.find(c => c.id === s.id); if (!c) throw new Error('comp');
+    const dc = sos.tables[s.td], ac = sos.tables[16 + s.ta]; if (!dc || !ac) throw new Error('table');
+    return { c, dcT: s.td, acT: s.ta, dc: buildDecoder(dc.counts, dc.syms), ac: buildDecoder(ac.counts, ac.syms) }; });
+  let mcus, blocksPer;
+  if (sc.length === 1){ const c = sc[0].c; const bw = Math.ceil(Math.ceil(sof.W * c.h / Hmax) / 8), bh = Math.ceil(Math.ceil(sof.H * c.v / Vmax) / 8);
+    mcus = bw * bh; blocksPer = [1]; }
+  else { mcus = Math.ceil(sof.W / (8 * Hmax)) * Math.ceil(sof.H / (8 * Vmax)); blocksPer = sc.map(s => s.c.h * s.c.v); }
+  let p = sos.dataStart, buf = 0, nb = 0; const end = sos.dataEnd;
+  const bit = () => { if (nb === 0){ let b = 0; if (p < end){ b = u8[p++]; if (b === 0xFF){ const n2 = u8[p]; if (n2 === 0) p++; else { p--; b = 0; } } } buf = b; nb = 8; }
+    nb--; return (buf >> nb) & 1; };
+  const decode = t => { let code = bit(), l = 1; while (code > t.maxcode[l]){ code = (code << 1) | bit(); l++; if (l > 16) throw new Error('bad code'); }
+    return t.syms[t.valptr[l] + code - t.mincode[l]]; };
+  const recv = n => { let v = 0; for (let k = 0; k < n; k++) v = (v << 1) | bit(); return v; };
+  // symbol stream: Int32 triples (tableKey, symbol, extraBits) ; tableKey = class*4+id ; restart marker = -1
+  const out = []; const freqs = {};
+  const F = key => freqs[key] || (freqs[key] = new Float64Array(256));
+  for (let m = 0; m < mcus; m++){
+    if (dri && m > 0 && m % dri === 0){ nb = 0; if (u8[p] === 0xFF && u8[p + 1] >= 0xD0 && u8[p + 1] <= 0xD7) p += 2; else throw new Error('rst'); out.push(-1, 0, 0); }
+    for (let s = 0; s < sc.length; s++){ const S = sc[s];
+      for (let b = 0; b < blocksPer[s]; b++){
+        const t = decode(S.dc); if (t > 11) throw new Error('dc'); out.push(S.dcT, t, recv(t)); F(S.dcT)[t]++;
+        for (let k = 1; k < 64; ){ const rs = decode(S.ac); const r = rs >> 4, sz = rs & 15;
+          out.push(16 + S.acT, rs, recv(sz)); F(16 + S.acT)[rs]++;
+          if (sz === 0){ if (r === 15){ k += 16; continue; } break; }
+          k += r + 1; if (k > 64) throw new Error('ac overflow'); }
+      } } }
+  return { out, freqs };
+}
+// symbol stream + frequencies -> optimal DHT segment and entropy-coded bytes
+function huffEncode(o, freqs){
+  const tables = {}; for (const k of Object.keys(freqs)) tables[k] = genOptimal(freqs[k]);
+  const enc = {};
+  for (const k of Object.keys(tables)){ const t = tables[k]; const code = new Int32Array(256), len = new Int32Array(256); let c = 0, i = 0;
+    for (let l = 1; l <= 16; l++){ for (let n = 0; n < t.counts[l - 1]; n++){ code[t.syms[i]] = c; len[t.syms[i]] = l; c++; i++; } c <<= 1; }
+    enc[k] = { code, len }; }
+  const bytes = []; let acc = 0, nacc = 0;
+  const put = (v, n) => { for (let k = n - 1; k >= 0; k--){ acc = (acc << 1) | ((v >> k) & 1); nacc++;
+      if (nacc === 8){ bytes.push(acc); if (acc === 0xFF) bytes.push(0); acc = 0; nacc = 0; } } };
+  const pad = () => { if (nacc) put(0x7F, 8 - nacc); };
+  let rst = 0;
+  for (let k = 0; k < o.length; k += 3){
+    if (o[k] === -1){ pad(); bytes.push(0xFF, 0xD0 + (rst++ & 7)); continue; }
+    const e = enc[o[k]]; const s = o[k + 1]; put(e.code[s], e.len[s]);
+    const extra = o[k] < 16 ? s : (s & 15); if (extra) put(o[k + 2], extra); }
+  pad();
+  const keys = Object.keys(tables).map(Number).sort((a, b) => a - b); const body = [];
+  for (const k of keys){ const t = tables[k]; body.push(k, ...t.counts, ...t.syms); }
+  const L = body.length + 2;
+  return { dht: Uint8Array.from([0xFF, 0xC4, L >> 8, L & 255, ...body]), data: Uint8Array.from(bytes) };
+}
+function sameSymbols(u8, o){
+  try { const i2 = jpegScan(u8); const a = jpegSymbols(u8, i2).out;
+    if (a.length !== o.length) return false; for (let k = 0; k < a.length; k++) if (a[k] !== o[k]) return false; return true; }
+  catch (e){ return false; }
+}
+function jpegOptimize(u8){
+  const info = jpegScan(u8); if (!info) return null;
+  let sym; try { sym = jpegSymbols(u8, info); } catch (e){ return null; }
+  const h = huffEncode(sym.out, sym.freqs);
+  // assemble: SOI, keep segments except APP0 JFIF / COM / old DHT, new DHT before SOS
+  const parts = [new Uint8Array([0xFF, 0xD8])];
+  for (const { m, seg } of info.segs){
+    if (m === 0xDA){ parts.push(h.dht, seg, h.data); continue; }
+    if (m === 0xC4 || m === 0xFE) continue;
+    if (m === 0xE0 && seg[4] === 0x4A && seg[5] === 0x46 && seg[6] === 0x49 && seg[7] === 0x46) continue; // JFIF
+    parts.push(seg); }
+  parts.push(new Uint8Array([0xFF, 0xD9]));
+  const res = concat(parts);
+  if (!sameSymbols(res, sym.out)) return null; // verify: identical coefficients
+  return res.length < u8.length ? res : null;
+}
+
+// ---------- Lossy JPEG re-encoder (used only when quality < 100) ----------
+const ZZ = [0,1,8,16,9,2,3,10,17,24,32,25,18,11,4,5,12,19,26,33,40,48,41,34,27,20,13,6,7,14,21,28,35,42,49,56,57,50,43,36,29,22,15,23,30,37,44,51,58,59,52,45,38,31,39,46,53,60,61,54,47,55,62,63];
+const STD_L = [16,11,10,16,24,40,51,61,12,12,14,19,26,58,60,55,14,13,16,24,40,57,69,56,14,17,22,29,51,87,80,62,18,22,37,56,68,109,103,77,24,35,55,64,81,104,113,92,49,64,78,87,103,121,120,101,72,92,95,98,112,100,103,99];
+const STD_C = (() => { const t = new Array(64).fill(99); const r = [[17,18,24,47],[18,21,26,66],[24,26,56,99],[47,66,99,99]];
+  for (let y = 0; y < 4; y++) for (let x = 0; x < 4; x++) t[y * 8 + x] = r[y][x]; return t; })();
+function qTable(std, q){ const sc = q < 50 ? 5000 / q : 200 - 2 * q; return std.map(v => Math.min(255, Math.max(1, Math.floor((v * sc + 50) / 100)))); }
+// estimated IJG quality of an existing JPEG (from its luminance table)
+function jpegQuality(u8){
+  let p = 2; while (p < u8.length - 4){ if (u8[p] !== 0xFF) return null; const m = u8[p + 1], L = (u8[p + 2] << 8) | u8[p + 3];
+    if (m === 0xDB){ const pq = u8[p + 4] >> 4; if (pq) return null; let sum = 0, ss = 0;
+      for (let k = 0; k < 64; k++){ sum += u8[p + 5 + k]; ss += STD_L[ZZ[k]]; }
+      const sc = sum / ss * 100; return Math.max(1, Math.min(100, Math.round(sc <= 100 ? (200 - sc) / 2 : 5000 / sc))); }
+    if (m === 0xDA) return null; p += 2 + L; }
+  return null;
+}
+const DCTM = (() => { const m = new Float64Array(64); for (let u = 0; u < 8; u++) for (let x = 0; x < 8; x++)
+  m[u * 8 + x] = (u === 0 ? Math.SQRT1_2 : 1) / 2 * Math.cos((2 * x + 1) * u * Math.PI / 16); return m; })();
+function fdctQuant(blk, qt, outZ){
+  const tmp = new Float64Array(64);
+  for (let y = 0; y < 8; y++) for (let u = 0; u < 8; u++){ let s = 0; for (let x = 0; x < 8; x++) s += DCTM[u * 8 + x] * blk[y * 8 + x]; tmp[y * 8 + u] = s; }
+  for (let u = 0; u < 8; u++) for (let v = 0; v < 8; v++){ let s = 0; for (let y = 0; y < 8; y++) s += DCTM[v * 8 + y] * tmp[y * 8 + u]; blk[v * 8 + u] = s; }
+  for (let k = 0; k < 64; k++){ const n = ZZ[k]; outZ[k] = Math.round(blk[n] / qt[n]); }
+}
+// rgba: Uint8ClampedArray W*H*4 ; gray: encode single component
+function jpegEncode(rgba, W, H, q, gray){
+  const ql = qTable(STD_L, q), qc = qTable(STD_C, q);
+  const nc = gray ? 1 : 3, hs = gray ? 1 : 2, vs = gray ? 1 : 2;
+  const planes = []; const n = W * H;
+  const Y = new Float64Array(n), Cb = gray ? null : new Float64Array(n), Cr = gray ? null : new Float64Array(n);
+  for (let i = 0; i < n; i++){ const r = rgba[i * 4], g = rgba[i * 4 + 1], b = rgba[i * 4 + 2];
+    Y[i] = 0.299 * r + 0.587 * g + 0.114 * b;
+    if (!gray){ Cb[i] = -0.168736 * r - 0.331264 * g + 0.5 * b + 128; Cr[i] = 0.5 * r - 0.418688 * g - 0.081312 * b + 128; } }
+  const mcuW = 8 * hs, mcuH = 8 * vs, mx = Math.ceil(W / mcuW), my = Math.ceil(H / mcuH);
+  const o = []; const freqs = { 0: new Float64Array(256), 16: new Float64Array(256) };
+  if (!gray){ freqs[1] = new Float64Array(256); freqs[17] = new Float64Array(256); }
+  const pred = [0, 0, 0]; const blk = new Float64Array(64), z = new Int32Array(64);
+  const cat = v => { v = Math.abs(v); let s = 0; while (v){ s++; v >>= 1; } return s; };
+  const emitBlock = (ci, qt) => {
+    fdctQuant(blk, qt, z); const dk = ci ? 1 : 0, ak = ci ? 17 : 16;
+    const diff = z[0] - pred[ci]; pred[ci] = z[0]; const s = cat(diff);
+    o.push(dk, s, diff >= 0 ? diff : diff + (1 << s) - 1); freqs[dk][s]++;
+    let run = 0;
+    for (let k = 1; k < 64; k++){ const v = z[k];
+      if (v === 0){ run++; continue; }
+      while (run > 15){ o.push(ak, 0xF0, 0); freqs[ak][0xF0]++; run -= 16; }
+      const sz = cat(v); const rs = (run << 4) | sz; o.push(ak, rs, v >= 0 ? v : v + (1 << sz) - 1); freqs[ak][rs]++; run = 0; }
+    if (run){ o.push(ak, 0, 0); freqs[ak][0]++; }
+  };
+  const px = (P, x, y) => P[Math.min(H - 1, y) * W + Math.min(W - 1, x)];
+  for (let by = 0; by < my; by++) for (let bx = 0; bx < mx; bx++){
+    for (let v = 0; v < vs; v++) for (let h = 0; h < hs; h++){
+      const x0 = bx * mcuW + h * 8, y0 = by * mcuH + v * 8;
+      for (let y = 0; y < 8; y++) for (let x = 0; x < 8; x++) blk[y * 8 + x] = px(Y, x0 + x, y0 + y) - 128;
+      emitBlock(0, ql); }
+    if (!gray) for (const [ci, P] of [[1, Cb], [2, Cr]]){
+      const x0 = bx * mcuW, y0 = by * mcuH;
+      for (let y = 0; y < 8; y++) for (let x = 0; x < 8; x++){
+        const sx = x0 + 2 * x, sy = y0 + 2 * y;
+        blk[y * 8 + x] = (px(P, sx, sy) + px(P, sx + 1, sy) + px(P, sx, sy + 1) + px(P, sx + 1, sy + 1)) / 4 - 128; }
+      emitBlock(ci, qc); }
+  }
+  const hcode = huffEncode(o, freqs);
+  const dqt = [0xFF, 0xDB, 0, gray ? 67 : 132, 0, ...ZZ.map(k => ql[k])]; if (!gray) dqt.push(1, ...ZZ.map(k => qc[k]));
+  const sof = [0xFF, 0xC0, 0, 8 + 3 * nc, 8, H >> 8, H & 255, W >> 8, W & 255, nc];
+  if (gray) sof.push(1, 0x11, 0); else sof.push(1, 0x22, 0, 2, 0x11, 1, 3, 0x11, 1);
+  const sos = [0xFF, 0xDA, 0, 6 + 2 * nc, nc]; if (gray) sos.push(1, 0x00); else sos.push(1, 0x00, 2, 0x11, 3, 0x11); sos.push(0, 63, 0);
+  return concat([new Uint8Array([0xFF, 0xD8]), Uint8Array.from(dqt), Uint8Array.from(sof), hcode.dht, Uint8Array.from(sos), hcode.data, new Uint8Array([0xFF, 0xD9])]);
+}
+async function decodeJpegPixels(u8){
+  if (typeof createImageBitmap === 'undefined') return null;
+  const bmp = await createImageBitmap(new Blob([u8], { type: 'image/jpeg' }), { colorSpaceConversion: 'none', premultiplyAlpha: 'none' });
+  const c = typeof OffscreenCanvas !== 'undefined' ? new OffscreenCanvas(bmp.width, bmp.height) : Object.assign(document.createElement('canvas'), { width: bmp.width, height: bmp.height });
+  const ctx = c.getContext('2d', { willReadFrequently: true }); ctx.drawImage(bmp, 0, 0);
+  const d = ctx.getImageData(0, 0, bmp.width, bmp.height); bmp.close && bmp.close(); return d;
+}
+function fnv(u8){ let h = 0x811c9dc5; for (let i = 0; i < u8.length; i++){ h ^= u8[i]; h = Math.imul(h, 16777619); } return (h >>> 0).toString(36); }
+function sameBytes(a, b){ if (a.length !== b.length) return false; for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) return false; return true; }
+
+// ---------- Downsampling that keeps text sharp ----------
+// Mixed raster content: text and line art found in the image stay at full resolution as a 1-bit layer,
+// only the background (with the text painted out) is downsampled.
+function fillCells(sum, cnt, gw, gh, nc, dflt){
+  const N = gw * gh, mean = new Float32Array(N * nc); let has = new Uint8Array(N), left = N;
+  for (let b = 0; b < N; b++) if (cnt[b]){ has[b] = 1; left--; for (let c = 0; c < nc; c++) mean[b * nc + c] = sum[b * nc + c] / cnt[b]; }
+  if (left === N){ mean.fill(dflt); return mean; }
+  for (let pass = 0; left && pass < gw + gh + 2; pass++){
+    const nh = has.slice();
+    for (let y = 0; y < gh; y++) for (let x = 0; x < gw; x++){ const b = y * gw + x; if (has[b]) continue;
+      let k = 0; const acc = [0, 0, 0];
+      for (const [dx, dy] of [[-1, 0], [1, 0], [0, -1], [0, 1]]){ const nx = x + dx, ny = y + dy;
+        if (nx < 0 || ny < 0 || nx >= gw || ny >= gh || !has[ny * gw + nx]) continue;
+        k++; for (let c = 0; c < nc; c++) acc[c] += mean[(ny * gw + nx) * nc + c]; }
+      if (k){ for (let c = 0; c < nc; c++) mean[b * nc + c] = acc[c] / k; nh[b] = 1; left--; } }
+    has = nh; }
+  return mean;
+}
+// average per BxB block (skipping pixels flagged in `skip`), empty blocks filled from neighbours
+function blockMeans(P, W, H, nc, B, skip){
+  const bw = Math.ceil(W / B), bh = Math.ceil(H / B), sum = new Float64Array(bw * bh * nc), cnt = new Float64Array(bw * bh);
+  for (let y = 0; y < H; y++){ const row = ((y / B) | 0) * bw;
+    for (let x = 0; x < W; x++){ const i = y * W + x; if (skip && skip[i]) continue; const b = row + ((x / B) | 0); cnt[b]++;
+      for (let c = 0; c < nc; c++) sum[b * nc + c] += P[i * nc + c]; } }
+  return { mean: fillCells(sum, cnt, bw, bh, nc, 255), bw, bh, B };
+}
+// bilinear interpolation of block means back to full size (only where `only` is set, when given)
+function expandMeans(bm, W, H, nc, only){
+  const { mean, bw, bh, B } = bm, out = new Uint8Array(W * H * nc);
+  const ax = (L, n) => { const a = new Int32Array(L), b = new Int32Array(L), w = new Float32Array(L);
+    for (let i = 0; i < L; i++){ let f = (i + 0.5) / B - 0.5; if (f < 0) f = 0; let k = Math.floor(f); if (k > n - 1) k = n - 1;
+      a[i] = k; b[i] = Math.min(n - 1, k + 1); w[i] = Math.min(1, f - k); } return [a, b, w]; };
+  const [xa, xb, xw] = ax(W, bw), [ya, yb, yw] = ax(H, bh);
+  for (let y = 0; y < H; y++){ const r0 = ya[y] * bw, r1 = yb[y] * bw, wy = yw[y];
+    for (let x = 0; x < W; x++){ const i = y * W + x; if (only && !only[i]) continue; const wx = xw[x];
+      for (let c = 0; c < nc; c++){
+        const t = mean[(r0 + xa[x]) * nc + c] * (1 - wx) + mean[(r0 + xb[x]) * nc + c] * wx;
+        const u = mean[(r1 + xa[x]) * nc + c] * (1 - wx) + mean[(r1 + xb[x]) * nc + c] * wx;
+        out[i * nc + c] = t * (1 - wy) + u * wy + 0.5; } } }
+  return out;
+}
+function lumaOf(px, n, nc){ if (nc === 1) return px; const Y = new Uint8Array(n);
+  for (let i = 0, j = 0; i < n; i++, j += 3) Y[i] = (px[j] * 77 + px[j + 1] * 150 + px[j + 2] * 29) >> 8; return Y; }
+// 1 = text / line-art pixel, 0 = background
+function textMask(Y, W, H, ppi){
+  const n = W * H, T = 40, B = Math.max(16, Math.min(128, Math.round(ppi / 3)));
+  const M = expandMeans(blockMeans(Y, W, H, 1, B, null), W, H, 1, null);
+  const cand = new Uint8Array(n);
+  for (let i = 0; i < n; i++){ const d = Y[i] - M[i]; if (d < -T) cand[i] = 1; else if (d > T) cand[i] = 2; }
+  // pixels touching any candidate are left out of the "is the surrounding calm" test
+  const near = new Uint8Array(n);
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++){ if (!cand[y * W + x]) continue;
+    for (let yy = Math.max(0, y - 1); yy <= Math.min(H - 1, y + 1); yy++) for (let xx = Math.max(0, x - 1); xx <= Math.min(W - 1, x + 1); xx++) near[yy * W + xx] = 1; }
+  const mask = new Uint8Array(n), seen = new Uint8Array(n), stack = new Int32Array(n), comp = new Int32Array(n);
+  const maxThick = Math.max(6, ppi * 0.6), pad = 3; let count = 0;
+  for (let i0 = 0; i0 < n; i0++){
+    const pol = cand[i0]; if (!pol || seen[i0]) continue;
+    let sp = 0, k = 0, x0 = W, y0 = H, x1 = -1, y1 = -1, gs = 0; stack[sp++] = i0; seen[i0] = 1;
+    while (sp){ const i = stack[--sp]; comp[k++] = i; gs += Y[i]; const y = (i / W) | 0, x = i - y * W;
+      if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y;
+      for (let dy = -1; dy <= 1; dy++){ const ny = y + dy; if (ny < 0 || ny >= H) continue;
+        for (let dx = -1; dx <= 1; dx++){ const nx = x + dx; if (nx < 0 || nx >= W) continue; const j = ny * W + nx;
+          if (!seen[j] && cand[j] === pol){ seen[j] = 1; stack[sp++] = j; } } } }
+    if (k < 2 || Math.min(x1 - x0 + 1, y1 - y0 + 1) > maxThick) continue;
+    let s = 0, ss = 0, c = 0;
+    for (let y = Math.max(0, y0 - pad); y <= Math.min(H - 1, y1 + pad); y++) for (let x = Math.max(0, x0 - pad); x <= Math.min(W - 1, x1 + pad); x++){
+      const j = y * W + x; if (near[j]) continue; const v = Y[j]; s += v; ss += v * v; c++; }
+    if (c < 4) continue;
+    const bm = s / c, sd = Math.sqrt(Math.max(0, ss / c - bm * bm));
+    if (sd > 20 || Math.abs(gs / k - bm) < T) continue; // busy surroundings = photo texture, not text
+    // keep pixels at least half-way from the background to the darkest (lightest) ink, so strokes keep their
+    // original weight; lighter anti-aliased edges stay in the background layer
+    let ext = pol === 1 ? 255 : 0;
+    for (let j = 0; j < k; j++){ const v = Y[comp[j]]; if (pol === 1 ? v < ext : v > ext) ext = v; }
+    const mid = (bm + ext) / 2;
+    for (let j = 0; j < k; j++){ const v = Y[comp[j]]; if (pol === 1 ? v <= mid : v >= mid){ mask[comp[j]] = 1; count++; } }
+  }
+  return count ? mask : null;
+}
+// area-average resize
+function boxResize(P, W, H, nc, w, h){
+  const rng = (L, l) => { const a = new Int32Array(l), b = new Int32Array(l);
+    for (let i = 0; i < l; i++){ a[i] = Math.floor(i * L / l); b[i] = Math.max(a[i] + 1, Math.floor((i + 1) * L / l)); } return [a, b]; };
+  const [xa, xb] = rng(W, w), [ya, yb] = rng(H, h), tmp = new Float32Array(w * H * nc), out = new Uint8Array(w * h * nc);
+  for (let y = 0; y < H; y++) for (let x = 0; x < w; x++) for (let c = 0; c < nc; c++){ let s = 0;
+    for (let k = xa[x]; k < xb[x]; k++) s += P[(y * W + k) * nc + c]; tmp[(y * w + x) * nc + c] = s / (xb[x] - xa[x]); }
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) for (let c = 0; c < nc; c++){ let s = 0;
+    for (let k = ya[y]; k < yb[y]; k++) s += tmp[(k * w + x) * nc + c]; out[(y * w + x) * nc + c] = s / (yb[y] - ya[y]) + 0.5; }
+  return out;
+}
+function encodeJpegPlanes(P, w, h, nc, q){
+  const n = w * h, rgba = new Uint8ClampedArray(n * 4);
+  for (let i = 0; i < n; i++){ const s = i * nc, d = i * 4; rgba[d] = P[s]; rgba[d + 1] = P[s + (nc > 1 ? 1 : 0)]; rgba[d + 2] = P[s + (nc > 1 ? 2 : 0)]; rgba[d + 3] = 255; }
+  return jpegEncode(rgba, w, h, q, nc === 1);
+}
+// px: W*H*nc samples -> { bg, mask (packed 1-bit, 0 = text), color (single text colour) | fg (colour layer) }
+function buildLayers(px, W, H, nc, w, h, ppi, keepText, q){
+  const n = W * H; let mask = keepText ? textMask(lumaOf(px, n, nc), W, H, ppi) : null;
+  let src = px, color = null, fg = null, packed = null;
+  if (mask){
+    const gw = Math.max(1, Math.ceil(w / 2)), gh = Math.max(1, Math.ceil(h / 2));
+    const gsum = new Float64Array(gw * gh * nc), gcnt = new Float64Array(gw * gh), tot = [0, 0, 0], tot2 = [0, 0, 0]; let tc = 0;
+    for (let y = 0; y < H; y++){ const gy = Math.floor(y * gh / H) * gw;
+      for (let x = 0; x < W; x++){ const i = y * W + x; if (mask[i] !== 1) continue; const g = gy + Math.floor(x * gw / W); gcnt[g]++; tc++;
+        for (let c = 0; c < nc; c++){ const v = px[i * nc + c]; gsum[g * nc + c] += v; tot[c] += v; tot2[c] += v * v; } } }
+    let sd = 0; for (let c = 0; c < nc; c++){ const m = tot[c] / tc; sd = Math.max(sd, Math.sqrt(Math.max(0, tot2[c] / tc - m * m))); }
+    if (sd < 28) color = Array.from({ length: nc }, (_, c) => tot[c] / tc / 255);
+    else { const g = fillCells(gsum, gcnt, gw, gh, nc, 0), d = new Uint8Array(g.length); for (let k = 0; k < g.length; k++) d[k] = g[k] + 0.5;
+      fg = { w: gw, h: gh, jpg: encodeJpegPlanes(d, gw, gh, nc, Math.max(q, 80)) }; }
+    // paint the text out of the background so no blurred copy shows around the sharp layer
+    const B = Math.max(8, Math.min(64, Math.round(ppi / 6)));
+    const bgc = expandMeans(blockMeans(px, W, H, nc, B, mask), W, H, nc, mask);
+    src = px.slice(); for (let i = 0; i < n; i++) if (mask[i]) for (let c = 0; c < nc; c++) src[i * nc + c] = bgc[i * nc + c];
+    const rb = Math.ceil(W / 8); packed = new Uint8Array(rb * H).fill(255);
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) if (mask[y * W + x]) packed[y * rb + (x >> 3)] &= ~(0x80 >> (x & 7));
+    mask = null;
+  }
+  const bg = encodeJpegPlanes(boxResize(src, W, H, nc, w, h), w, h, nc, q);
+  return { bg, packed, color, fg };
+}
+
+// ---------- main ----------
+async function optimize(u8, opts = {}, log = () => {}){
+  const tol = opts.tol || 0.1, pack = opts.pack !== false;
+  const t0 = Date.now();
+  log('กำลังอ่านโครงสร้างไฟล์…');
+  const doc = new Doc(u8); await doc.load();
+  const warnings = doc.warnings;
+  if (D(doc.trailer, '/Encrypt')) throw new Error('ไฟล์นี้ถูกเข้ารหัส ต้องปลดรหัสก่อนจึงจะลดขนาดได้');
+  if (doc.s.indexOf('/ByteRange') >= 0) warnings.push('ไฟล์นี้มีลายเซ็นดิจิทัล ลายเซ็นดิจิทัลจะใช้ไม่ได้หลังแก้ไฟล์ (ลายเซ็นที่เป็นรูปภาพยังอยู่ครบ)');
+  const rootRef = D(doc.trailer, '/Root'), infoRef = D(doc.trailer, '/Info'), idv = D(doc.trailer, '/ID');
+  let maxNum = 0; for (const k of doc.xref.keys()) if (k > maxNum) maxNum = k;
+  let next = maxNum + 1;
+  const over = new Map(); const getObj = async n => over.has(n) ? over.get(n) : await doc.get(n);
+  const st = { opsIn: 0, opsOut: 0, segIn: 0, segOut: 0, curveToLine: 0, emptyBlocks: 0, emptyPaths: 0, decIn: 0, decOut: 0, zIn: 0, zOut: 0, streams: 0, pages: 0 };
+
+  // pages
+  const pages = []; const seenNodes = new Set();
+  const walk = async ref => {
+    if (!ref || ref.t !== 'r' || seenNodes.has(ref.n)) return; seenNodes.add(ref.n);
+    const o = await doc.get(ref.n); if (!o) return;
+    const ty = nameOf(D(o.val, '/Type')); const kids = await doc.resolve(D(o.val, '/Kids'));
+    if (ty === '/Page' || (!kids && D(o.val, '/Contents'))) pages.push(ref.n);
+    else if (kids && kids.t === 'a') for (const k of kids.v) await walk(k);
+  };
+  const root = await doc.resolve(rootRef); await walk(D(root, '/Pages'));
+  log('พบ ' + pages.length + ' หน้า');
+
+  // where each image is drawn (for downsampling to a target PPI): Do operators with their CTM
+  const pagePlace = [], formPlace = new Map();
+  const formsDone = new Set();
+  const doForms = async resVal => {
+    const res = await doc.resolve(resVal); const xo = await doc.resolve(D(res, '/XObject')); if (!xo || xo.t !== 'd') return;
+    for (const v of xo.v.values()){
+      if (!v || v.t !== 'r' || formsDone.has(v.n)) continue; formsDone.add(v.n);
+      const o = await doc.get(v.n); if (!o || !o.raw || nameOf(D(o.val, '/Subtype')) !== '/Form') continue;
+      let data; try { data = await doc.decode(o.val, o.raw); } catch (e){ data = null; } if (!data) continue;
+      st.doList = []; const neu = optimizeContent(u8ToStr(data), tol, st); const z = await deflate(strToU8(neu));
+      formPlace.set(v.n, { list: st.doList, res: D(o.val, '/Resources') || resVal }); st.doList = null;
+      st.decIn += data.length; st.decOut += neu.length; st.zIn += o.raw.length; st.zOut += z.length; st.streams++;
+      if (z.length < o.raw.length){ const d = dictClone(o.val); d.v.delete('/DecodeParms'); d.v.set('/Filter', { t: 'n', raw: '/FlateDecode' }); d.v.set('/Length', { t: '#', raw: String(z.length) });
+        over.set(v.n, { num: v.n, g: o.g, val: d, raw: z }); }
+      await doForms(D(o.val, '/Resources') || resVal);
+    }
+  };
+  const pageRes = async po => { let o = po.val;
+    for (let k = 0; o && k < 32; k++){ const r = D(o, '/Resources'); if (r) return r; o = await doc.resolve(D(o, '/Parent')); }
+    return null; };
+
+  for (let pi = 0; pi < pages.length; pi++){
+    const pn = pages[pi]; const po = await doc.get(pn); const pres = await pageRes(po);
+    let cv = await doc.resolve(D(po.val, '/Contents'));
+    const refs = !cv ? [] : (D(po.val, '/Contents').t === 'r' && cv.t !== 'a') ? [D(po.val, '/Contents')] : (cv.t === 'a' ? cv.v : []);
+    const parts = []; let zIn = 0, ok = refs.length > 0;
+    for (const r of refs){ if (!r || r.t !== 'r'){ ok = false; break; }
+      const o = await doc.get(r.n); if (!o || !o.raw){ ok = false; break; }
+      let data; try { data = await doc.decode(o.val, o.raw); } catch (e){ data = null; }
+      if (!data){ ok = false; break; } parts.push(u8ToStr(data)); zIn += o.raw.length; }
+    if (ok){
+      log('หน้า ' + (pi + 1) + ': กำลังเขียนคำสั่งวาดเส้นใหม่ (' + (parts.reduce((a, b) => a + b.length, 0) / 1048576).toFixed(1) + ' MB)…');
+      await new Promise(r => setTimeout(r, 0));
+      const src = parts.join('\n');
+      st.doList = []; const neu = optimizeContent(src, tol, st); const z = await deflate(strToU8(neu));
+      pagePlace.push({ list: st.doList, res: pres }); st.doList = null;
+      st.decIn += src.length; st.decOut += neu.length; st.zIn += zIn; st.zOut += z.length; st.streams += refs.length; st.pages++;
+      if (z.length < zIn){
+        const cn = next++; over.set(cn, { num: cn, g: 0, val: { t: 'd', v: new Map([['/Filter', { t: 'n', raw: '/FlateDecode' }], ['/Length', { t: '#', raw: String(z.length) }]]) }, raw: z });
+        const pd = dictClone(po.val); pd.v.set('/Contents', { t: 'r', n: cn, g: 0 }); over.set(pn, { num: pn, g: po.g, val: pd, raw: null });
+      }
+    } else if (refs.length) warnings.push('หน้า ' + (pi + 1) + ' ใช้การบีบอัดที่เครื่องมือนี้ไม่รองรับ จึงคงไว้ตามเดิม');
+    await doForms(pres);
+  }
+
+  // largest size (pt) at which each image is drawn
+  const downsample = !!opts.downsample, targetPPI = Math.max(36, Math.min(1200, +opts.ppi || 150));
+  const imgSize = new Map();
+  if (downsample){
+    const mul = (a, c) => [a[0] * c[0] + a[1] * c[2], a[0] * c[1] + a[1] * c[3], a[2] * c[0] + a[3] * c[2], a[2] * c[1] + a[3] * c[3],
+      a[4] * c[0] + a[5] * c[2] + c[4], a[4] * c[1] + a[5] * c[3] + c[5]];
+    const place = async (list, resVal, base, depth) => {
+      const res = await doc.resolve(resVal); const xo = await doc.resolve(D(res, '/XObject')); if (!xo || xo.t !== 'd') return;
+      for (const { name, m } of list){
+        const ref = D(xo, name); if (!ref || ref.t !== 'r') continue;
+        const o = await doc.get(ref.n); if (!o) continue;
+        const M = mul(m, base), sub = nameOf(D(o.val, '/Subtype'));
+        if (sub === '/Image'){ const w = Math.hypot(M[0], M[1]), h = Math.hypot(M[2], M[3]); const cur = imgSize.get(ref.n);
+          if (!cur) imgSize.set(ref.n, { w, h }); else { cur.w = Math.max(cur.w, w); cur.h = Math.max(cur.h, h); } }
+        else if (sub === '/Form' && depth < 16){ const fp = formPlace.get(ref.n); if (!fp) continue;
+          const fm = await doc.resolve(D(o.val, '/Matrix')); const F = fm && fm.t === 'a' && fm.v.length === 6 ? fm.v.map(num) : [1, 0, 0, 1, 0, 0];
+          await place(fp.list, fp.res, mul(F.some(isNaN) ? [1, 0, 0, 1, 0, 0] : F, M), depth + 1); }
+      } };
+    for (const p of pagePlace) await place(p.list, p.res, [1, 0, 0, 1, 0, 0], 0);
+  }
+
+  // collect reachable objects
+  log('กำลังเก็บกวาด object ที่ไม่ได้ใช้…');
+  const remap = new Map();
+  const collect = async src => {
+    const reach = new Map(); const stack = [];
+    const visit = v => { if (!v) return;
+      if (v.t === 'r'){ const n = remap.has(v.n) ? remap.get(v.n).n : v.n; if (!reach.has(n)){ reach.set(n, null); stack.push(n); } }
+      else if (v.t === 'd'){ for (const x of v.v.values()) visit(x); } else if (v.t === 'a'){ for (const x of v.v) visit(x); } };
+    visit(rootRef); visit(infoRef);
+    while (stack.length){ const nn = stack.pop(); const o = src ? src.get(nn) : await getObj(nn); reach.set(nn, o); if (o) visit(o.val); }
+    return reach; };
+  let reach = await collect(null);
+
+  // streams: lossless JPEG Huffman optimisation, Flate re-compression, slimmer image dictionaries
+  st.jpgIn = st.jpgOut = st.jpgOpt = st.jpgCount = st.flIn = st.flOut = st.dups = st.dictSaved = 0;
+  st.jpgLossy = st.jpgKept = 0; st.qSamples = [];
+  const quality = Math.max(1, Math.min(100, Math.round(+opts.quality || 100)));
+  const canLossy = typeof createImageBitmap !== 'undefined';
+  if (quality < 100 && !canLossy) warnings.push('สภาพแวดล้อมนี้ถอดรหัสภาพไม่ได้ จึงคงคุณภาพภาพไว้ที่ 100%');
+  st.quality = quality;
+  st.dsCount = st.dsIn = st.dsOut = st.dsText = st.dsKept = 0; st.ppi = targetPPI;
+  if (downsample && !canLossy) warnings.push('สภาพแวดล้อมนี้ถอดรหัสภาพไม่ได้ จึงลดความละเอียดได้เฉพาะภาพที่ไม่ใช่ JPEG');
+  const keepText = opts.keepText !== false, dsQ = quality < 100 ? quality : 85;
+  const added = new Map();
+  const N = (k, v) => [k, typeof v === 'string' ? (v[0] === '/' ? { t: 'n', raw: v } : { t: 'k', raw: v }) : { t: '#', raw: String(v) }];
+  const ref = n => ({ t: 'r', n, g: 0 });
+  // returns true when the image was replaced by a downsampled version
+  const downsampleImage = async (nn, o, fl) => {
+    const v = o.val, W = num(await doc.resolve(D(v, '/Width'))), H = num(await doc.resolve(D(v, '/Height'))), sz = imgSize.get(nn);
+    if (!(W > 0 && H > 0) || W * H < 4096 || !(sz.w > 0.5 && sz.h > 0.5)) return false;
+    const ppi = Math.min(W / (sz.w / 72), H / (sz.h / 72)); if (!(ppi > targetPPI * 1.15)) return false;
+    if (num(await doc.resolve(D(v, '/BitsPerComponent'))) !== 8) return false;
+    for (const k of ['/SMask', '/Mask', '/Decode', '/ImageMask', '/Alternates', '/SMaskInData']) if (D(v, k)) return false;
+    const cs = await doc.resolve(D(v, '/ColorSpace')); let nc = 0; const csn = nameOf(cs);
+    if (csn === '/DeviceRGB') nc = 3; else if (csn === '/DeviceGray') nc = 1;
+    else if (cs && cs.t === 'a' && nameOf(cs.v[0]) === '/ICCBased'){ const ic = await doc.resolve(cs.v[1]); nc = num(D(ic, '/N')); }
+    if (nc !== 1 && nc !== 3) return false;
+    let px = null;
+    if (fl === '/DCTDecode' && canLossy && !D(v, '/DecodeParms')){
+      const img = await decodeJpegPixels(o.raw); if (!img || img.width !== W || img.height !== H) return false;
+      px = new Uint8Array(W * H * nc); const s = img.data;
+      for (let i = 0; i < W * H; i++) for (let c = 0; c < nc; c++) px[i * nc + c] = s[i * 4 + c]; }
+    else if (fl === '/FlateDecode'){ const d = await doc.decode(v, o.raw); if (!d || d.length < W * H * nc) return false; px = d.subarray(0, W * H * nc); }
+    else return false;
+    const s = targetPPI / ppi, w = Math.max(1, Math.round(W * s)), h = Math.max(1, Math.round(H * s));
+    log('  ย่อภาพ ' + W + '×' + H + ' (' + Math.round(ppi) + ' PPI) → ' + w + '×' + h + (keepText ? ' พร้อมแยกชั้นตัวหนังสือ' : ''));
+    await new Promise(r => setTimeout(r, 0));
+    const L = buildLayers(px, W, H, nc, w, h, ppi, keepText, dsQ); px = null;
+    const csv = D(v, '/ColorSpace'), objs = [];
+    const bgDict = { t: 'd', v: new Map([N('/Subtype', '/Image'), N('/Width', w), N('/Height', h), ['/ColorSpace', csv], N('/BitsPerComponent', 8), N('/Filter', '/DCTDecode')]) };
+    if (D(v, '/Intent')) bgDict.v.set('/Intent', D(v, '/Intent'));
+    if (!L.packed){
+      if (D(v, '/Interpolate')) bgDict.v.set('/Interpolate', D(v, '/Interpolate'));
+      if (L.bg.length >= o.raw.length){ st.dsKept++; return false; }
+      if (D(v, '/OC')) bgDict.v.set('/OC', D(v, '/OC'));
+      added.set(nn, { num: nn, g: o.g, val: bgDict, raw: L.bg });
+      st.dsCount++; st.dsIn += o.raw.length; st.dsOut += L.bg.length; return true; }
+    bgDict.v.set('/Interpolate', { t: 'b', raw: 'true' });
+    const mz = await deflate(L.packed);
+    const total = L.bg.length + mz.length + (L.fg ? L.fg.jpg.length : 0) + 400;
+    if (total >= o.raw.length){ st.dsKept++; return false; }
+    // the image object becomes a Form drawing the downsampled background, then the full-resolution text layer
+    const bgN = next++, mN = next++;
+    objs.push([bgN, { num: bgN, g: 0, val: bgDict, raw: L.bg }]);
+    objs.push([mN, { num: mN, g: 0, val: { t: 'd', v: new Map([N('/Subtype', '/Image'), N('/Width', W), N('/Height', H), ['/ImageMask', { t: 'b', raw: 'true' }], N('/BitsPerComponent', 1), N('/Filter', '/FlateDecode')]) }, raw: mz }]);
+    const xo = new Map([['/B', ref(bgN)]]); let content;
+    if (L.fg){ const fN = next++; xo.set('/T', ref(fN));
+      objs.push([fN, { num: fN, g: 0, val: { t: 'd', v: new Map([N('/Subtype', '/Image'), N('/Width', L.fg.w), N('/Height', L.fg.h), ['/ColorSpace', csv], N('/BitsPerComponent', 8), ['/Mask', ref(mN)], N('/Filter', '/DCTDecode')]) }, raw: L.fg.jpg }]);
+      content = '/B Do /T Do'; }
+    else { xo.set('/T', ref(mN)); const c = L.color.map(x => fmtNum(Math.round(x * 1000) / 1000)).join(' ');
+      content = '/B Do ' + c + (nc === 1 ? ' g' : ' rg') + ' /T Do'; }
+    const form = { t: 'd', v: new Map([N('/Type', '/XObject'), N('/Subtype', '/Form'), ['/BBox', { t: 'a', v: [0, 0, 1, 1].map(x => ({ t: '#', raw: String(x) })) }],
+      ['/Resources', { t: 'd', v: new Map([['/XObject', { t: 'd', v: xo }]]) }]]) };
+    if (D(v, '/OC')) form.v.set('/OC', D(v, '/OC'));
+    added.set(nn, { num: nn, g: o.g, val: form, raw: strToU8(content) });
+    for (const [k, x] of objs) added.set(k, x);
+    st.dsCount++; st.dsText++; st.dsIn += o.raw.length; st.dsOut += total - 400; return true;
+  };
+  if (downsample && imgSize.size) log('กำลังลดความละเอียดภาพที่เกิน ' + targetPPI + ' PPI…');
+  if (opts.images !== false || opts.structure !== false || downsample){
+    log('กำลังปรับภาพและ stream แบบไม่สูญเสียคุณภาพ…');
+    let cnt = 0;
+    for (const [nn, o] of reach){
+      if (!o || !o.raw || over.has(nn)) continue;
+      const f = await doc.resolve(D(o.val, '/Filter'));
+      const fl = !f ? null : f.t === 'a' ? (f.v.length === 1 ? nameOf(f.v[0]) : '?') : nameOf(f);
+      const isImg = nameOf(D(o.val, '/Subtype')) === '/Image';
+      if (downsample && isImg && imgSize.has(nn)){
+        let done = false; try { done = await downsampleImage(nn, o, fl); } catch (e){ warnings.push('ลดความละเอียดภาพ object ' + nn + ' ไม่ได้ (' + e.message + ')'); }
+        if (done) continue; }
+      let raw = o.raw, d = o.val, changed = false;
+      if (opts.images !== false && isImg && fl === '/DCTDecode'){
+        st.jpgCount++; st.jpgIn += raw.length;
+        const r = jpegOptimize(raw); let best = r || raw; if (r) st.jpgOpt++;
+        const qe = jpegQuality(raw); if (qe) st.qSamples.push(qe);
+        if (quality < 100 && canLossy){
+          const cs = await doc.resolve(D(o.val, '/ColorSpace')); let ncs = 0;
+          const csn = nameOf(cs); if (csn === '/DeviceRGB') ncs = 3; else if (csn === '/DeviceGray') ncs = 1;
+          else if (cs && cs.t === 'a' && nameOf(cs.v[0]) === '/ICCBased'){ const ic = await doc.resolve(cs.v[1]); ncs = num(D(ic, '/N')); }
+          const ok = (ncs === 1 || ncs === 3) && !D(o.val, '/Decode') && !D(o.val, '/DecodeParms') && num(D(o.val, '/BitsPerComponent')) !== 16;
+          if (ok){ try { const img = await decodeJpegPixels(raw);
+              if (img && img.width === num(D(o.val, '/Width')) && img.height === num(D(o.val, '/Height'))){
+                const e = jpegEncode(img.data, img.width, img.height, quality, ncs === 1);
+                if (e.length < best.length){ best = e; st.jpgLossy++; } else st.jpgKept++; } } catch (e){ st.jpgKept++; } } }
+        if (best !== raw){ raw = best; changed = true; } st.jpgOut += raw.length; }
+      else if (opts.structure !== false && fl === '/FlateDecode' && !D(o.val, '/DecodeParms')){
+        try { const dec = await inflate(raw); const z = await deflate(dec); st.flIn += raw.length;
+          if (z.length < raw.length){ raw = z; changed = true; } st.flOut += raw.length; } catch (e){} }
+      if (opts.structure !== false && isImg && nameOf(D(o.val, '/Type')) === '/XObject'){ d = dictClone(d); d.v.delete('/Type'); changed = true; st.dictSaved++; }
+      if (changed) reach.set(nn, { num: nn, g: o.g, val: d, raw });
+      if (++cnt % 400 === 0){ log('  … ' + cnt + ' stream'); await new Promise(r => setTimeout(r, 0)); }
+    }
+    for (const [k, x] of added) reach.set(k, x);
+    if (opts.structure !== false){
+      const seen = new Map();
+      for (const nn of [...reach.keys()].sort((a, b) => a - b)){
+        const o = reach.get(nn); if (!o || !o.raw) continue;
+        const d = dictClone(o.val); d.v.delete('/Length');
+        const key = ser(d) + '|' + o.raw.length + '|' + fnv(o.raw); const c = seen.get(key);
+        if (c != null && sameBytes(reach.get(c).raw, o.raw)){ remap.set(nn, { n: c, g: reach.get(c).g }); st.dups++; }
+        else seen.set(key, nn); }
+      if (remap.size) reach = await collect(reach);
+    }
+  }
+
+  // write
+  REMAP = remap;
+  log('กำลังเขียนไฟล์ใหม่…');
+  const ver = (/^%PDF-(\d\.\d)/.exec(doc.s.slice(0, 20)) || [, '1.7'])[1];
+  const header = '%PDF-' + (pack && +ver < 1.5 ? '1.5' : ver) + '\n%\xE2\xE3\xCF\xD3\n';
+  const chunks = []; let pos = 0; const put = u => { chunks.push(u); pos += u.length; };
+  put(strToU8(header));
+  const entries = new Map();
+  const nums = [...reach.keys()].filter(k => reach.get(k)).sort((a, b) => a - b);
+  const packable = [];
+  for (const nn of nums){
+    const o = reach.get(nn);
+    if (pack && !o.raw && o.g === 0){ packable.push(nn); continue; }
+    entries.set(nn, { t: 1, off: pos, g: o.g });
+    if (o.raw){ const d = dictClone(o.val); d.v.set('/Length', { t: '#', raw: String(o.raw.length) });
+      put(strToU8(nn + ' ' + o.g + ' obj\n' + ser(d) + '\nstream\n')); put(o.raw); put(strToU8('\nendstream\nendobj\n')); }
+    else put(strToU8(nn + ' ' + o.g + ' obj\n' + ser(o.val) + '\nendobj\n'));
+  }
+  const GROUP = 200;
+  for (let a = 0; a < packable.length; a += GROUP){
+    const grp = packable.slice(a, a + GROUP); const sn = next++; let hdr = '', body = '';
+    grp.forEach((nn, k) => { hdr += nn + ' ' + body.length + ' '; body += ser(reach.get(nn).val) + '\n'; entries.set(nn, { t: 2, stm: sn, idx: k }); });
+    const z = await deflate(strToU8(hdr + body));
+    entries.set(sn, { t: 1, off: pos, g: 0 });
+    put(strToU8(sn + ' 0 obj\n<</Type/ObjStm/N ' + grp.length + '/First ' + hdr.length + '/Filter/FlateDecode/Length ' + z.length + '>>\nstream\n'));
+    put(z); put(strToU8('\nendstream\nendobj\n'));
+  }
+  const xn = next++; const size = next; entries.set(xn, { t: 1, off: pos, g: 0 });
+  const xb = new Uint8Array(size * 7);
+  for (let k = 0; k < size; k++){ const e = entries.get(k); const b = k * 7;
+    if (!e){ xb[b] = 0; if (k === 0){ xb[b + 5] = 255; xb[b + 6] = 255; } continue; }
+    const f2 = e.t === 1 ? e.off : e.stm, f3 = e.t === 1 ? e.g : e.idx;
+    xb[b] = e.t; xb[b + 1] = (f2 >>> 24) & 255; xb[b + 2] = (f2 >>> 16) & 255; xb[b + 3] = (f2 >>> 8) & 255; xb[b + 4] = f2 & 255;
+    xb[b + 5] = (f3 >>> 8) & 255; xb[b + 6] = f3 & 255; }
+  const xz = await deflate(xb);
+  let xd = '<</Type/XRef/Size ' + size + '/W[1 4 2]/Root ' + ser(rootRef);
+  if (infoRef) xd += '/Info ' + ser(infoRef); if (idv) xd += '/ID' + ser(await doc.resolve(idv));
+  xd += '/Filter/FlateDecode/Length ' + xz.length + '>>';
+  const xpos = pos;
+  put(strToU8(xn + ' 0 obj\n' + xd + '\nstream\n')); put(xz); put(strToU8('\nendstream\nendobj\nstartxref\n' + xpos + '\n%%EOF\n'));
+  const outBytes = concat(chunks); REMAP = null;
+  st.objsIn = doc.xref.size; st.objsOut = nums.length;
+  if (st.qSamples.length){ const a = st.qSamples.slice().sort((x, y) => x - y); st.srcQuality = a[a.length >> 1]; } delete st.qSamples;
+  st.ms = Date.now() - t0;
+  return { bytes: outBytes, stats: st, warnings };
+}
+return { optimize, jpegOptimize, jpegEncode, jpegQuality, Doc, optimizeContent, inflate, deflate, u8ToStr, strToU8 };
+})();
+if (typeof module !== 'undefined') module.exports = PDFSlim;
+// CORE-END
+</script>
+<script>
 const $=id=>document.getElementById(id);
 function toast(m){let b=$('toast');if(!b){b=document.createElement('div');b.id='toast';b.style.cssText='position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);max-width:90vw;background:#fff;color:#ff0000;font-weight:600;font-family:Tahoma,Noto Sans Thai,sans-serif;text-align:center;border:1px solid #ff0000;padding:16px 28px;border-radius:12px;z-index:9999;font-size:24px;white-space:pre-line;box-shadow:0 4px 16px #0006';document.body.append(b)}b.textContent=m;b.hidden=false;clearTimeout(b._t);b._t=setTimeout(()=>{b.hidden=true},3500)}
 window.alert=toast;
@@ -198,7 +1185,7 @@ window.addEventListener('error',e=>{$('empty').hidden=false;$('empty').textConte
 if(!window.pdfjsLib||!window.PDFLib){$('empty').textContent='โหลดไลบรารีไม่สำเร็จ ('+(!window.pdfjsLib?'pdf.js ':'')+(!window.PDFLib?'pdf-lib':'')+') กรุณารีเฟรชหน้า'}
 const P=window.PDFLib;
 let cmMode=false;
-const TOOLS={text:'➕ เพิ่มข้อความ',edit:'✏️ แก้ไขข้อความ',hl:'🖍 Highlight ข้อความ',wm:'💧 คาดข้อความเอกสาร (Watermark)',sg:'✍️ เซ็นเอกสารออนไลน์',merge:'📎 รวมไฟล์',pw:'🔒 ใส่รหัสผ่าน',cmp:'🗜 บีบอัด PDF',img:'🖼 แทรกรูปภาพ',rmimg:'🧹 ลบรูปภาพ',rot:'🔄 หมุนหน้า',del:'🗑 ลบหน้าเอกสาร',swp:'🔀 จัดเรียง/สลับหน้าเอกสาร',num:'🔢 เพิ่มเลขหน้า',cover:'⬛ ปิดทับข้อความ',png:'📷 แปลง PDF เป็นรูปภาพ'};
+const TOOLS={text:'➕ เพิ่มข้อความ',edit:'✏️ แก้ไขข้อความ',hl:'🖍 Highlight ข้อความ',wm:'💧 คาดข้อความเอกสาร (Watermark)',sg:'✍️ เซ็นเอกสารออนไลน์',merge:'📎 รวมไฟล์',pw:'🔒 ใส่รหัสผ่าน',cmp:'🗜 ลดขนาดไฟล์ PDF',vec:'📐 ลดขนาดไฟล์ PDF-Vector',swp:'🔀 จัดเรียง/สลับหน้าเอกสาร',img:'🖼 แทรกรูปภาพ',cover:'⬛ ปิดทับข้อความ',rmimg:'🧹 ลบรูปภาพ',rot:'🔄 หมุนหน้า',del:'🗑 ลบหน้าเอกสาร',num:'🔢 เพิ่มเลขหน้า',png:'📷 แปลง PDF เป็นรูปภาพ'};
 let selA=0,selH=false,annots=[],aid=0,bytes=null,hist=[],redo=[],pdf=null,pi=0,vp=null,tool='text',drag=null,imgFile=null,delMode=false;
 const cv=$('cv'),ov=$('ov'),ctx=cv.getContext('2d'),oc=ov.getContext('2d');
 pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
@@ -1574,4 +2561,38 @@ function addCmAnnot(D,pg,m){
   new MutationObserver(upd).observe($('stage'),{attributes:true,attributeFilter:['style','hidden']});
   upd();
 })();
+
+// ---------- ลดขนาดไฟล์ PDF-Vector ----------
+(()=>{const sy=()=>{const on=$('vdown').checked;$('vppi').disabled=$('vtext').disabled=!on;$('vdownOpts').style.opacity=on?1:.45};$('vdown').onchange=sy;sy();
+$('f').addEventListener('change',()=>{$('vres').hidden=true;$('verr').hidden=true;$('vst').textContent=''});
+const fmt=b=>b>=1048576?(b/1048576).toFixed(2)+' MB':(b/1024).toFixed(1)+' KB',fmtN=n=>n.toLocaleString('th-TH');let url=null;
+$('vgo').onclick=async()=>{if(!need())return;const err=$('verr');err.hidden=true;
+  if(!window.CompressionStream||!window.DecompressionStream){err.textContent='เบราว์เซอร์นี้ไม่รองรับ กรุณาใช้ Chrome, Edge, Firefox หรือ Safari รุ่นปัจจุบัน';err.hidden=false;return}
+  const b=$('vgo'),st=$('vst');b.disabled=true;$('vres').hidden=true;st.textContent='กำลังทำงาน...';
+  try{const src=await bakedBytes(),before=src.length;
+    const q=Math.max(1,Math.min(100,Math.round(+$('vq').value)||100)),ppi=Math.max(36,Math.min(1200,Math.round(+$('vppi').value)||150));$('vq').value=q;$('vppi').value=ppi;
+    const r=await PDFSlim.optimize(src,{tol:+$('vtol').value,pack:$('vstruct').checked,structure:$('vstruct').checked,quality:q,downsample:$('vdown').checked,ppi,keepText:$('vtext').checked},m=>{st.textContent=m.trim()});
+    const nb=r.bytes,s=r.stats,after=nb.length;
+    const rows=[['<b>คำสั่งวาดเส้นเวกเตอร์</b>',fmt(s.zIn),fmt(Math.min(s.zIn,s.zOut))],['&nbsp;&nbsp;จำนวนคำสั่ง',fmtN(s.opsIn),fmtN(s.opsOut)],['&nbsp;&nbsp;ช่วงเส้นตรงและเส้นโค้ง',fmtN(s.segIn),fmtN(s.segOut)]];
+    if(s.jpgCount)rows.push(['<b>ภาพ JPEG</b> ('+fmtN(s.jpgCount)+' ภาพ, '+(s.jpgLossy?'คุณภาพ '+s.quality+'%':'พิกเซลเท่าเดิม')+')',fmt(s.jpgIn),fmt(s.jpgOut)]);
+    if(s.quality<100)rows.push(['&nbsp;&nbsp;ภาพที่บันทึกใหม่ที่ '+s.quality+'% / คงภาพเดิม','',fmtN(s.jpgLossy)+' / '+fmtN(s.jpgCount-s.jpgLossy)]);
+    if(s.srcQuality)rows.push(['&nbsp;&nbsp;คุณภาพภาพต้นฉบับโดยประมาณ',s.srcQuality+'%','']);
+    if(s.dsCount)rows.push(['<b>ภาพที่ลดความละเอียดเป็น '+s.ppi+' PPI</b> ('+fmtN(s.dsCount)+' ภาพ)',fmt(s.dsIn),fmt(s.dsOut)]);
+    if(s.dsText)rows.push(['&nbsp;&nbsp;ภาพที่คงตัวหนังสือไว้ที่ความละเอียดเดิม','',fmtN(s.dsText)]);
+    if(s.dsKept)rows.push(['&nbsp;&nbsp;ภาพที่ย่อแล้วไม่เล็กลง (คงเดิม)','',fmtN(s.dsKept)]);
+    if(s.flIn)rows.push(['stream อื่นที่บีบอัดใหม่',fmt(s.flIn),fmt(s.flOut)]);
+    rows.push(['<b>โครงสร้าง:</b> จำนวน object',fmtN(s.objsIn),fmtN(s.objsOut)]);
+    if(s.dups)rows.push(['&nbsp;&nbsp;ภาพซ้ำที่รวมเป็นชุดเดียว','',fmtN(s.dups)]);
+    if(s.quality<100&&s.jpgCount&&!s.jpgLossy)r.warnings.push('ไม่มีภาพไหนเล็กลงที่คุณภาพ '+s.quality+'% จึงคงภาพเดิมทั้งหมด (ภาพต้นฉบับคุณภาพประมาณ '+(s.srcQuality||'?')+'%)');
+    $('vstats').innerHTML=rows.map(x=>'<tr><td>'+x[0]+'</td><td>'+x[1]+'</td><td>'+x[2]+'</td></tr>').join('');
+    $('vqnote').textContent=s.srcQuality?'ไฟล์นี้: ภาพต้นฉบับมีคุณภาพประมาณ '+s.srcQuality+'% ต้องพิมพ์ค่าต่ำกว่านี้ภาพจึงจะเล็กลง':'';$('vwarns').innerHTML=r.warnings.slice(0,6).map(w=>'<p>⚠ '+w.replace(/</g,'&lt;')+'</p>').join('');
+    $('vrNew').textContent=fmt(after);$('vrPct').textContent=after<before?'−'+((1-after/before)*100).toFixed(1)+'%':'ไม่เล็กลง';
+    $('vvOld').textContent=fmt(before);$('vvNew').textContent=fmt(after);$('vbNew').style.width=Math.max(1,Math.min(100,after/before*100))+'%';
+    const ok=after<before*.995;
+    if(ok){try{await pdfjsLib.getDocument({data:nb.slice()}).promise}catch(e){throw new Error('ไฟล์ผลลัพธ์เปิดไม่ได้ จึงคงไฟล์เดิมไว้')}
+      pushH();annots=[];await load(nb,false);st.textContent='เสร็จใน '+(s.ms/1000).toFixed(1)+' วินาที · ไฟล์ในโปรแกรมถูกแทนที่แล้ว (กด ↶ ย้อนกลับได้)'}
+    else st.textContent='ลดขนาดเพิ่มไม่ได้แล้ว คงไฟล์เดิมไว้';
+    if(url)URL.revokeObjectURL(url);const a=$('vdl');a.hidden=!ok;if(ok){url=URL.createObjectURL(new Blob([nb],{type:'application/pdf'}));a.href=url;a.download=((($('f').dataset.name||'').replace(/\.pdf$/i,'').trim())||'file')+'_slim.pdf'}
+    $('vres').hidden=false;
+  }catch(e){st.textContent='';err.textContent='ผิดพลาด: '+e.message;err.hidden=false;console.error(e)}b.disabled=false}})();
 </script></body></html>
