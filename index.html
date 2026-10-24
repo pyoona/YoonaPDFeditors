@@ -167,7 +167,7 @@ button,.btn,select,input,textarea,.lbp,label,.opt p{font-weight:500}
 <label style="font-weight:500"><input id="wmall" type="checkbox"> ใส่ลายน้ำทุกหน้า</label> <span id="wmst"></span></div></div></div>
 
 <div class="opt" data-t="rmimg"><button id="rmi">🧹 ลบรูปทั้งหมด</button><label><input type="checkbox" id="rmall"> ทุกหน้า</label><span id="rmst"></span><span style="color:var(--mu);font-size:13px;flex:1 1 200px">ลบเฉพาะรูป: คลิกที่รูปแล้วกด 🗑 ลบ  ·  ถ้าคลิกไม่ติด (รูปติดกับพื้นหลังหน้า) ให้ลากเป็นกรอบสี่เหลี่ยมครอบรูปนั้น</span></div>
-<div class="opt" data-t="cmp"><select id="cmode"><option value="max" selected>คมชัดสูงสุด – รูป ≤3000px, JPEG 90%</option><option value="mid">สมดุล (แนะนำ) – รูป ≤1600px, JPEG 65%</option><option value="hi">คุณภาพสูง – รูป ≤2400px, JPEG 80%</option><option value="low">เล็กที่สุด – รูป ≤1100px, JPEG 45%</option><option value="lossless">ไม่กระทบคุณภาพ – บีบข้อมูลโครงสร้างอย่างเดียว</option><option value="rh">แปลงเป็นรูปทุกหน้า – คมชัดสูง (JPEG 90%)</option><option value="rm">แปลงเป็นรูปทุกหน้า – ละเอียดกลาง</option><option value="rs">แปลงเป็นรูปทุกหน้า – เล็กมาก</option></select><button id="cmpb" class="p">🗜 บีบอัด</button><span id="cmst"></span></div>
+<div class="opt" data-t="cmp"><select id="cmode"><option value="q100">คุณภาพ 100% – ไม่ย่อรูป, JPEG 100%</option><option value="max" selected>คมชัดสูงสุด – รูป ≤3000px, JPEG 90%</option><option value="mid">สมดุล (แนะนำ) – รูป ≤1600px, JPEG 65%</option><option value="hi">คุณภาพสูง – รูป ≤2400px, JPEG 80%</option><option value="low">เล็กที่สุด – รูป ≤1100px, JPEG 45%</option><option value="lossless">ไม่กระทบคุณภาพ – บีบข้อมูลโครงสร้างอย่างเดียว</option><option value="rx">แปลงเป็นรูปทุกหน้า – 300 dpi, JPEG 100%</option><option value="rh">แปลงเป็นรูปทุกหน้า – คมชัดสูง (JPEG 90%)</option><option value="rm">แปลงเป็นรูปทุกหน้า – ละเอียดกลาง</option><option value="rs">แปลงเป็นรูปทุกหน้า – เล็กมาก</option></select><button id="cmpb" class="p">🗜 บีบอัด</button><span id="cmst"></span></div>
 <div class="opt" data-t="cover">สี <input id="cc" type="color" value="#000000"></div>
 <div class="opt" data-t="img"><button type="button" class="p" onclick="document.getElementById('im').click()">🖼 อัพโหลดรูปภาพ</button><input id="im" type="file" accept="image/png,image/jpeg" multiple style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none"> กว้าง <input id="iw" type="number" value="150"> <div id="imp"><span>รูปที่เลือกจะแสดงตรงนี้ — ลากรูปลงบนหน้าเพื่อวาง (เลือกได้หลายรูป)</span></div></div>
 <div class="opt" data-t="rot">
@@ -860,7 +860,7 @@ $('rmi').onclick=async()=>{let n=0;$('rmst').textContent='';const all=$('rmall')
   await edit(async D=>{n=stripImages(D,all?D.getPages():[D.getPage(pi)],!all);if(!n)throw Object.assign(new Error('ไม่พบรูปภาพ'+(all?'':'ในหน้านี้')),{skip:1});gc(D)});
   if(n)$('rmst').textContent='ลบรูปแล้ว '+n+' จุด'};
 
-const LV={max:{q:.9,max:3000},mid:{q:.65,max:1600},hi:{q:.8,max:2400},low:{q:.45,max:1100}};
+const LV={q100:{q:1,max:1e9},max:{q:.9,max:3000},mid:{q:.65,max:1600},hi:{q:.8,max:2400},low:{q:.45,max:1100}};
 const sz=n=>n>1048576?(n/1048576).toFixed(2)+' MB':Math.round(n/1024)+' KB';
 async function zip(u8){const z=new CompressionStream('deflate'),w=z.writable.getWriter();w.write(u8);w.close();return new Uint8Array(await new Response(z.readable).arrayBuffer())}
 async function reimg(c,o,lv){
@@ -889,7 +889,7 @@ async function raster(src,sc,q,st){const pd=await pdfjsLib.getDocument({data:src
   return new Uint8Array(doc.output('arraybuffer'))}
 $('cmpb').onclick=async()=>{if(!need())return;const m=$('cmode').value,b=$('cmpb'),st=$('cmst');b.disabled=true;st.textContent='กำลังทำงาน...';
   try{const src=await bakedBytes(),A=src.length;let nb;
-    if(m=='rs')nb=await raster(src,1.4,.55,st);else if(m=='rm')nb=await raster(src,2,.75,st);else if(m=='rh')nb=await raster(src,3,.9,st);
+    if(m=='rs')nb=await raster(src,1.4,.55,st);else if(m=='rm')nb=await raster(src,2,.75,st);else if(m=='rh')nb=await raster(src,3,.9,st);else if(m=='rx')nb=await raster(src,300/72,1,st);
     else{const D=await P.PDFDocument.load(src,{ignoreEncryption:true}),lv=LV[m],c=D.context;
       if(lv){const L=c.enumerateIndirectObjects().filter(e=>e[1] instanceof P.PDFRawStream&&e[1].dict.get(NM('Subtype'))===NM('Image'));let i=0;
         for(const [r,o] of L){st.textContent='บีบอัดรูป '+(++i)+'/'+L.length+'...';try{const n=await reimg(c,o,lv);if(n)c.assign(r,n)}catch(e){}}}
