@@ -2613,7 +2613,7 @@ $('vgo').onclick=async()=>{if(!need())return;const err=$('verr');err.hidden=true
     if(ok){try{await pdfjsLib.getDocument({data:nb.slice()}).promise}catch(e){throw new Error('ไฟล์ผลลัพธ์เปิดไม่ได้ จึงคงไฟล์เดิมไว้')}
       pushH();annots=[];await load(nb,false);vName();st.textContent='เสร็จใน '+(s.ms/1000).toFixed(1)+' วินาที · ไฟล์ในโปรแกรมถูกแทนที่แล้ว (กด ↶ ย้อนกลับได้)'}
     else st.textContent='ลดขนาดเพิ่มไม่ได้แล้ว คงไฟล์เดิมไว้';
-    if(url)URL.revokeObjectURL(url);const a=$('vdl');a.hidden=!ok;if(ok){url=URL.createObjectURL(new Blob([nb],{type:'application/pdf'}));a.href=url;a.download=((($('f').dataset.name||'').replace(/\.pdf$/i,'').trim())||'file')+'_slim.pdf'}
+    if(url)URL.revokeObjectURL(url);const a=$('vdl'),bn=(($('f').dataset.name||'').replace(/\.pdf$/i,'').trim())||'file';a.hidden=false;url=URL.createObjectURL(new Blob([ok?nb:src],{type:'application/pdf'}));a.href=url;a.download=bn+(ok?'_slim':'')+'.pdf';a.textContent=ok?'ดาวน์โหลดไฟล์ที่ลดขนาดแล้ว':'ดาวน์โหลดไฟล์ (ขนาดเดิม '+fmt(src.length)+')';
     $('vres').hidden=false;
   }catch(e){st.textContent='';err.textContent='ผิดพลาด: '+e.message;err.hidden=false;console.error(e)}b.disabled=false}})();
 </script></body></html>
