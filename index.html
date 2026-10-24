@@ -169,6 +169,18 @@ button,.btn,select,input,textarea,.lbp,label,.opt p{font-weight:500}
 body.vecmode #thumbs,body.vecmode #nav,body.vecmode #wrap{display:none!important}
 #vfile{border:1px solid var(--bd);border-radius:10px;padding:10px 14px;background:var(--bg);font-size:15px;word-break:break-all}#vfile b{color:#c8102e}#vfile span{color:var(--mu);font-size:13px}#vfile .vfe{color:#ff0000;font-size:14px}
 #vres{max-width:700px;width:100%;justify-self:start}#vres .vtab{width:100%}#vres .vbars .t{max-width:none}
+@media (max-height:920px) and (min-width:641px){
+.vcols .vcard{padding:14px 18px;line-height:1.4}
+.vrow{margin:10px 0}.vlbl{margin-bottom:4px}
+.vhint{font-size:12px;margin-top:3px;line-height:1.4}
+.vq input[type=number]{font-size:16px;width:90px;padding:4px 8px}.vq span{font-size:16px}
+.vchk{margin:8px 0}.vchk input{margin-top:3px}
+#vdownOpts .vsub{display:inline-block;margin:0 8px 0 0}#vdownOpts .vq{display:inline-flex}
+#vgo{padding:9px 16px;margin-top:6px}
+#vfile{padding:6px 12px;font-size:14px}
+#main{padding-top:8px}
+}
+@media (max-height:920px) and (min-width:641px){#tabs{gap:3px;padding:8px 12px}#tabs button{padding:3px 10px;font-size:14px}}
 </style></head><body>
 <header><h1>📄 PDF Editor <span style="color:#ff0000;font-size:12px;font-weight:400">Powered by พี Yoona</span></h1>
 <button class="p up" onclick="document.getElementById('f').click()">Upload File</button><input id="f" type="file" accept="application/pdf,.pdf" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none">
@@ -1662,6 +1674,8 @@ function editAnnot(a){selA=a.id;
       renderAnnots()}});
 }
 let rzT=0;window.addEventListener('resize',()=>{clearTimeout(rzT);rzT=setTimeout(()=>{applyZoom();if(!ed)renderAnnots()},150)});
+// พื้นที่แสดงหน้าเปลี่ยนความกว้าง (เช่นเปิดแถบลายเซ็น) → ปรับขนาดหน้าให้พอดีใหม่ ไม่ให้หน้าล้นจอ
+if(window.ResizeObserver){let lw=0;new ResizeObserver(()=>{const w=$('wrap').clientWidth;if(!w||w===lw)return;lw=w;clearTimeout(rzT);rzT=setTimeout(()=>{applyZoom();if(!ed)renderAnnots()},60)}).observe($('wrap'))}
 
 // ---- zoom: scales only the PDF page (canvas + overlay + added text); toolbar buttons keep their size
 let zm=1,zraf=0;const ZMIN=.5,ZMAX=3;
