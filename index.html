@@ -167,6 +167,8 @@ button,.btn,select,input,textarea,.lbp,label,.opt p{font-weight:500}
 #vst{color:var(--mu);font-size:13px;margin-top:8px;min-height:1em}#verr{color:#c8102e;font-size:14px;margin:8px 0 0}
 .vdl{display:block;text-align:center;text-decoration:none;font-weight:600;border-radius:10px;padding:12px 20px;background:#1f7a4d;color:#fff;margin-top:16px}.vdl[hidden]{display:none}
 body.vecmode #thumbs,body.vecmode #nav,body.vecmode #wrap{display:none!important}
+#vfile{border:1px solid var(--bd);border-radius:10px;padding:10px 14px;background:var(--bg);font-size:15px;word-break:break-all}#vfile b{color:#c8102e}#vfile span{color:var(--mu);font-size:13px}#vfile .vfe{color:#ff0000;font-size:14px}
+#vres{max-width:700px;width:100%;justify-self:start}#vres .vtab{width:100%}#vres .vbars .t{max-width:none}
 </style></head><body>
 <header><h1>📄 PDF Editor <span style="color:#ff0000;font-size:12px;font-weight:400">Powered by พี Yoona</span></h1>
 <button class="p up" onclick="document.getElementById('f').click()">Upload File</button><input id="f" type="file" accept="application/pdf,.pdf" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none">
@@ -188,7 +190,7 @@ body.vecmode #thumbs,body.vecmode #nav,body.vecmode #wrap{display:none!important
 <div class="opt" data-t="cmp"><select id="cmode"><option value="q100">คุณภาพ 100% – ไม่ย่อรูป, JPEG 100%</option><option value="max" selected>คมชัดสูงสุด – รูป ≤3000px, JPEG 90%</option><option value="mid">สมดุล (แนะนำ) – รูป ≤1600px, JPEG 65%</option><option value="hi">คุณภาพสูง – รูป ≤2400px, JPEG 80%</option><option value="low">เล็กที่สุด – รูป ≤1100px, JPEG 45%</option><option value="lossless">ไม่กระทบคุณภาพ – บีบข้อมูลโครงสร้างอย่างเดียว</option><option value="rx">แปลงเป็นรูปทุกหน้า – 300 dpi, JPEG 100%</option><option value="rh">แปลงเป็นรูปทุกหน้า – คมชัดสูง (JPEG 90%)</option><option value="rm">แปลงเป็นรูปทุกหน้า – ละเอียดกลาง</option><option value="rs">แปลงเป็นรูปทุกหน้า – เล็กมาก</option></select><button id="cmpb" class="p">🗜 บีบอัด</button><span id="cmst"></span></div>
 <div class="opt" data-t="vec"><div class="vcols">
 <div class="vcard">
-
+<div id="vfile"></div>
 <div class="vrow"><div class="vlbl">ลดขนาดเส้นเวกเตอร์</div><select id="vtol"><option value="0.02">ละเอียดมาก: 0.02 pt (≈0.007 มม.)</option><option value="0.05">ละเอียด: 0.05 pt (≈0.018 มม.)</option><option value="0.1" selected>สมดุล: 0.1 pt (≈0.035 มม.) แนะนำ</option><option value="0.25">เล็กสุด: 0.25 pt (≈0.09 มม.)</option></select>
 <div class="vhint">ค่าความคลาดเคลื่อนเป็นระยะที่เส้นอาจเลื่อนไปจากเดิมได้มากที่สุด ระดับ "สมดุล" มองไม่เห็นความต่างทั้งบนจอและงานพิมพ์ทั่วไป</div></div>
 <div class="vrow"><label for="vq" class="vlbl">คุณภาพของภาพ</label><div class="vq"><input id="vq" type="number" min="1" max="100" step="1" value="100" inputmode="numeric"><span>%</span></div>
@@ -1192,7 +1194,7 @@ const cv=$('cv'),ov=$('ov'),ctx=cv.getContext('2d'),oc=ov.getContext('2d');
 pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
 for(const k in TOOLS){const b=document.createElement('button');b.textContent=TOOLS[k];b.dataset.t=k;b.onclick=()=>setTool(k);$('tabs').append(b)}
-function setTool(t){document.body.classList.toggle('vecmode',t=='vec');const prevTool=tool;if(typeof setDel=='function'&&delMode)setDel(false);if((prevTool=='text'||prevTool=='edit')&&(t=='text'||t=='edit')&&t!==prevTool){$('fsel').value='auto';$('fsz').value='';$('fszl').hidden=true;$('fi').textContent=''}if(selA){selA=0;selH=false;if(vp)renderAnnots()}tool=t;if(t!='hl')cmMode=false;$('stage').classList.toggle('noan',t!='text'&&t!='edit');ov.style.cursor=(t=='text'||t=='hl')?'text':'crosshair';document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.t==t));document.querySelectorAll('.opt').forEach(o=>o.classList.toggle('on',o.dataset.t.split(' ').includes(t)));cmClear();wmPrev();hlCur();if(t!='sg')sgClear();rmClear();if(t!='wm'){try{wmLeave()}catch(e){}}try{ftHint()}catch(e){}}
+function setTool(t){document.body.classList.toggle('vecmode',t=='vec');if(t=='vec'&&window.vName)vName();const prevTool=tool;if(typeof setDel=='function'&&delMode)setDel(false);if((prevTool=='text'||prevTool=='edit')&&(t=='text'||t=='edit')&&t!==prevTool){$('fsel').value='auto';$('fsz').value='';$('fszl').hidden=true;$('fi').textContent=''}if(selA){selA=0;selH=false;if(vp)renderAnnots()}tool=t;if(t!='hl')cmMode=false;$('stage').classList.toggle('noan',t!='text'&&t!='edit');ov.style.cursor=(t=='text'||t=='hl')?'text':'crosshair';document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.t==t));document.querySelectorAll('.opt').forEach(o=>o.classList.toggle('on',o.dataset.t.split(' ').includes(t)));cmClear();wmPrev();hlCur();if(t!='sg')sgClear();rmClear();if(t!='wm'){try{wmLeave()}catch(e){}}try{ftHint()}catch(e){}}
 (()=>{const h=document.querySelector('header'),u=()=>document.documentElement.style.setProperty('--hh',h.offsetHeight+'px');u();addEventListener('resize',u);if(window.ResizeObserver)new ResizeObserver(u).observe(h)})();
 (()=>{const i=$('fsz'),b=$('fszb'),l=$('fszl');
 const show=()=>{[...l.children].forEach(d=>d.classList.toggle('cur',d.dataset.v===i.value.trim()));l.hidden=false;const c=l.querySelector('.cur');if(c)l.scrollTop=c.offsetTop-l.clientHeight/2};
@@ -2564,9 +2566,10 @@ function addCmAnnot(D,pg,m){
 })();
 
 // ---------- ลดขนาดไฟล์ PDF-Vector ----------
+window.vName=(n,z)=>{const el=$('vfile');n=n||$('f').dataset.name||'';z=z||(bytes?bytes.length:0);if(!n&&!z){el.innerHTML='<span class="vfe">ยังไม่ได้อัพโหลดไฟล์ — กด "Upload File" ด้านบน</span>';return}el.innerHTML='📄 <b></b> <span></span>';el.querySelector('b').textContent=n||'ไฟล์ PDF';el.querySelector('span').textContent=z?'· '+(z>=1048576?(z/1048576).toFixed(2)+' MB':(z/1024).toFixed(1)+' KB'):''};
 (()=>{const sy=()=>{const on=$('vdown').checked;$('vppi').disabled=$('vtext').disabled=!on;$('vdownOpts').style.opacity=on?1:.45};$('vdown').onchange=sy;sy();
-$('f').addEventListener('change',()=>{$('vres').hidden=true;$('verr').hidden=true;$('vst').textContent=''});
-const fmt=b=>b>=1048576?(b/1048576).toFixed(2)+' MB':(b/1024).toFixed(1)+' KB',fmtN=n=>n.toLocaleString('th-TH');let url=null;
+$('f').addEventListener('change',e=>{const f=e.target.files[0];if(f)vName(f.name,f.size);$('vres').hidden=true;$('verr').hidden=true;$('vst').textContent=''});
+const fmt=b=>b>=1048576?(b/1048576).toFixed(2)+' MB':(b/1024).toFixed(1)+' KB',fmtN=n=>n.toLocaleString('th-TH');let url=null;vName();
 $('vgo').onclick=async()=>{if(!need())return;const err=$('verr');err.hidden=true;
   if(!window.CompressionStream||!window.DecompressionStream){err.textContent='เบราว์เซอร์นี้ไม่รองรับ กรุณาใช้ Chrome, Edge, Firefox หรือ Safari รุ่นปัจจุบัน';err.hidden=false;return}
   const b=$('vgo'),st=$('vst');b.disabled=true;$('vres').hidden=true;st.textContent='กำลังทำงาน...';
@@ -2591,7 +2594,7 @@ $('vgo').onclick=async()=>{if(!need())return;const err=$('verr');err.hidden=true
     $('vvOld').textContent=fmt(before);$('vvNew').textContent=fmt(after);$('vbNew').style.width=Math.max(1,Math.min(100,after/before*100))+'%';
     const ok=after<before*.995;
     if(ok){try{await pdfjsLib.getDocument({data:nb.slice()}).promise}catch(e){throw new Error('ไฟล์ผลลัพธ์เปิดไม่ได้ จึงคงไฟล์เดิมไว้')}
-      pushH();annots=[];await load(nb,false);st.textContent='เสร็จใน '+(s.ms/1000).toFixed(1)+' วินาที · ไฟล์ในโปรแกรมถูกแทนที่แล้ว (กด ↶ ย้อนกลับได้)'}
+      pushH();annots=[];await load(nb,false);vName();st.textContent='เสร็จใน '+(s.ms/1000).toFixed(1)+' วินาที · ไฟล์ในโปรแกรมถูกแทนที่แล้ว (กด ↶ ย้อนกลับได้)'}
     else st.textContent='ลดขนาดเพิ่มไม่ได้แล้ว คงไฟล์เดิมไว้';
     if(url)URL.revokeObjectURL(url);const a=$('vdl');a.hidden=!ok;if(ok){url=URL.createObjectURL(new Blob([nb],{type:'application/pdf'}));a.href=url;a.download=((($('f').dataset.name||'').replace(/\.pdf$/i,'').trim())||'file')+'_slim.pdf'}
     $('vres').hidden=false;
