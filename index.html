@@ -1224,15 +1224,20 @@ setTool('text');$('fcl').oninput=()=>{$('fca').checked=false};$('fg').onchange=(
 async function load(b,push=true){
   if(push&&bytes)pushH();
   bytes=b;pdf=await pdfjsLib.getDocument({data:b.slice()}).promise;
-  if(pi>=pdf.numPages)pi=pdf.numPages-1;buildThumbs();await show();
+  if(pi>=pdf.numPages)pi=pdf.numPages-1;let rdy;thReady=new Promise(r=>rdy=r);buildThumbs();try{await show()}finally{rdy()}
 }
 // Annotation (เช่น FreeText ที่เพิ่มจาก Edge) วาดบนชั้นของมันเอง วางเหนือแผ่นสีปิดทับ จะได้ไม่ถูกบังตอนแก้ข้อความ
 var ftList=[];let cva=null;
+// ถ้าข้ามการแยกชั้น annotation ไว้ แล้วผู้ใช้เพิ่มแผ่นปิดทับในหน้านั้น → วาดหน้าใหม่ให้ annotation ลอยเหนือแผ่นปิดทับเหมือนในไฟล์จริง
+var layerSkipped=false;
+function layerRecheck(){if(layerSkipped&&pdf&&annots.some(x=>x.cover&&x.pg==pi)){layerSkipped=false;show()}}
 async function renderPageLayers(p){
   if(!cva){cva=document.createElement('canvas');cva.id='cva';cva.style.cssText='position:absolute;left:0;top:0;z-index:6;pointer-events:none';cv.after(cva)}
   cva.width=cv.width;cva.height=cv.height;cva.getContext('2d').clearRect(0,0,cva.width,cva.height);cva.style.width=cv.style.width;cva.hidden=true;
   let has=false;ftList=[];
   try{const an=await p.getAnnotations();has=an.some(a=>a.subtype&&!['Link','Popup','Widget'].includes(a.subtype));
+    // วาดชั้น annotation แยก (ต้องวาดหน้า 2 รอบ) เฉพาะเมื่อจำเป็น: มี FreeText ให้แก้ หรือมีแผ่นปิดทับในหน้านี้
+    layerSkipped=false;if(has&&!an.some(a=>a.subtype==='FreeText')&&!annots.some(x=>x.cover&&x.pg==pi)){has=false;layerSkipped=true}
     ftList=an.filter(a=>a.subtype==='FreeText'&&a.rect&&!((a.annotationFlags||0)&34)).map(a=>({id:a.id,rect:Array.from(a.rect)}))}catch(e){}
   if(!has){await p.render({canvasContext:ctx,viewport:vp}).promise;return}
   await p.render({canvasContext:ctx,viewport:vp,annotationMode:0}).promise;
@@ -1253,6 +1258,7 @@ async function show(){
 }
 // วาดหน้าทีละครั้ง: ถ้ามีการเรียก show() ซ้อนกัน (เช่นเปิดไฟล์แล้วกดลดขนาดทันที) ให้รอรอบก่อนเสร็จ จะได้ไม่ชนกันบน canvas เดียว
 {const s0=show;let q=Promise.resolve();show=function(...a){const r=q.then(()=>s0.apply(this,a));q=r.catch(()=>{});return r}}
+{const r0=renderAnnots;renderAnnots=function(...a){const v=r0.apply(this,a);try{layerRecheck()}catch(e){}return v}}
 const snap=()=>({b:bytes,a:JSON.parse(JSON.stringify(annots))});
 const pushH=()=>{hist.push(snap());redo=[]};
 function need(){if(!bytes){alert('กรุณา Upload File PDF ก่อน');return false}return true}
@@ -1714,7 +1720,10 @@ $('f').onchange=async e=>{const f=e.target.files[0];if(!f)return;hist=[];redo=[]
   try{let b=new Uint8Array(await f.arrayBuffer());b=await unlockIfEncrypted(b);await load(b,false);orig=bytes;$('f').dataset.name=f.name}catch(x){alert('เปิดไฟล์ไม่ได้: '+(x.message||x))}e.target.value=''};
 // ไฟล์ที่ถูกเข้ารหัส/ล็อกการแก้ไข: pdf-lib แก้แล้วบันทึกกลับไม่ได้ (pdf.js จะขอรหัสผ่าน -> 'No password given')
 // จึงเปิดด้วย pdf.js (ถามรหัสผ่านถ้าจำเป็น) แล้วแปลงแต่ละหน้าเป็นภาพ สร้างเป็น PDF ใหม่ที่ไม่เข้ารหัส
+// เช็คแบบเร็ว: ไฟล์ที่เข้ารหัสต้องมีคำว่า /Encrypt ใน trailer — ถ้าไม่มีเลยก็ไม่ต้องให้ pdf-lib อ่านทั้งไฟล์ (ไฟล์หลาย MB ใช้เวลานาน)
+function hasEncryptKey(b){const k=[47,69,110,99,114,121,112,116];outer:for(let i=b.indexOf(47);i>=0&&i<=b.length-8;i=b.indexOf(47,i+1)){for(let j=1;j<8;j++)if(b[i+j]!==k[j])continue outer;return true}return false}
 async function unlockIfEncrypted(b){
+  if(!hasEncryptKey(b))return b;
   let enc=false;try{enc=!!(await P.PDFDocument.load(b,{ignoreEncryption:true})).isEncrypted}catch(e){enc=true}
   if(!enc)return b;
   if(!await ask('ไฟล์นี้ถูกเข้ารหัสหรือล็อกการแก้ไข จึงแก้ไขโดยตรงไม่ได้\nต้องแปลงแต่ละหน้าเป็นภาพก่อน (ข้อความในไฟล์จะเลือก/ค้นหาไม่ได้)\nดำเนินการต่อหรือไม่?'))throw new Error('ยกเลิกการเปิดไฟล์');
@@ -2245,7 +2254,10 @@ function thDrag(d,i,e){
   addEventListener('pointermove',mv);addEventListener('pointerup',end);addEventListener('pointercancel',end);addEventListener('touchmove',tm,{passive:false});
   if(touch)timer=setTimeout(()=>{if(!on&&Math.hypot(cx-sx,cy-sy)<=8)begin()},350);
 }
-async function renderTh(doc,d,tok){
+async function renderTh(doc,d,tok){const r=thQ.then(()=>renderTh0(doc,d,tok));thQ=r.catch(()=>{});return r}
+// ภาพย่อ: รอหน้าหลักแสดงเสร็จก่อน แล้ววาดทีละภาพ จะได้ไม่แย่งเวลากับหน้าที่กำลังเปิด
+var thReady=Promise.resolve(),thQ=Promise.resolve();
+async function renderTh0(doc,d,tok){await thReady;if(tok!==thTok)return;
   try{const p=await doc.getPage(+d.dataset.i+1),v0=p.getViewport({scale:1}),sc=Math.min(2,Math.max(1,window.devicePixelRatio||1))*110/v0.width,v=p.getViewport({scale:sc}),c=d.querySelector('canvas');
     if(tok!==thTok)return;c.width=Math.round(v.width);c.height=Math.round(v.height);
     await p.render({canvasContext:c.getContext('2d'),viewport:v}).promise}catch(e){}
