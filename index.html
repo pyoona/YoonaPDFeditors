@@ -1625,10 +1625,22 @@ async function ftWrite(f,info,o){
   });
 }
 
+// ลายเซ็น/รูปที่วางทับ annotation เดิม (เช่นรูปแบบ Stamp ที่ฝังมาในไฟล์) — annotation จะแสดงทับเนื้อหาหน้าเสมอ
+// จึงต้องใส่ลายเซ็นเป็น annotation ตัวสุดท้ายของหน้า เพื่อให้อยู่บนสุด
+function annotOver(D,pg,r){const N=P.PDFName.of,arr=pg.node.lookupMaybe(N('Annots'),P.PDFArray);if(!arr)return false;
+  for(let i=0;i<arr.size();i++){const d=arr.lookupMaybe(i,P.PDFDict);if(!d)continue;const st=d.lookupMaybe(N('Subtype'),P.PDFName);
+    if(st&&['/Link','/Popup'].includes(st.asString()))continue;const R=d.lookupMaybe(N('Rect'),P.PDFArray);if(!R||R.size()<4)continue;
+    const q=[0,1,2,3].map(k=>{const v=R.lookup(k);return v&&v.asNumber?v.asNumber():0}),x0=Math.min(q[0],q[2]),x1=Math.max(q[0],q[2]),y0=Math.min(q[1],q[3]),y1=Math.max(q[1],q[3]);
+    if(r.x<x1&&r.x+r.w>x0&&r.y<y1&&r.y+r.h>y0)return true}
+  return false}
+function imgAnnot(D,pg,emb,r){const N=P.PDFName.of,c=D.context,f=v=>Math.round(v*1000)/1000,w=f(r.w),h=f(r.h);
+  const ap=c.register(c.stream(`q ${w} 0 0 ${h} 0 0 cm /Im0 Do Q`,{Type:'XObject',Subtype:'Form',BBox:[0,0,w,h],Resources:{XObject:{Im0:emb.ref}}}));
+  const ref=c.register(c.obj({Type:'Annot',Subtype:'Stamp',Name:'Signature',Rect:[f(r.x),f(r.y),f(r.x+r.w),f(r.y+r.h)],F:4|128,P:pg.ref,AP:{N:ap},M:P.PDFString.fromDate(new Date())}));
+  let arr=pg.node.lookupMaybe(N('Annots'),P.PDFArray);if(!arr){arr=c.obj([]);pg.node.set(N('Annots'),arr)}arr.push(ref)}
 // ---- added text lives as movable/editable objects until it is baked into the PDF (save / other tools)
 async function bake(D){
   for(const a of annots){const pg=D.getPage(a.pg);if(a.cm)addCmAnnot(D,pg,a.cm);if(a.mk)drawMark(pg,a.mk);
-    if(a.im){const e=a.im.type=='image/png'?await D.embedPng(Uint8Array.from(atob(a.im.u.split(',')[1]),c=>c.charCodeAt(0))):await D.embedJpg(Uint8Array.from(atob(a.im.u.split(',')[1]),c=>c.charCodeAt(0)));pg.drawImage(e,{x:a.im.x,y:a.im.y,width:a.im.w,height:a.im.h})}
+    if(a.im){const e=a.im.type=='image/png'?await D.embedPng(Uint8Array.from(atob(a.im.u.split(',')[1]),c=>c.charCodeAt(0))):await D.embedJpg(Uint8Array.from(atob(a.im.u.split(',')[1]),c=>c.charCodeAt(0)));if(annotOver(D,pg,a.im))imgAnnot(D,pg,e,a.im);else pg.drawImage(e,{x:a.im.x,y:a.im.y,width:a.im.w,height:a.im.h})}
     if(a.cover)pg.drawRectangle({x:a.cover.x,y:a.cover.y,width:a.cover.w,height:a.cover.h,color:rgbOf(a.cover.color)});
     if(a.text&&a.text.trim()){const o=await txtPng(a.text,a.size,a.color,a.fam),im=await D.embedPng(o.buf);pg.drawImage(im,{x:a.x,y:a.y-o.h,width:o.w,height:o.h})}}
 }
