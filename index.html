@@ -236,9 +236,9 @@ body.vecmode #thumbs,body.vecmode #nav,body.vecmode #wrap{display:none!important
 <div class="opt" data-t="pw"><input id="pw" type="password" placeholder="รหัสผ่าน"><button id="pwb" class="p">ใส่รหัสผ่านและบันทึก</button></div>
 <div class="opt" data-t="png"><button id="pngb" class="p">แปลงเป็นรูปภาพ</button></div>
 
-<div id="work"><div class="opt" data-t="sg" style="margin:12px 0 0 16px;width:320px;flex:none;flex-direction:column;align-items:stretch"><div id="sgtabs" style="display:flex;gap:4px;margin-bottom:8px"><button type="button" data-k="0" class="p" style="flex:1">✏️ วาด</button><button type="button" data-k="1" style="flex:1">Aa พิมพ์</button><button type="button" data-k="2" style="flex:1">🖼 รูปภาพ</button></div><div id="sgp0" style="display:flex;flex-direction:column;gap:6px"><canvas id="sgc" width="560" height="240" style="width:280px;height:120px;touch-action:none;background:#fff;border:1px solid var(--bd);border-radius:6px;cursor:crosshair"></canvas><span>สีหมึก <input id="sgink" type="color" value="#000080"> <button id="sgclr">ล้าง</button> <button id="sgadd" class="p">+ เพิ่มลายเซ็นที่วาด</button></span></div>
+<div id="work"><div class="opt" data-t="sg" style="margin:12px 0 0 16px;width:320px;flex:none;flex-direction:column;align-items:stretch"><div id="sgtabs" style="display:flex;gap:4px;margin-bottom:8px"><button type="button" data-k="2" class="p" style="flex:1">🖼 รูปภาพ</button><button type="button" data-k="1" style="flex:1">Aa พิมพ์</button><button type="button" data-k="0" style="flex:1">✏️ วาด</button></div><div id="sgp0" hidden style="flex-direction:column;gap:6px"><canvas id="sgc" width="560" height="240" style="width:280px;height:120px;touch-action:none;background:#fff;border:1px solid var(--bd);border-radius:6px;cursor:crosshair"></canvas><span>สีหมึก <input id="sgink" type="color" value="#000080"> <button id="sgclr">ล้าง</button> <button id="sgadd" class="p">+ เพิ่มลายเซ็นที่วาด</button></span></div>
 <div id="sgp1" hidden style="flex-direction:column;gap:6px"><input id="sgt" type="text" placeholder="พิมพ์ชื่อของคุณ"><select id="sgf"><option value="Dancing Script">Dancing Script (ลายมือสากล)</option><option value="Charm">Charm (ลายมือไทย)</option><option value="Sarabun">Sarabun (ตัวเรียบ)</option></select><button id="sgtadd" class="p">+ เพิ่มลายเซ็นข้อความ</button></div>
-<div id="sgp2" hidden style="flex-direction:column;gap:6px">รูปภาพลายเซ็น (PNG/JPG)<input id="sgfile" type="file" accept="image/png,image/jpeg"><label><input type="checkbox" id="sgw" checked> ลบพื้นหลังสีขาว</label></div>
+<div id="sgp2" style="display:flex;flex-direction:column;gap:6px">รูปภาพลายเซ็น (PNG/JPG)<input id="sgfile" type="file" accept="image/png,image/jpeg"><label><input type="checkbox" id="sgw" checked> ลบพื้นหลังสีขาว</label></div>
 <div style="border-top:1px solid var(--bd);margin:12px 0 8px;padding-top:8px"><b>ลายเซ็นของฉัน</b></div><div id="sgl" style="display:flex;flex-wrap:wrap;gap:8px;flex-basis:100%"></div></div><div id="thumbs" hidden></div><div style="flex:1;min-width:0"><div id="nav"><button id="pv">◀</button><span id="pg">–</span><button id="nx">▶</button><span style="width:16px"></span><button id="zo" title="Zoom out">−</button><button id="zr" title="Reset zoom" style="min-width:64px">100%</button><button id="zi" title="Zoom in">+</button></div>
 <div id="wrap"><div id="empty">กด "Upload File" เพื่อเริ่มต้น</div>
 <div id="stage" hidden><canvas id="cv"></canvas><canvas id="ov"></canvas><canvas id="wmv" hidden style="position:absolute;left:0;top:0;pointer-events:none;z-index:4"></canvas></div></div></div></div>
@@ -1760,7 +1760,7 @@ $('reset').onclick=async()=>{
   const bx=$('dlbox');if(bx)bx.remove();$('fi').textContent='';$('imgs').innerHTML='';
   // ล้างรายการลายเซ็น (เครื่องมือ 1) และรูปที่เลือกไว้ (เครื่องมือ 2)
   sigs.length=0;sgRender();sgClear();sx.clearRect(0,0,sc.width,sc.height);
-  {const t=$('sgtabs')&&$('sgtabs').querySelector('button[data-k="0"]');if(t)t.click()}
+  {const t=$('sgtabs')&&$('sgtabs').querySelector('button[data-k="2"]');if(t)t.click()}
   imgList=[];imgSel=0;$('im').value='';
   $('imp').innerHTML='<span>รูปที่เลือกจะแสดงตรงนี้ — ลากรูปลงบนหน้าเพื่อวาง (เลือกได้หลายรูป)</span>';
   setTool('text');pi=0;
@@ -2056,7 +2056,7 @@ function sgDelPill(fx,fy,fhh){
   b.onclick=async e=>{e.stopPropagation();b.remove();await $('undo').onclick()};
   st.append(b);setTimeout(()=>b.remove(),10000)}
 
-(()=>{const bs=[...document.querySelectorAll('#sgtabs button')];bs.forEach(b=>b.onclick=()=>{bs.forEach(x=>x.classList.toggle('p',x===b));[0,1,2].forEach(k=>{const el=$('sgp'+k);el.hidden=k!=+b.dataset.k;el.style.display=el.hidden?'none':'flex'})});$('sgp0').style.display='flex'})();
+(()=>{const bs=[...document.querySelectorAll('#sgtabs button')];bs.forEach(b=>b.onclick=()=>{bs.forEach(x=>x.classList.toggle('p',x===b));[0,1,2].forEach(k=>{const el=$('sgp'+k);el.hidden=k!=+b.dataset.k;el.style.display=el.hidden?'none':'flex'})});$('sgp2').style.display='flex'})();
 function sgPlace(u,pos){if(!need())return;sgClear();const im=new Image();im.onload=()=>{
   const st=$('stage'),asp=cv.width/cv.height,o={fx:0,fy:0,fw:.28,ar:im.height/im.width},fh=()=>o.fw*asp*o.ar;if(pos){const pw=cv.width/vp.scale;o.fw=Math.min(90,36/o.ar,pw*.2)/pw;o.fx=pos.cx-o.fw/2;o.fy=pos.cy-fh()/2}else{o.fx=(1-o.fw)/2;o.fy=.7}o.fx=Math.max(0,Math.min(1-o.fw,o.fx));o.fy=Math.max(0,Math.min(1-fh(),o.fy));
   const d=document.createElement('div');d.className='sgo';d.style.cssText='position:absolute;z-index:6;border:2px dashed #1e3a8a;background:#ffffff22;cursor:move;touch-action:none;line-height:0';
