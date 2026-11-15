@@ -200,7 +200,7 @@ body.vecmode #thumbs,body.vecmode #nav,body.vecmode #wrap{display:none!important
 #sgside button,#sgmine button{white-space:nowrap}
 #sgl{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
 #sgside::before{display:none}#sgside{flex-wrap:nowrap!important;gap:10px!important}#sghd{font:bold 14px/1.3 "Sarabun","IBM Plex Sans Thai","Noto Sans Thai","Leelawadee UI",Tahoma,sans-serif;color:#c80000;white-space:nowrap}
-#wrap.hand,#wrap.hand *{cursor:grab!important}#wrap.grabbing,#wrap.grabbing *{cursor:grabbing!important;user-select:none}#wrap.hand,#wrap.grabbing{touch-action:none}#wrap:has(#stage:not([hidden])){cursor:grab}#wrap #stage{cursor:auto}#hand{font-size:16px;min-width:40px}
+#wrap.hand,#wrap.hand *{cursor:grab!important}#wrap.grabbing,#wrap.grabbing *{cursor:grabbing!important;user-select:none}#wrap.hand,#wrap.grabbing{touch-action:none}body.bgpan #wrap:has(#stage:not([hidden])){cursor:grab}#wrap #stage{cursor:auto}#hand{font-size:16px;min-width:40px}
 </style></head><body>
 <header><h1>📄 PDF Editor <span style="color:#ff0000;font-size:12px;font-weight:400">Powered by พี Yoona</span></h1>
 <button class="p up" onclick="document.getElementById('f').click()">Upload File</button><input id="f" type="file" accept="application/pdf,.pdf" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none">
@@ -1224,7 +1224,7 @@ const cv=$('cv'),ov=$('ov'),ctx=cv.getContext('2d'),oc=ov.getContext('2d');
 pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
 for(const k in TOOLS){const b=document.createElement('button');b.textContent=TOOLS[k];b.dataset.t=k;b.onclick=()=>setTool(k);$('tabs').append(b)}
-function setTool(t){if(window.handSet)handSet(false);document.body.classList.toggle('vecmode',t=='vec');if(t=='vec'&&window.vName){vName();if(window.vSync)vSync()}const prevTool=tool;if(typeof setDel=='function'&&delMode)setDel(false);if((prevTool=='text'||prevTool=='edit')&&(t=='text'||t=='edit')&&t!==prevTool){$('fsel').value='auto';$('fsz').value='';$('fszl').hidden=true;$('fi').textContent=''}if(selA){selA=0;selH=false;if(vp)renderAnnots()}tool=t;if(t!='hl')cmMode=false;$('stage').classList.toggle('noan',t!='text'&&t!='edit');ov.style.cursor=(t=='text'||t=='hl')?'text':'crosshair';document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.t==t));document.querySelectorAll('.opt').forEach(o=>o.classList.toggle('on',o.dataset.t.split(' ').includes(t)));cmClear();wmPrev();hlCur();if(t!='sg')sgClear();rmClear();if(t!='wm'){try{wmLeave()}catch(e){}}try{ftHint()}catch(e){}}
+function setTool(t){if(window.handSet)handSet(false);document.body.classList.toggle('bgpan',['text','edit','sg'].includes(t));document.body.classList.toggle('vecmode',t=='vec');if(t=='vec'&&window.vName){vName();if(window.vSync)vSync()}const prevTool=tool;if(typeof setDel=='function'&&delMode)setDel(false);if((prevTool=='text'||prevTool=='edit')&&(t=='text'||t=='edit')&&t!==prevTool){$('fsel').value='auto';$('fsz').value='';$('fszl').hidden=true;$('fi').textContent=''}if(selA){selA=0;selH=false;if(vp)renderAnnots()}tool=t;if(t!='hl')cmMode=false;$('stage').classList.toggle('noan',t!='text'&&t!='edit');ov.style.cursor=(t=='text'||t=='hl')?'text':'crosshair';document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.t==t));document.querySelectorAll('.opt').forEach(o=>o.classList.toggle('on',o.dataset.t.split(' ').includes(t)));cmClear();wmPrev();hlCur();if(t!='sg')sgClear();rmClear();if(t!='wm'){try{wmLeave()}catch(e){}}try{ftHint()}catch(e){}}
 (()=>{const h=document.querySelector('header'),u=()=>document.documentElement.style.setProperty('--hh',h.offsetHeight+'px');u();addEventListener('resize',u);if(window.ResizeObserver)new ResizeObserver(u).observe(h)})();
 (()=>{const i=$('fsz'),b=$('fszb'),l=$('fszl');
 const show=()=>{[...l.children].forEach(d=>d.classList.toggle('cur',d.dataset.v===i.value.trim()));l.hidden=false;const c=l.querySelector('.cur');if(c)l.scrollTop=c.offsetTop-l.clientHeight/2};
@@ -2674,7 +2674,7 @@ $('vgo').onclick=async()=>{if(!need())return;const err=$('verr');err.hidden=true
   const typing=e=>{const t=e.target;return t&&(/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)||t.isContentEditable)};
   addEventListener('keydown',e=>{if(e.code==='Space'&&!typing(e)&&pdf&&!$('stage').hidden){if(!sp){sp=true;upd()}e.preventDefault()}});
   addEventListener('keyup',e=>{if(e.code==='Space'&&sp){sp=false;upd()}});addEventListener('blur',()=>{if(sp){sp=false;upd()}});
-  const start=e=>{if(e.button!==0||!pdf||$('stage').hidden)return;const bg=!$('stage').contains(e.target);if(!(on||sp||bg))return;
+  const start=e=>{if(e.button!==0||!pdf||$('stage').hidden)return;const bg=['text','edit','sg'].includes(tool)&&!$('stage').contains(e.target);if(!(on||sp||bg))return;
     e.preventDefault();e.stopImmediatePropagation();drag={x:e.clientX,y:e.clientY,sx:W.scrollLeft,sy:window.scrollY,id:e.pointerId,mv:false};W.classList.add('grabbing');try{W.setPointerCapture(e.pointerId)}catch(_){}};
   W.addEventListener('pointerdown',start,true);
   W.addEventListener('mousedown',e=>{if(e.button===0&&(on||sp||drag)){e.preventDefault();e.stopImmediatePropagation()}},true);
