@@ -253,7 +253,7 @@ body.vecmode #thumbs,body.vecmode #nav,body.vecmode #wrap{display:none!important
 <div class="opt" data-t="pw"><input id="pw" type="password" placeholder="รหัสผ่าน"><button id="pwb" class="p">ใส่รหัสผ่านและบันทึก</button></div>
 <div class="opt" data-t="png"><button id="pngb" class="p">แปลงเป็นรูปภาพ</button></div>
 
-<div id="work"><div id="thumbs" hidden></div><div style="flex:1;min-width:0"><div id="nav"><button id="pv">◀</button><span id="pg">–</span><button id="nx">▶</button><span style="width:16px"></span><button id="zo" title="Zoom out">−</button><button id="zr" title="Reset zoom" style="min-width:64px">100%</button><button id="zi" title="Zoom in">+</button><span style="width:16px"></span><button id="hand" type="button" title="เครื่องมือมือ: คลิกซ้ายค้างแล้วลากเพื่อเลื่อนดูเอกสาร (กด Space ค้างเพื่อใช้ชั่วคราว)">✋</button></div>
+<div id="work"><div id="thumbs" hidden></div><div style="flex:1;min-width:0"><div id="nav"><button id="pv">◀</button><span id="pg">–</span><button id="nx">▶</button><span style="width:16px"></span><button id="zo" title="Zoom out">−</button><button id="zr" title="Reset zoom" style="min-width:64px">100%</button><button id="zi" title="Zoom in">+</button></div>
 <div id="wrap"><div id="empty">กด "Upload File" เพื่อเริ่มต้น</div>
 <div id="stage" hidden><canvas id="cv"></canvas><canvas id="ov"></canvas><canvas id="wmv" hidden style="position:absolute;left:0;top:0;pointer-events:none;z-index:4"></canvas></div></div></div></div>
 </main></div>
@@ -2667,11 +2667,11 @@ $('vgo').onclick=async()=>{if(!need())return;const err=$('verr');err.hidden=true
   }catch(e){st.textContent='';err.textContent='ผิดพลาด: '+e.message;err.hidden=false;console.error(e)}b.disabled=false}})();
 
 // ===== เครื่องมือมือ (Hand / Pan): คลิกซ้ายค้างแล้วลาก เพื่อเลื่อนดูเอกสาร ขึ้น-ลง ซ้าย-ขวา =====
-// ใช้ได้: (1) ปุ่ม ✋ ข้างปุ่มซูม  (2) กด Space ค้าง  (3) เมนู เพิ่มข้อความ / แก้ไขข้อความ / เซ็นเอกสาร: ลากบนพื้นที่สีเทา
+// ใช้ได้: (1) [เอาปุ่ม ✋ ออกแล้ว]  (2) กด Space ค้าง  (3) เมนู เพิ่มข้อความ / แก้ไขข้อความ / เซ็นเอกสาร: ลากบนพื้นที่สีเทา
 // (4) เมนู เพิ่มข้อความ / แก้ไขข้อความ / เซ็นเอกสาร: ลากบนหน้าเอกสารได้เลย (คลิกเฉยๆ ยังวางข้อความได้เหมือนเดิม)
 (()=>{const W=$('wrap'),B=$('hand');let on=false,sp=false,pd=null;
-  const upd=()=>{W.classList.toggle('hand',on||sp);B.classList.toggle('p',on)};
-  window.handSet=v=>{on=!!v;upd()};B.onclick=()=>{on=!on;upd()};
+  const upd=()=>{W.classList.toggle('hand',on||sp);if(B)B.classList.toggle('p',on)};
+  window.handSet=v=>{on=!!v;upd()};if(B)B.onclick=()=>{on=!on;upd()};
   const typing=e=>{const t=e.target;return t&&(/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)||t.isContentEditable)};
   addEventListener('keydown',e=>{if(e.code==='Space'&&!typing(e)&&pdf&&!$('stage').hidden){if(!sp){sp=true;upd()}e.preventDefault()}});
   addEventListener('keyup',e=>{if(e.code==='Space'&&sp){sp=false;upd()}});addEventListener('blur',()=>{if(sp){sp=false;upd()}});
