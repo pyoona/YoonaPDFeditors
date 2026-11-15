@@ -187,6 +187,7 @@ body.vecmode #thumbs,body.vecmode #nav,body.vecmode #wrap{display:none!important
 #vdownOpts.off{opacity:.45}#vdownOpts.off,#vdownOpts.off *{color:var(--mu)}.vchk:has(#vdown:not(:checked))+#vdownOpts{opacity:.45;pointer-events:none}
 #sgbar #sgtabs{display:flex;gap:6px;flex-wrap:nowrap}#sgbar #sgtabs button{padding:6px 16px;white-space:nowrap}#sgbar .grp{flex:0 0 auto!important}
 #sgside.sgcol{display:none!important}#sgp0[hidden]+#sgp1[hidden]+#sgp2[hidden]+#sgmine{margin-top:0!important;border-top:0!important;padding-top:0!important}
+#sgl{gap:6px!important}#sgl>div>button{padding:0 4px!important;min-width:0!important;min-height:0!important;font-size:11px!important;line-height:18px!important;border-radius:4px!important}
 </style></head><body>
 <header><h1>📄 PDF Editor <span style="color:#ff0000;font-size:12px;font-weight:400">Powered by พี Yoona</span></h1>
 <button class="p up" onclick="document.getElementById('f').click()">Upload File</button><input id="f" type="file" accept="application/pdf,.pdf" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none">
@@ -2023,8 +2024,8 @@ const sigs=[];
 function sgClear(){document.querySelectorAll('#stage .sgo').forEach(e=>e.remove())}
 function sgRender(){sgRender0.apply(this,arguments);try{sgSide()}catch(e){}}
 function sgRender0(){const g=$('sgl');g.innerHTML='';if(!sigs.length){g.textContent='ยังไม่มีลายเซ็น';return}
-  sigs.forEach((u,i)=>{const d=document.createElement('div');d.style.cssText='display:flex;align-items:center;gap:4px;border:1px solid var(--bd);border-radius:6px;padding:4px;background:#fff';
-    const im=new Image();im.src=u;im.title='ลากไปวางบนหน้าที่ต้องการ';im.draggable=false;im.style.cssText='max-height:40px;max-width:130px;cursor:grab;touch-action:none;user-select:none';
+  sigs.forEach((u,i)=>{const d=document.createElement('div');d.style.cssText='display:flex;align-items:center;gap:2px;border:1px solid var(--bd);border-radius:5px;padding:2px 3px;background:#fff';
+    const im=new Image();im.src=u;im.title='ลากไปวางบนหน้าที่ต้องการ';im.draggable=false;im.style.cssText='max-height:26px;max-width:90px;cursor:grab;touch-action:none;user-select:none';
     im.onpointerdown=e=>{if(e.button>0)return;e.preventDefault();const sx=e.clientX,sy=e.clientY;let gh=null,mv=false;
       const mk=()=>{gh=new Image();gh.src=u;gh.style.cssText='position:fixed;z-index:99999;pointer-events:none;opacity:.8;max-height:60px;max-width:160px;transform:translate(-50%,-50%)';document.body.append(gh)};
       const mm=ev=>{if(!mv&&Math.hypot(ev.clientX-sx,ev.clientY-sy)>5){mv=true;mk()}if(gh){gh.style.left=ev.clientX+'px';gh.style.top=ev.clientY+'px'}};
