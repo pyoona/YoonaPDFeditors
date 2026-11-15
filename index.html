@@ -2667,19 +2667,31 @@ $('vgo').onclick=async()=>{if(!need())return;const err=$('verr');err.hidden=true
   }catch(e){st.textContent='';err.textContent='ผิดพลาด: '+e.message;err.hidden=false;console.error(e)}b.disabled=false}})();
 
 // ===== เครื่องมือมือ (Hand / Pan): คลิกซ้ายค้างแล้วลาก เพื่อเลื่อนดูเอกสาร ขึ้น-ลง ซ้าย-ขวา =====
-// ใช้ได้ 3 แบบ: (1) กดปุ่ม ✋ ข้างปุ่มซูม  (2) กด Space ค้าง  (3) ลากบนพื้นที่สีเทารอบหน้าเอกสาร
-(()=>{const W=$('wrap'),B=$('hand');let on=false,sp=false,drag=null;
+// ใช้ได้: (1) ปุ่ม ✋ ข้างปุ่มซูม  (2) กด Space ค้าง  (3) เมนู เพิ่มข้อความ / แก้ไขข้อความ / เซ็นเอกสาร: ลากบนพื้นที่สีเทา
+// (4) เมนู เพิ่มข้อความ / เซ็นเอกสาร: ลากบนหน้าเอกสารได้เลย (คลิกเฉยๆ ยังวางข้อความได้เหมือนเดิม)
+(()=>{const W=$('wrap'),B=$('hand');let on=false,sp=false,pd=null;
   const upd=()=>{W.classList.toggle('hand',on||sp);B.classList.toggle('p',on)};
   window.handSet=v=>{on=!!v;upd()};B.onclick=()=>{on=!on;upd()};
   const typing=e=>{const t=e.target;return t&&(/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)||t.isContentEditable)};
   addEventListener('keydown',e=>{if(e.code==='Space'&&!typing(e)&&pdf&&!$('stage').hidden){if(!sp){sp=true;upd()}e.preventDefault()}});
   addEventListener('keyup',e=>{if(e.code==='Space'&&sp){sp=false;upd()}});addEventListener('blur',()=>{if(sp){sp=false;upd()}});
-  const start=e=>{if(e.button!==0||!pdf||$('stage').hidden)return;const bg=['text','edit','sg'].includes(tool)&&!$('stage').contains(e.target);if(!(on||sp||bg))return;
-    e.preventDefault();e.stopImmediatePropagation();drag={x:e.clientX,y:e.clientY,sx:W.scrollLeft,sy:window.scrollY,id:e.pointerId,mv:false};W.classList.add('grabbing');try{W.setPointerCapture(e.pointerId)}catch(_){}};
+  // ลากบนหน้าเอกสารเพื่อเลื่อนได้ไหม (เฉพาะเมนูที่การลากบนหน้าไม่มีหน้าที่อื่น)
+  window.pagePan=()=>tool=='sg'||(tool=='text'&&!delMode&&!$('ckt').value);
+  const start=e=>{if(e.button!==0||!pdf||$('stage').hidden||e.pointerType==='touch')return;
+    const inSt=$('stage').contains(e.target),bg=['text','edit','sg'].includes(tool)&&!inSt,pg=e.target===ov&&pagePan();
+    if(!(on||sp||bg||pg))return;
+    const pend=!(on||sp);pd={x:e.clientX,y:e.clientY,sx:W.scrollLeft,sy:window.scrollY,mv:false,pend};
+    if(!pend){e.preventDefault();e.stopImmediatePropagation();W.classList.add('grabbing');try{W.setPointerCapture(e.pointerId)}catch(_){}}};
   W.addEventListener('pointerdown',start,true);
-  W.addEventListener('mousedown',e=>{if(e.button===0&&(on||sp||drag)){e.preventDefault();e.stopImmediatePropagation()}},true);
-  W.addEventListener('pointermove',e=>{if(!drag)return;e.preventDefault();e.stopImmediatePropagation();const dx=e.clientX-drag.x,dy=e.clientY-drag.y;if(Math.abs(dx)+Math.abs(dy)>3)drag.mv=true;W.scrollLeft=drag.sx-dx;window.scrollTo(window.scrollX,drag.sy-dy)},true);
-  const end=e=>{if(!drag)return;e.stopImmediatePropagation();const mv=drag.mv;drag=null;W.classList.remove('grabbing');try{W.releasePointerCapture(e.pointerId)}catch(_){}
+  W.addEventListener('mousedown',e=>{if(e.button===0&&(on||sp||(pd&&!pd.pend))){e.preventDefault();e.stopImmediatePropagation()}},true);
+  W.addEventListener('pointermove',e=>{if(!pd)return;const dx=e.clientX-pd.x,dy=e.clientY-pd.y;
+    if(pd.pend){if(Math.abs(dx)+Math.abs(dy)<=4)return;pd.pend=false;W.classList.add('grabbing');
+      // ยกเลิกการลากของเครื่องมือเดิมบนหน้า (ถ้ามี) แล้วเปลี่ยนเป็นเลื่อนหน้าแทน
+      try{if(drag){drag=null;oc.clearRect(0,0,ov.width,ov.height)}}catch(_){}try{ov.releasePointerCapture(e.pointerId)}catch(_){}
+      try{W.setPointerCapture(e.pointerId)}catch(_){}window.getSelection&&getSelection().removeAllRanges()}
+    e.preventDefault();e.stopImmediatePropagation();if(Math.abs(dx)+Math.abs(dy)>3)pd.mv=true;
+    W.scrollLeft=pd.sx-dx;window.scrollTo(window.scrollX,pd.sy-dy)},true);
+  const end=e=>{if(!pd)return;if(pd.pend){pd=null;return}e.stopImmediatePropagation();const mv=pd.mv;pd=null;W.classList.remove('grabbing');try{W.releasePointerCapture(e.pointerId)}catch(_){}
     if(mv)W.addEventListener('click',ev=>{ev.stopImmediatePropagation();ev.preventDefault()},{capture:true,once:true})};
   W.addEventListener('pointerup',end,true);W.addEventListener('pointercancel',end,true);
   ['click','dblclick'].forEach(t=>W.addEventListener(t,e=>{if(on||sp){e.stopImmediatePropagation();e.preventDefault()}},true));
