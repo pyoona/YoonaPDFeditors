@@ -1318,7 +1318,7 @@ async function putText(d,pg,t,size,color,x,y,fam){
 const pos=e=>{const r=ov.getBoundingClientRect(),k=ov.width/r.width;return[(e.clientX-r.left)*k,(e.clientY-r.top)*k]};
 ov.onpointerdown=e=>{if(!need())return;if(ed){ed.commit();return}const[x,y]=pos(e);drag={x0:x,y0:y,x1:x,y1:y};ov.setPointerCapture(e.pointerId)};
 ov.onpointermove=e=>{
-  if(!drag){if((tool=='edit'||delMode&&tool=='text')&&bytes&&!ed){const[x,y]=pos(e),f=tool=='edit'&&!$('ckt').value?ftHit(x,y):null,h=f?null:hit(x,y);oc.clearRect(0,0,ov.width,ov.height);ov.style.cursor=(h||f)?'text':'crosshair';
+  if(!drag){if((tool=='edit'||delMode&&tool=='text')&&bytes&&!ed){const[x,y]=pos(e),f=tool=='edit'&&!$('ckt').value?ftHit(x,y):null,h=f?null:hit(x,y);oc.clearRect(0,0,ov.width,ov.height);ov.style.cursor=(h||f)?'text':(tool=='edit'&&!delMode&&!$('ckt').value?'grab':'crosshair');
     if(f){oc.save();oc.fillStyle=delMode?'#ff000033':'#e9713233';oc.fillRect(f.vx,f.vy,f.vw,f.vh);oc.strokeStyle=delMode?'#ff0000':'#e97132';oc.lineWidth=2;oc.setLineDash([]);oc.strokeRect(f.vx,f.vy,f.vw,f.vh);oc.restore()}
     else if(h){oc.fillStyle=delMode?'#ff000033':'#1e3a8a33';oc.fillRect(h.b.x-1,h.b.t,h.b.w+2,h.b.b-h.b.t)}}return}
   [drag.x1,drag.y1]=pos(e);oc.clearRect(0,0,ov.width,ov.height);
@@ -1427,7 +1427,7 @@ async function act(d){
   if(!big)return alert('ลากเมาส์/นิ้วเพื่อสร้างกรอบ');
   const r=rectPts(d);
   if(tool=='cover')return edit((D,p)=>p.drawRectangle({...r,width:r.w,height:r.h,color:rgbOf($('cc').value)}));
-  if(tool=='edit')return newText(d,true);
+  // แก้ไขข้อความ: ยกเลิกการลากกรอบเพิ่มข้อความ (การลากบนหน้าใช้เลื่อนดูเอกสารแทน)
 }
 
 // click-to-edit existing text
@@ -2668,7 +2668,7 @@ $('vgo').onclick=async()=>{if(!need())return;const err=$('verr');err.hidden=true
 
 // ===== เครื่องมือมือ (Hand / Pan): คลิกซ้ายค้างแล้วลาก เพื่อเลื่อนดูเอกสาร ขึ้น-ลง ซ้าย-ขวา =====
 // ใช้ได้: (1) ปุ่ม ✋ ข้างปุ่มซูม  (2) กด Space ค้าง  (3) เมนู เพิ่มข้อความ / แก้ไขข้อความ / เซ็นเอกสาร: ลากบนพื้นที่สีเทา
-// (4) เมนู เพิ่มข้อความ / เซ็นเอกสาร: ลากบนหน้าเอกสารได้เลย (คลิกเฉยๆ ยังวางข้อความได้เหมือนเดิม)
+// (4) เมนู เพิ่มข้อความ / แก้ไขข้อความ / เซ็นเอกสาร: ลากบนหน้าเอกสารได้เลย (คลิกเฉยๆ ยังวางข้อความได้เหมือนเดิม)
 (()=>{const W=$('wrap'),B=$('hand');let on=false,sp=false,pd=null;
   const upd=()=>{W.classList.toggle('hand',on||sp);B.classList.toggle('p',on)};
   window.handSet=v=>{on=!!v;upd()};B.onclick=()=>{on=!on;upd()};
@@ -2676,7 +2676,7 @@ $('vgo').onclick=async()=>{if(!need())return;const err=$('verr');err.hidden=true
   addEventListener('keydown',e=>{if(e.code==='Space'&&!typing(e)&&pdf&&!$('stage').hidden){if(!sp){sp=true;upd()}e.preventDefault()}});
   addEventListener('keyup',e=>{if(e.code==='Space'&&sp){sp=false;upd()}});addEventListener('blur',()=>{if(sp){sp=false;upd()}});
   // ลากบนหน้าเอกสารเพื่อเลื่อนได้ไหม (เฉพาะเมนูที่การลากบนหน้าไม่มีหน้าที่อื่น)
-  window.pagePan=()=>tool=='sg'||(tool=='text'&&!delMode&&!$('ckt').value);
+  window.pagePan=()=>tool=='sg'||((tool=='text'||tool=='edit')&&!delMode&&!$('ckt').value);
   const start=e=>{if(e.button!==0||!pdf||$('stage').hidden||e.pointerType==='touch')return;
     const inSt=$('stage').contains(e.target),bg=['text','edit','sg'].includes(tool)&&!inSt,pg=e.target===ov&&pagePan();
     if(!(on||sp||bg||pg))return;
