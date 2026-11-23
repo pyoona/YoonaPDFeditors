@@ -207,6 +207,7 @@ body.vecmode #thumbs,body.vecmode #nav,body.vecmode #wrap{display:none!important
 #hlrow{gap:22px!important}#hlrow>.hf:first-child{align-items:center;min-width:52px}#hlrow>.hf:first-child #hcw{margin:2px auto 0}
 .opt[data-t=hl] .seg button.a{background:#1e3a8a;border-color:#1e3a8a;color:#fff}
 #hlrow{border:1px solid #c4c4c4;border-radius:10px;padding:8px 16px}
+#mgb{background:#c8102e!important;border-color:#c8102e!important;color:#fff!important;padding:9px 20px!important;font-size:15px!important;height:auto!important;border-radius:8px!important}#mgb:hover{background:#a50d26!important;border-color:#a50d26!important}
 </style></head><body>
 <header><h1>📄 PDF Editor <span style="color:#ff0000;font-size:12px;font-weight:400">Powered by พี Yoona</span></h1>
 <button class="p up" onclick="document.getElementById('f').click()">Upload File</button><input id="f" type="file" accept="application/pdf,.pdf" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none">
@@ -252,7 +253,7 @@ body.vecmode #thumbs,body.vecmode #nav,body.vecmode #wrap{display:none!important
 <button id="rot">⟳ หมุนหน้านี้ 90°</button><label><input type="checkbox" id="rall"> หมุนทุกหน้า</label></div>
 <div class="opt" data-t="del"><button id="delp">🗑 ลบหน้านี้</button></div>
 <div class="opt" data-t="swp"><span>หน้า</span> <input id="swa" type="number" min="1" value="1" style="width:64px"> <span>สลับกับหน้า</span> <input id="swb" type="number" min="1" value="2" style="width:64px"> <button id="swgo" class="p">🔀 สลับหน้า</button><span style="color:var(--mu);font-size:13px;margin-left:8px">หรือ</span><button id="swup">⬆ เลื่อนหน้านี้ขึ้น</button><button id="swdn">⬇ เลื่อนหน้านี้ลง</button><span style="color:var(--mu);font-size:13px;margin-left:8px">หรือ</span><span style="color:var(--tx);font-size:14px">ใช้เมาส์ลากตัวอย่างหน้าทางซ้ายไปวางบนอีกหน้า เพื่อสลับหน้าเอกสาร</span><span id="swst" style="color:var(--mu);font-size:13px"></span></div>
-<div class="opt" data-t="merge"><button onclick="document.getElementById('mg').click()">อัพโหลดเพื่อรวมไฟล์ PDF</button><input id="mg" type="file" accept="application/pdf,.pdf" multiple style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none"></div>
+<div class="opt" data-t="merge"><button id="mgb" onclick="document.getElementById('mg').click()">อัพโหลดเพื่อรวมไฟล์ PDF</button><input id="mg" type="file" accept="application/pdf,.pdf" multiple style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none"></div>
 <div class="opt" data-t="num"><div class="nfld"><span>รูปแบบ</span><select id="nf"><option value="n">1</option><option value="nt">1 / N</option><option value="d">- 1 -</option></select></div>
 <div class="nfld"><span>ตำแหน่ง</span><select id="np"><option value="tr">บนขวา</option><option value="tl">บนซ้าย</option><option value="tc">บนกลาง</option><option value="br">ล่างขวา</option><option value="bl">ล่างซ้าย</option><option value="bc">ล่างกลาง</option></select></div>
 <div class="nfld"><span>เริ่มจาก</span><input id="n0" type="number" value="1"></div><div class="nfld"><span>ขนาด</span><input id="nz" type="number" value="11"></div><div class="nfld"><span>สี</span><input id="ncl" type="color" value="#000000"></div><div class="nfld nbw"><span class="nb" style="visibility:hidden">&nbsp;</span><button id="num">กดเพิ่มเลขหน้า</button></div></div>
