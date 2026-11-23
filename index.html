@@ -1263,7 +1263,7 @@ async function renderPageLayers(p){
   cva.getContext('2d').putImageData(B,0,0);cva.hidden=false;
 }
 async function show(){
-  const p=await pdf.getPage(pi+1);vp=p.getViewport({scale:Math.min(3,Math.max(2,1.5*(window.devicePixelRatio||1)))});
+  const p=await pdf.getPage(pi+1);vp=p.getViewport({scale:renderScale(p)});
   cv.width=ov.width=vp.width;cv.height=ov.height=vp.height;
   applyZoom();
   $('empty').hidden=true;$('stage').hidden=false;rmClear();cmClear();
@@ -1712,17 +1712,29 @@ function editAnnot(a){selA=a.id;
       a.text=v;if(!v.trim()&&!a.cover)annots=annots.filter(z=>z!==a);
       renderAnnots()}});
 }
-let rzT=0;window.addEventListener('resize',()=>{clearTimeout(rzT);rzT=setTimeout(()=>{applyZoom();if(!ed)renderAnnots()},150)});
+let rzT=0;window.addEventListener('resize',()=>{clearTimeout(rzT);rzT=setTimeout(()=>{applyZoom();if(!ed)renderAnnots();sharpCheck()},150)});
 // พื้นที่แสดงหน้าเปลี่ยนความกว้าง (เช่นเปิดแถบลายเซ็น) → ปรับขนาดหน้าให้พอดีใหม่ ไม่ให้หน้าล้นจอ
-if(window.ResizeObserver){let lw=0;new ResizeObserver(()=>{const w=$('wrap').clientWidth;if(!w||w===lw)return;lw=w;clearTimeout(rzT);rzT=setTimeout(()=>{applyZoom();if(!ed)renderAnnots()},60)}).observe($('wrap'))}
+if(window.ResizeObserver){let lw=0;new ResizeObserver(()=>{const w=$('wrap').clientWidth;if(!w||w===lw)return;lw=w;clearTimeout(rzT);rzT=setTimeout(()=>{applyZoom();if(!ed)renderAnnots();sharpCheck()},60)}).observe($('wrap'))}
 
 // ---- zoom: scales only the PDF page (canvas + overlay + added text); toolbar buttons keep their size
 let zm=1,zraf=0;const ZMIN=.5,ZMAX=3;
+// ===== ความคมชัด: วาดหน้าเอกสารตามจำนวนพิกเซลจริงของจอ (ขนาดบนจอ × ซูม × การขยายหน้าจอของ Windows)
+// baseW = ความกว้าง "ตั้งต้น" ของหน้า (ใช้คำนวณขนาดบนจอเหมือนเดิม) แยกจากความละเอียดที่ใช้วาดจริง (vp)
+let baseW=0;const MAXPX=16e6,MAXSC=8;
+function dispW(bw){const avail=Math.max(200,$('wrap').clientWidth-32);return Math.round(Math.min(bw,avail)*zm)}
+function renderScale(p){const v1=p.getViewport({scale:1}),dpr=window.devicePixelRatio||1;
+  baseW=v1.width*Math.min(3,Math.max(2,1.5*dpr));
+  const want=dispW(baseW)*dpr/v1.width,cap=Math.min(MAXSC,Math.sqrt(MAXPX/(v1.width*v1.height)));
+  return Math.max(.5,Math.min(want,cap))}
+// หลังซูม/ปรับขนาดหน้าต่าง: ถ้าความละเอียดที่วาดไว้ไม่ตรงกับจอ ให้วาดหน้าใหม่ (รอให้หยุดซูมก่อน)
+let sharpT=0;function sharpCheck(){clearTimeout(sharpT);sharpT=setTimeout(()=>{if(!pdf||!vp||!baseW||$('stage').hidden||ed||(typeof drag!=='undefined'&&drag))return;
+  const v1w=vp.width/vp.scale,dpr=window.devicePixelRatio||1,want=Math.min(dispW(baseW)*dpr,v1w*Math.min(MAXSC,Math.sqrt(MAXPX/(v1w*(vp.height/vp.scale)))));
+  if(Math.abs(want-vp.width)/vp.width>.04)show()},350)}
 function applyZoom(){const zr=$('zr');if(zr)zr.textContent=Math.round(zm*100)+'%';if(!vp)return;
-  const avail=Math.max(200,$('wrap').clientWidth-32),W=Math.round(Math.min(vp.width,avail)*zm);
+  const W=dispW(baseW||vp.width);
   for(const c of [cv,ov,$('wmv'),cva].filter(Boolean)){c.style.maxWidth='none';c.style.width=W+'px'}$('stage').style.maxWidth='none'}
 function setZoom(z){const o=zm;zm=Math.min(ZMAX,Math.max(ZMIN,Math.round(z*100)/100));if(zm===o)return;
-  closeEd();applyZoom();cancelAnimationFrame(zraf);zraf=requestAnimationFrame(()=>{if(!ed)renderAnnots()})}
+  closeEd();applyZoom();cancelAnimationFrame(zraf);zraf=requestAnimationFrame(()=>{if(!ed)renderAnnots()});sharpCheck()}
 $('zi').onclick=()=>setZoom(zm+.1);$('zo').onclick=()=>setZoom(zm-.1);$('zr').onclick=()=>setZoom(1);
 $('wrap').addEventListener('wheel',e=>{if(!(e.ctrlKey||e.metaKey))return;e.preventDefault();setZoom(zm*(e.deltaY<0?1.1:1/1.1))},{passive:false});
 (()=>{let d0=0,z0=1;const w=$('wrap'),td=e=>Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
