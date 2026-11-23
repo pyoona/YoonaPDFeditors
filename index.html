@@ -1865,9 +1865,10 @@ $('swdn').onclick=()=>{if(!need())return;if(pi>=pdf.numPages-1)return alert('น
 $('mg').onchange=async e=>{
   const fs=[...e.target.files];e.target.value='';if(!fs.length)return;
   try{
-    const hadB=bytes,base=bytes?await P.PDFDocument.load(await bakedBytes(),{ignoreEncryption:true}):await P.PDFDocument.create();
+    // รวมเฉพาะไฟล์ที่เลือกในครั้งนี้ — ไฟล์ที่เปิดค้างไว้จะถูกแทนที่ (กด ↶ ย้อนกลับเพื่อเอาไฟล์เดิมคืนได้)
+    const hadB=bytes,base=await P.PDFDocument.create();
     for(const f of fs){const s=await P.PDFDocument.load(await f.arrayBuffer());(await base.copyPages(s,s.getPageIndices())).forEach(p=>base.addPage(p))}
-    const nb=await base.save();if(hadB)pushH();annots=[];await load(nb,false);
+    const nb=await base.save();if(hadB)pushH();annots=[];pi=0;try{$('f').dataset.name=(fs.length>1?'รวมไฟล์_':'')+fs[0].name.replace(/\.pdf$/i,'')+'.pdf'}catch(_){}await load(nb,false);
   }catch(x){alert('รวมไฟล์ไม่สำเร็จ: '+x.message)}
 };
 $('num').onclick=()=>edit(async D=>{
