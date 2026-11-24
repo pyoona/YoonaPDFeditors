@@ -1396,18 +1396,26 @@ function nearest(x,y){let best=null,bd=1e12;for(const it of items){if(covered(it
 // สีพื้นหลังรอบข้อความ: ใช้สีที่พบมากที่สุดตามขอบกรอบ (ไม่ใช้จุดเดียวที่มุม — มุมอาจโดนเส้นตาราง/เส้นขอบสีดำ ทำให้แผ่นปิดทับกลายเป็นสีดำ)
 function bgOf(x,y,w,h){try{x=Math.max(0,Math.floor(x));y=Math.max(0,Math.floor(y));w=Math.max(1,Math.min(Math.ceil(w),cv.width-x));h=Math.max(1,Math.min(Math.ceil(h),cv.height-y));
   const d=ctx.getImageData(x,y,w,h).data,bins=new Map(),add=(c,r)=>{const i=(r*w+c)*4,k=(d[i]>>4)<<8|(d[i+1]>>4)<<4|(d[i+2]>>4);let e=bins.get(k);if(!e)bins.set(k,e=[0,0,0,0]);e[0]++;e[1]+=d[i];e[2]+=d[i+1];e[3]+=d[i+2]};
-  for(let c=0;c<w;c++){add(c,0);if(h>1)add(c,h-1)}for(let r=1;r<h-1;r++){add(0,r);if(w>1)add(w-1,r)}
+  // ใช้ทุกพิกเซลในกรอบ (ไม่ใช่แค่ขอบ) — ขอบมักทับเส้นตารางแนวตั้ง/แนวนอนจนได้สีดำผิดๆ
+  for(let r=0;r<h;r++)for(let c=0;c<w;c++)add(c,r);
   let best=null;for(const e of bins.values())if(!best||e[0]>best[0])best=e;return[Math.round(best[1]/best[0]),Math.round(best[2]/best[0]),Math.round(best[3]/best[0])]}catch(e){return[255,255,255]}}
 function sample(b){
-  const x0=Math.max(0,Math.floor(b.x-2)),y0a=Math.max(0,Math.floor(b.t-1)),w=Math.max(1,Math.min(Math.ceil(b.w+4),cv.width-x0));let hg=Math.max(1,Math.min(Math.ceil(b.b-b.t+2),cv.height-y0a));
-  // เส้นใต้/เส้นประใต้ข้อความ (เช่น ช่องกรอกในแบบฟอร์ม): ให้แผ่นปิดทับหยุดเหนือเส้น เส้นจะได้ไม่หายไป
-  try{const yb=Math.max(y0a,Math.ceil(b.base)),n=y0a+hg-yb;if(n>0){const d=ctx.getImageData(x0,yb,w,n).data,bg0=bgOf(x0-1,y0a-1,w+2,hg+2);
-    for(let r=0;r<n;r++){let ink=0;for(let c=0;c<w;c++){const i=(r*w+c)*4;if(Math.abs(d[i]-bg0[0])+Math.abs(d[i+1]-bg0[1])+Math.abs(d[i+2]-bg0[2])>150)ink++}
-      if(ink/w>.6){hg=Math.max(1,yb+r-y0a-1);break}}}}catch(e){}
-  // เส้นตาราง/เส้นขอบที่อยู่เหนือข้อความ (ในส่วนบนของกรอบ): ให้แผ่นปิดทับเริ่มใต้เส้น เส้นจะได้ไม่หายไป
-  let y0=y0a;try{const bgt=bgOf(x0-1,y0-1,w+2,hg+2),lim=Math.max(0,Math.floor((b.base-y0)*.5)),d=ctx.getImageData(x0,y0,w,Math.max(1,lim)).data;let cut=0;
-    for(let r=0;r<lim;r++){let ink=0;for(let c=0;c<w;c++){const i=(r*w+c)*4;if(Math.abs(d[i]-bgt[0])+Math.abs(d[i+1]-bgt[1])+Math.abs(d[i+2]-bgt[2])>150)ink++}if(ink/w>.6)cut=r+1}
-    if(cut>0&&cut<hg-2){y0+=cut+1;hg-=cut+1}}catch(e){}
+  const x0=Math.max(0,Math.floor(b.x-2)),w=Math.max(1,Math.min(Math.ceil(b.w+4),cv.width-x0));
+  let y0=Math.max(0,Math.floor(b.t-1)),hg=Math.max(1,Math.min(Math.ceil(b.b-b.t+2),cv.height-y0));
+  // ข้อความเดิม: ขยายแผ่นปิดขึ้น/ลงให้คลุมสระบน วรรณยุกต์ สระล่าง และหางตัวอักษร (เช่น p y) ที่ยื่นออกนอกกรอบตัวอักษร
+  // แต่หยุดก่อนถึงเส้นตาราง/เส้นใต้ (แถบเข้มต่อเนื่องเกิน 85% ของความกว้าง) เส้นจะได้ไม่หายไป
+  if(isFinite(b.base)){try{const th=Math.max(2,b.b-b.t),top=Math.max(0,Math.floor(b.t-th*.45)),bot=Math.min(cv.height,Math.ceil(b.b+th*.3)),H=Math.max(1,bot-top);
+    const bgL=bgOf(x0-1,y0-1,w+2,hg+2),d=ctx.getImageData(x0,top,w,H).data,isLine=r=>{let best=0,run=0;for(let c=0;c<w;c++){const i=(r*w+c)*4;if(Math.abs(d[i]-bgL[0])+Math.abs(d[i+1]-bgL[1])+Math.abs(d[i+2]-bgL[2])>150){run++;if(run>best)best=run}else run=0}if(best/w<=.85)return false;
+      // ต้องยื่นออกนอกกรอบข้อความด้วย (เส้นตาราง/เส้นช่องกรอก) — แถวหัวตัวอักษรตัวหนาที่ติดกันจะไม่ถูกนับเป็นเส้น
+      const ext=(xx)=>{try{const q=ctx.getImageData(xx,top+r,1,1).data;return Math.abs(q[0]-bgL[0])+Math.abs(q[1]-bgL[1])+Math.abs(q[2]-bgL[2])>150}catch(_){return false}};
+      return ext(Math.max(0,x0-4))||ext(Math.min(cv.width-1,x0+w+3))};
+    const mid=b.base-top-th*.5;let t=0,e=H;for(let r=0;r<H;r++){if(!isLine(r))continue;if(r<mid)t=r+2;else if(r+top>b.base-1){e=r-1;break}}
+    if(e-t>2){y0=top+t;hg=e-t}}catch(err){}}
+  // เส้นตารางแนวตั้งที่ชิดขอบซ้าย/ขวาของข้อความ: หดแผ่นปิดเข้ามาไม่ให้ทับเส้น
+  let xa=x0,wa=w;try{const P=3,gx=Math.max(0,x0-P),gw=Math.min(cv.width-gx,w+P*2),bgV=bgOf(x0,y0,w,hg),cd=ctx.getImageData(gx,y0,gw,hg).data,isCol=X=>{const c=X-gx;if(c<0||c>=gw)return false;let n=0;for(let r=0;r<hg;r++){const i=(r*gw+c)*4;if(Math.abs(cd[i]-bgV[0])+Math.abs(cd[i+1]-bgV[1])+Math.abs(cd[i+2]-bgV[2])>120)n++}return n/hg>.8};
+    let L=x0,R=x0+w;for(let X=x0-P;X<x0+6;X++)if(isCol(X))L=Math.max(L,X+2);
+    for(let X=x0+w+P-1;X>=x0+w-6;X--)if(isCol(X))R=Math.min(R,X-1);
+    if(R-L>4){xa=L;wa=R-L}}catch(err){}
   const bg=bgOf(x0-1,y0-1,w+2,hg+2),dat=ctx.getImageData(x0,y0,w,hg).data;
   let best=0,tc=[0,0,0];
   for(let i=0;i<dat.length;i+=4){const d=Math.abs(dat[i]-bg[0])+Math.abs(dat[i+1]-bg[1])+Math.abs(dat[i+2]-bg[2]);if(d>best){best=d;tc=[dat[i],dat[i+1],dat[i+2]]}}
@@ -1415,7 +1423,7 @@ function sample(b){
   const v=[0,1,2].map(j=>tc[j]-bg[j]);let sc=Infinity;
   for(let j=0;j<3;j++){if(v[j]>0)sc=Math.min(sc,(255-bg[j])/v[j]);else if(v[j]<0)sc=Math.min(sc,(0-bg[j])/v[j])}
   if(isFinite(sc)&&sc>1)sc=Math.min(sc,3),tc=[0,1,2].map(j=>Math.max(0,Math.min(255,Math.round(bg[j]+v[j]*sc))));
-  return{bg:[bg[0],bg[1],bg[2]],tc,x0,y0,w,hg};
+  return{bg:[bg[0],bg[1],bg[2]],tc,x0:xa,y0,w:Math.max(1,wa),hg};
 }
 const userSize=()=>{const v=parseFloat($('fsz').value);return v>0?v:0};
 async function newText(d,drag){
@@ -1577,7 +1585,8 @@ async function openEd(h){
   let fs=us||b.size;
   if(!us){try{const fm=thaiFirst(fam,h.it.str);await loadFam(fm,fs,h.it.str);const m=document.createElement('canvas').getContext('2d');m.font=`${fs*10}px ${fm}`;const w0=m.measureText(h.it.str).width/10;if(w0>0&&h.it.width>0)fs*=Math.min(1.3,Math.max(.4,h.it.width/w0))}catch(e){}}
   else await loadFam(fam,fs,h.it.str);
-  const bgc=hexc(sm.bg),tcc=$('fca').checked?hexc(sm.tc):$('fcl').value,ty=b.base-baseOff(fs*vp.scale,fam).off,top=Math.min(y0,ty);
+  // ตำแหน่งบรรทัดต้องคำนวณด้วยฟอนต์ชุดเดียวกับที่ใช้วาดจริง (thaiFirst) ไม่งั้นข้อความจะขยับขึ้น/ลงตอนคลิก
+  const bgc=hexc(sm.bg),tcc=$('fca').checked?hexc(sm.tc):$('fcl').value,ty=b.base-baseOff(fs*vp.scale,thaiFirst(fam,FIXTH(h.it.str))).off,top=Math.min(y0,ty);
   inlineEditor({left:x0,top,fs,color:tcc,bg:bgc,font:fam,ref:b,value:FIXTH(h.it.str),del:true,minW:w,minH:hg,padL:b.x-x0,padT:ty-top,
     onDone:(txt,dx,dy,fz)=>{fz=fz||fs;if(Math.abs(dx)<.5&&Math.abs(dy)<.5){dx=dy=0}// ข้อความไทยที่มีสระบน+วรรณยุกต์ (เช่น ติ้ง ที่ไฟล์บางไฟล์วางซ้อนกัน): คลิกแล้วกดออกโดยไม่แก้ ก็วาดใหม่ให้วรรณยุกต์ไม่ซ้อน
       if(txt===FIXTH(h.it.str)&&!dx&&!dy&&fz===fs&&!THSTACK.test(txt))return;
