@@ -210,6 +210,8 @@ body.vecmode #thumbs,body.vecmode #nav,body.vecmode #wrap{display:none!important
 #mgb{background:#c8102e!important;border-color:#c8102e!important;color:#fff!important;padding:9px 20px!important;font-size:15px!important;height:auto!important;border-radius:8px!important}#mgb:hover{background:#a50d26!important;border-color:#a50d26!important}
 #pwwrap{position:relative;display:inline-flex;align-items:center}#pwwrap #pw{padding-right:34px;width:220px;box-sizing:border-box}#pweye{position:absolute;right:4px;top:50%;transform:translateY(-50%);width:28px;height:28px;min-width:0;padding:0;display:flex;align-items:center;justify-content:center;background:transparent!important;border:0!important;color:#888!important;cursor:pointer;touch-action:none}#pweye:hover{color:#1e3a8a!important}#pweye.on{color:#1e3a8a!important}
 #pwb{padding:6px 20px!important;font-size:15px!important;height:auto!important;border-radius:8px!important;margin-left:6px}
+#fbold{font-weight:800;font-family:Georgia,'Times New Roman',serif;font-size:16px;min-width:38px}
+#fbold.a{background:#1e3a8a;border-color:#1e3a8a;color:#fff}
 </style></head><body>
 <header><h1>📄 PDF Editor <span style="color:#ff0000;font-size:12px;font-weight:400">Powered by พี Yoona</span></h1>
 <button class="p up" onclick="document.getElementById('f').click()">Upload File</button><input id="f" type="file" accept="application/pdf,.pdf" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none">
@@ -217,7 +219,7 @@ body.vecmode #thumbs,body.vecmode #nav,body.vecmode #wrap{display:none!important
 <div id="app"><div id="side"><aside id="tabs"></aside><div id="imgs"></div></div><main id="main">
 
 <input id="eb" type="color" value="#ffffff" hidden>
-<div class="opt" data-t="text edit"><div class="rw"><div class="grp" data-h="ข้อความ"><span class="lbp">Font</span> <select id="fsel"><option value="auto">ตามต้นฉบับในไฟล์</option><option>Noto Sans Thai</option><option>Sarabun</option><option>Prompt</option><option>Kanit</option><option>Mitr</option><option>Noto Serif Thai</option><option>Arial</option><option>Times New Roman</option><option>Courier New</option></select> <span class="lbp">Size</span> <span class="cb"><input id="fsz" type="text" inputmode="decimal" autocomplete="off" placeholder="ตามต้นฉบับ"><button type="button" id="fszb" aria-label="เลือกขนาด">▾</button><div id="fszl" hidden><div data-v="">ตามต้นฉบับ</div><div data-v="6">6</div><div data-v="7">7</div><div data-v="8">8</div><div data-v="9">9</div><div data-v="10">10</div><div data-v="11">11</div><div data-v="12">12</div><div data-v="14">14</div><div data-v="16">16</div><div data-v="18">18</div><div data-v="20">20</div><div data-v="22">22</div><div data-v="24">24</div><div data-v="28">28</div><div data-v="32">32</div><div data-v="36">36</div><div data-v="40">40</div><div data-v="48">48</div><div data-v="56">56</div><div data-v="64">64</div><div data-v="72">72</div></div></span> <button type="button" id="fszup" title="Increase Font Size" aria-label="Increase Font Size">A+</button><button type="button" id="fszdn" title="Decrease Font Size" aria-label="Decrease Font Size">A−</button><i class="br"></i> สี <input id="fcl" type="color" value="#000000"><label><input type="checkbox" id="fca" checked> สีตามต้นฉบับ</label> <button id="fload" class="p" type="button">ดึง Font อัตโนมัติ</button></div><div class="grp" style="display:none;flex:1 1 300px;flex-direction:column;align-items:flex-start;flex-wrap:nowrap;gap:6px" data-h="การจัดวาง"><label><input type="checkbox" id="fsn" checked> จัดบรรทัดตามข้อความเดิม</label><label><input type="checkbox" id="fjn" checked> รวมข้อความที่ติดกันเป็นแถบเดียว</label><label><input type="checkbox" id="fg" checked> 📏 เส้นวัดตอนย้ายกล่อง</label></div><div class="grp" id="fdg" data-h="ลบ"><button type="button" id="fdel" title="ลบข้อความจากไฟล์ PDF: เปิดโหมดแล้วคลิกข้อความ หรือลากคลุมพื้นที่" aria-label="ลบข้อความจากไฟล์ PDF"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 11v6M14 11v6"/></svg> ลบข้อความ</button></div><div class="grp" id="ckg" data-h="☑ วางเครื่องหมาย"><span class="lbp">เครื่องหมาย</span> <select id="ckt"><option value="">ปิด (คลิกเพื่อแก้ข้อความ)</option><option value="cb">☑ ติ๊กในกล่อง</option><option value="bx">☐ กล่องว่าง</option><option value="ck">✔ เครื่องหมายถูก</option><option value="xb">☒ กากบาทในกล่อง</option><option value="xx">✘ กากบาท</option></select><i class="br"></i> ขนาด <input id="cks" type="range" min="8" max="48" value="14"> สี <input id="ckc" type="color" value="#000000"></div></div><span id="fi"></span></div>
+<div class="opt" data-t="text edit"><div class="rw"><div class="grp" data-h="ข้อความ"><span class="lbp">Font</span> <select id="fsel"><option value="auto">ตามต้นฉบับในไฟล์</option><option>Noto Sans Thai</option><option>Sarabun</option><option>Prompt</option><option>Kanit</option><option>Mitr</option><option>Noto Serif Thai</option><option>Arial</option><option>Times New Roman</option><option>Courier New</option></select> <span class="lbp">Size</span> <span class="cb"><input id="fsz" type="text" inputmode="decimal" autocomplete="off" placeholder="ตามต้นฉบับ"><button type="button" id="fszb" aria-label="เลือกขนาด">▾</button><div id="fszl" hidden><div data-v="">ตามต้นฉบับ</div><div data-v="6">6</div><div data-v="7">7</div><div data-v="8">8</div><div data-v="9">9</div><div data-v="10">10</div><div data-v="11">11</div><div data-v="12">12</div><div data-v="14">14</div><div data-v="16">16</div><div data-v="18">18</div><div data-v="20">20</div><div data-v="22">22</div><div data-v="24">24</div><div data-v="28">28</div><div data-v="32">32</div><div data-v="36">36</div><div data-v="40">40</div><div data-v="48">48</div><div data-v="56">56</div><div data-v="64">64</div><div data-v="72">72</div></div></span> <button type="button" id="fszup" title="Increase Font Size" aria-label="Increase Font Size">A+</button><button type="button" id="fszdn" title="Decrease Font Size" aria-label="Decrease Font Size">A−</button><button type="button" id="fbold" title="ตัวหนา (เลือกข้อความบางส่วนก่อน = หนาเฉพาะส่วนนั้น)" aria-label="ตัวหนา">B</button><i class="br"></i> สี <input id="fcl" type="color" value="#000000"><label><input type="checkbox" id="fca" checked> สีตามต้นฉบับ</label> <button id="fload" class="p" type="button">ดึง Font อัตโนมัติ</button></div><div class="grp" style="display:none;flex:1 1 300px;flex-direction:column;align-items:flex-start;flex-wrap:nowrap;gap:6px" data-h="การจัดวาง"><label><input type="checkbox" id="fsn" checked> จัดบรรทัดตามข้อความเดิม</label><label><input type="checkbox" id="fjn" checked> รวมข้อความที่ติดกันเป็นแถบเดียว</label><label><input type="checkbox" id="fg" checked> 📏 เส้นวัดตอนย้ายกล่อง</label></div><div class="grp" id="fdg" data-h="ลบ"><button type="button" id="fdel" title="ลบข้อความจากไฟล์ PDF: เปิดโหมดแล้วคลิกข้อความ หรือลากคลุมพื้นที่" aria-label="ลบข้อความจากไฟล์ PDF"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 11v6M14 11v6"/></svg> ลบข้อความ</button></div><div class="grp" id="ckg" data-h="☑ วางเครื่องหมาย"><span class="lbp">เครื่องหมาย</span> <select id="ckt"><option value="">ปิด (คลิกเพื่อแก้ข้อความ)</option><option value="cb">☑ ติ๊กในกล่อง</option><option value="bx">☐ กล่องว่าง</option><option value="ck">✔ เครื่องหมายถูก</option><option value="xb">☒ กากบาทในกล่อง</option><option value="xx">✘ กากบาท</option></select><i class="br"></i> ขนาด <input id="cks" type="range" min="8" max="48" value="14"> สี <input id="ckc" type="color" value="#000000"></div></div><span id="fi"></span></div>
 <div class="opt" data-t="sg tb" id="sgbar"><div class="rw"><div class="grp" data-h="สร้างลายเซ็น"><div id="sgtabs"><button type="button" data-k="2">🖼 รูปภาพ</button><button type="button" data-k="1">Aa พิมพ์</button><button type="button" data-k="0">✏️ วาด</button></div></div><div class="grp sgcol" id="sgside" data-h=""><span id="sghd"></span><div id="sgp0" hidden><canvas id="sgc" width="560" height="240" style="touch-action:none;background:#fff;border:1px solid var(--bd);border-radius:6px;cursor:crosshair"></canvas><span class="sgrow">สีหมึก <input id="sgink" type="color" value="#000080"> <button id="sgclr">ล้าง</button><button id="sgadd" class="p">+ เพิ่มลายเซ็น</button></span></div><div id="sgp1" hidden><input id="sgt" type="text" placeholder="พิมพ์ชื่อของคุณ"><select id="sgf"><option value="Dancing Script" title="ลายมือสากล">Dancing Script</option><option value="Charm" title="ลายมือไทย">Charm (ไทย)</option><option value="Sarabun" title="ตัวเรียบ">Sarabun</option></select><button id="sgtadd" class="p">+ เพิ่มลายเซ็น</button></div><div id="sgp2" hidden><input id="sgfile" type="file" accept="image/png,image/jpeg"><label><input type="checkbox" id="sgw" checked> ลบพื้นหลังสีขาว</label></div></div><div class="grp" id="sgmine" hidden data-h="ลายเซ็นของฉัน"><div id="sgl"></div></div></div></div>
 <div class="opt" data-t="hl"><div class="seg"><button type="button" id="hlb">Highlight</button><button type="button" id="cmb">Comment เอกสาร</button></div><div id="hlrow" style="flex:0 1 auto;display:none;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-left:28px"><div class="hf"><span class="hl" id="hclbl">เลือกสี</span><span id="hcw" style="position:relative;display:inline-block"><input id="hc" type="hidden" value="#ffe600"><button type="button" id="hcb" title="เลือกสี" aria-label="เลือกสี" style="width:20px;height:20px;min-width:0;border-radius:50%;padding:0;border:1px solid #888;background:#ffe600"></button><div id="hcp" hidden style="position:absolute;top:28px;left:0;z-index:80;background:#fff;color:#222;border:1px solid #ddd;border-radius:10px;padding:14px;box-shadow:0 6px 24px #0004;width:max-content"><div style="font-weight:600;margin-bottom:8px">Colors</div><div id="hcg" style="display:grid;grid-template-columns:repeat(6,34px);gap:10px"></div><button type="button" id="hcm" style="display:flex;align-items:center;gap:8px;width:100%;margin-top:12px;padding:6px 8px;border:0;border-top:1px solid #e5e5e5;border-radius:0;background:none;color:#222;font-size:14px;cursor:pointer"><span style="width:20px;height:20px;border-radius:50%;border:1px solid #888;background:conic-gradient(#f00,#ff0,#0f0,#0ff,#00f,#f0f,#f00)"></span>More colors…</button><input id="hcn" type="color" value="#ffe600" tabindex="-1" aria-hidden="true" style="position:absolute;left:0;bottom:0;width:1px;height:1px;opacity:0;pointer-events:none;padding:0;border:0"></div></span></div><div id="hlpanel"><div class="hf"><span class="hl">หัวปากกา</span><select id="hltip" style="width:130px"><option value="chisel">▯ หัวไฮไลต์ (แบน)</option><option value="pencil">✏ หัวดินสอ (กลม)</option></select></div><div class="hf"><span class="hl">เลือกวิธีลาก</span><select id="hlmode" style="width:130px"><option value="none" selected>Not Select</option><option value="line">ลากอิสระในบรรทัด</option><option value="free">ลากอิสระ</option></select></div><div class="hf" id="hlsw"><span class="hl">Size · <span id="hlsv">14</span>pt</span><input id="hls" type="range" min="4" max="40" value="14"></div><div class="hf" id="hlpw" hidden><span class="hl">ความหนาหัวดินสอ · <span id="hlpv">1</span>pt</span><input id="hlp" type="range" min="1" max="20" value="1"></div></div><div class="hf" id="cmw" hidden><span class="hl">พิมพ์ชื่อผู้ Comment</span><input id="cma" type="text" placeholder="ไม่ระบุก็ได้" style="width:200px"></div></div></div>
 <div class="opt" data-t="wm">
@@ -1307,9 +1309,17 @@ function rectPts(r){const a=vp.convertToPdfPoint(r.x0,r.y0),b=vp.convertToPdfPoi
 const BASEFB='"Noto Sans Thai",sans-serif';
 function baseOff(px,fam){const m=document.createElement('canvas').getContext('2d');m.font=`${px}px ${fam}`;const mt=m.measureText('Hg'),A=mt.fontBoundingBoxAscent||px*.9,D=mt.fontBoundingBoxDescent||px*.3;return{A,D,off:(1.5*px-(A+D))/2+A}}
 async function loadFam(fam,size,t){try{await document.fonts.load(`${size}px ${fam}`,t)}catch(e){}try{await document.fonts.load(`${size}px "Sarabun"`,t)}catch(e){}try{await document.fonts.load(`${size}px "Noto Sans Thai"`,t)}catch(e){}}
-async function txtPng(t,size,color,fam){
+async function txtPng(t,size,color,fam,segs,bold){
+  const W8=bold?'bold ':'';
+  if(segs&&segs.length>=1&&!t.includes('\n')&&segs.map(x=>x.t).join('')===t){
+    for(const x of segs)await loadFam(x.f,size,x.t);
+    const k=6,px=size*k,c=document.createElement('canvas'),x=c.getContext('2d'),bo=segsOff(px,segs,fam||BASEFB);let W=0,Hh=px*1.5;
+    for(const q of segs){const pz=px*(q.z||1);x.font=`${q.w?'bold ':''}${pz}px ${q.f}`;x.fontKerning='normal';W+=x.measureText(q.t).width;Hh=Math.max(Hh,bo-baseOff(pz,q.f).off+pz*1.5)}
+    c.width=Math.ceil(W)+4;c.height=Math.ceil(Hh);let cx=2;
+    for(const q of segs){x.font=`${q.w?'bold ':''}${px*(q.z||1)}px ${q.f}`;x.fillStyle=color;x.textBaseline='alphabetic';x.textRendering='geometricPrecision';x.fontKerning='normal';x.fillText(q.t,cx,bo);cx+=x.measureText(q.t).width}
+    const buf=await new Promise(r=>c.toBlob(r)).then(b=>b.arrayBuffer());return{buf,w:c.width/k,h:c.height/k}}
   fam=thaiFirst(fam||BASEFB,t);await loadFam(fam,size,t);
-  const k=6,f=`${size*k}px ${fam}`,c=document.createElement('canvas'),x=c.getContext('2d');
+  const k=6,f=`${W8}${size*k}px ${fam}`,c=document.createElement('canvas'),x=c.getContext('2d');
   x.font=f;const L=t.split('\n'),lh=size*k*1.5;
   c.width=Math.ceil(Math.max(...L.map(l=>x.measureText(l).width)))+4;c.height=Math.ceil(lh*L.length);
   x.font=f;x.fillStyle=color;x.textBaseline='alphabetic';x.textRendering='geometricPrecision';x.fontKerning='normal';
@@ -1390,6 +1400,20 @@ function thaiFirst(fam,text){if(!fam||!text||!NEEDTH.test(text)||fam.includes('"
   // ฟอนต์ในเครื่องที่ตรงกับต้นฉบับ (LT_ / ชื่อเดียวกัน): ใช้ช่องว่างของฟอนต์นั้นเอง ไม่ใช้ช่องว่างจาก SPC — ช่องว่างจะกว้างเท่าต้นฉบับ ขนาดตัวอักษรจึงไม่ถูกย่อ
   if(!/^"FT/.test(f))return f+','+r;
   return r.replace('"SPC",','"SPC",'+f+',')}
+// ===== บรรทัดที่มีหลายรูปแบบ (เช่น "9 ตุลาคม 2569" ตัวหนา + ข้อความต่อท้ายตัวปกติ): เก็บเป็นช่วงๆ แต่ละช่วงใช้ฟอนต์ของต้นฉบับตัวเอง
+// พิมพ์ต่อท้ายช่วงไหน ตัวอักษรที่พิมพ์ก็ได้รูปแบบ (หนา/บาง) ของช่วงนั้น
+function segFam(it,str){const f0=famOf(it);if(NEEDTH.test(str))return thaiFirst(f0,str);
+  // มีฟอนต์เดียวกับต้นฉบับในเครื่อง: ใช้ช่องว่างของฟอนต์นั้น (ช่องว่างจาก SPC กว้างกว่า ทำให้ข้อความยืดเลยเส้นใต้เดิม)
+  const fb=fbMap[it.fontName]||'';return(fb&&!/^"(FB|Sarabun)/.test(fb)?f0.replace('"SPC",',''):f0)+',"NOTH"'}
+function segsMerge(sg){const o=[];for(const x of sg){if(!x.t)continue;const z=x.z||1,l=o[o.length-1];if(l&&l.f===x.f&&!!l.w===!!x.w&&Math.abs((l.z||1)-z)<.02)l.t+=x.t;else{const n={t:x.t,f:x.f};if(z!==1)n.z=z;if(x.w)n.w=1;o.push(n)}}return o}
+function segsOff(px,sg,fam){let m=baseOff(px,fam).off;for(const x of sg||[]){const z=x.z||1,q=baseOff(px*z,x.f);m=Math.max(m,q.off)}return m}
+function segsUseful(sg){return !!(sg&&sg.length&&(sg.length>1||sg.some(x=>x.w||(x.z&&x.z!==1))))}
+function segsFill(el,sg){el.textContent='';for(const x of sg){const sp=document.createElement('span');sp.textContent=x.t;sp.dataset.f=x.f;sp.style.fontFamily=x.f;if(x.z&&x.z!==1){sp.dataset.z=x.z;sp.style.fontSize=x.z+'em'}if(x.w)sp.style.fontWeight='700';el.append(sp)}}
+function segsRead(el,def){const o=[];let last=def;
+  let lz=1,lw=0;const walk=(n,f,z,w)=>{for(const c of n.childNodes){if(c.nodeType===3){const ff=f||last,zz=f?z:lz,ww=f?w:lw;if(c.data)o.push({t:c.data,f:ff,z:zz,w:ww});last=ff;lz=zz;lw=ww}
+    else if(c.nodeType===1&&c.tagName!=='BR'){const cf=(c.dataset&&c.dataset.f)||(c.style&&c.style.fontFamily)||f,cz=c.dataset&&c.dataset.z?+c.dataset.z:(c.dataset&&c.dataset.f?1:z);
+      const fw=c.style&&c.style.fontWeight,cw=/^(B|STRONG)$/.test(c.tagName)||fw==='bold'||+fw>=600?1:(fw==='normal'||(fw&&+fw<600))?0:w;walk(c,cf,cz,cw)}}};
+  walk(el,null,1,0);return segsMerge(o)}
 function fontLabel(it){try{const f=pageObj.commonObjs.get(it.fontName);return String(f.name||'').replace(/^[A-Z]{6}\+/,'')||it.fontName}catch(e){return it.fontName}}
 function showFont(it){$('fi').textContent=$('fsel').value!=='auto'?'':it?'ฟอนต์ต้นฉบับ: '+fontLabel(it):'ไม่พบข้อความต้นฉบับ ใช้ Noto Sans Thai'}
 function nearest(x,y){let best=null,bd=1e12;for(const it of items){if(covered(it))continue;const b=box(it),dx=Math.max(b.x-x,0,x-(b.x+b.w)),dy=Math.max(b.t-y,0,y-b.b),d=Math.hypot(dx,dy);if(d<bd){bd=d;best=it}}return best}
@@ -1414,7 +1438,9 @@ function sample(b){
       // ต้องยื่นออกนอกกรอบข้อความด้วย (เส้นตาราง/เส้นช่องกรอก) — แถวหัวตัวอักษรตัวหนาที่ติดกันจะไม่ถูกนับเป็นเส้น
       const ext=(xx)=>{try{const q=ctx.getImageData(xx,top+r,1,1).data;return Math.abs(q[0]-bgL[0])+Math.abs(q[1]-bgL[1])+Math.abs(q[2]-bgL[2])>150}catch(_){return false}};
       return ext(Math.max(0,x0-4))||ext(Math.min(cv.width-1,x0+w+3))};
-    const mid=b.base-top-th*.5;let t=0,e=H;for(let r=0;r<H;r++){if(!isLine(r))continue;if(r<mid)t=r+2;else if(r+top>b.base-1){e=r-1;break}}
+    // เส้นใต้ (ขีดเส้นใต้เฉพาะบางคำ เช่น วันที่) ที่อยู่ใต้บรรทัด: เส้นยาวต่อเนื่องเกิน ~1.5 เท่าความสูงตัวอักษร — ไม่ปิดทับ เส้นใต้จะได้ไม่หาย
+    const ulRow=r=>{if(r+top<=b.base)return false;let best=0,run=0;for(let c=0;c<w;c++){const i=(r*w+c)*4;if(Math.abs(d[i]-bgL[0])+Math.abs(d[i+1]-bgL[1])+Math.abs(d[i+2]-bgL[2])>150){run++;if(run>best)best=run}else run=0}return best>=Math.max(12,th*1.5)};
+    const mid=b.base-top-th*.5;let t=0,e=H;for(let r=0;r<H;r++){if(r+top>b.base&&ulRow(r)){e=r-1;break}if(!isLine(r))continue;if(r<mid)t=r+2;else if(r+top>b.base-1){e=r-1;break}}
     if(e-t>2){y0=top+t;hg=e-t}}catch(err){}}
   // เส้นตารางแนวตั้งที่ชิดขอบซ้าย/ขวาของข้อความ: หดแผ่นปิดเข้ามาไม่ให้ทับเส้น
   let xa=x0,wa=w;try{const P=3,gx=Math.max(0,x0-P),gw=Math.min(cv.width-gx,w+P*2),bgV=bgOf(x0,y0,w,hg),cd=ctx.getImageData(gx,y0,gw,hg).data,isCol=X=>{const c=X-gx;if(c<0||c>=gw)return false;let n=0;for(let r=0;r<hg;r++){const i=(r*gw+c)*4;if(Math.abs(cd[i]-bgV[0])+Math.abs(cd[i+1]-bgV[1])+Math.abs(cd[i+2]-bgV[2])>120)n++}return n/hg>.8};
@@ -1442,8 +1468,8 @@ async function newText(d,drag){
   if(!drag&&near&&$('fsn').checked){const nb=box(near);if(Math.abs(d.y0-nb.base)<=nb.h*1.5)y0=nb.base-baseOff(size*vp.scale,fam).off}   // snap onto the nearest original line
   const x=drag?bx:d.x0,y=drag?by:y0,bgc=drag?$('eb').value:null;
   inlineEditor({left:x,top:y,fs:size,color,font:fam,bg:bgc,ref:near?box(near):null,minW:drag?Math.abs(d.x1-d.x0):0,minH:drag?Math.abs(d.y1-d.y0):0,placeholder:'พิมพ์ข้อความ...',
-    onDone:(v,dx,dy,fz)=>{
-      const X=x+dx,Y=y+dy,pp=vp.convertToPdfPoint(X,Y),an={id:++aid,pg:pi,x:pp[0],y:pp[1],size:fz||size,size0:size,color,fam,fam0:fam,text:v};
+    onDone:(v,dx,dy,fz,bx)=>{
+      const X=x+dx,Y=y+dy,pp=vp.convertToPdfPoint(X,Y),an={id:++aid,pg:pi,x:pp[0],y:pp[1],size:fz||size,size0:size,color,fam,fam0:fam,text:v,bold:!!(bx&&bx.bold)};
       if(drag){const r=rectPts({x0:d.x0+dx,y0:d.y0+dy,x1:d.x1+dx,y1:d.y1+dy});an.cover={x:r.x,y:r.y,w:r.w,h:r.h,color:bgc}}
       else if(!v.trim())return;
       pushH();annots.push(an);selA=an.id;selH=false;renderAnnots()}});
@@ -1503,8 +1529,8 @@ function joinRun(h){
   while(a>0&&!DOT(L[a-1])&&L[a].b.x-end(L[a-1])<=gap)a--;
   while(z<L.length-1&&!DOT(L[z])&&L[z+1].b.x-end(L[z])<=gap)z++;
   if(a==z)return h;
-  let str='';for(let k=a;k<=z;k++){const o=L[k];if(k>a&&o.b.x-end(L[k-1])>b0.h*.15&&!/\s$/.test(str)&&!/^\s/.test(o.it.str))str+=' ';str+=o.it.str}
-  const it={...L[a].it,str,width:(end(L[z])-L[a].b.x)/vp.scale};return{it,b:box(it)}}
+  let str='';const sg=[];for(let k=a;k<=z;k++){const o=L[k];if(k>a&&o.b.x-end(L[k-1])>b0.h*.15&&!/\s$/.test(str)&&!/^\s/.test(o.it.str)){str+=' ';sg[sg.length-1].str+=' '}str+=o.it.str;sg.push({it:o.it,str:o.it.str})}
+  const it={...L[a].it,str,width:(end(L[z])-L[a].b.x)/vp.scale,_segs:sg};return{it,b:box(it)}}
 const FIXTH=s=>s.replace(/(?<=[\u0E00-\u0E7F])[\u00C9-\u00CD]/g,c=>String.fromCharCode(0x0E48+c.charCodeAt(0)-0xC9));
 function closeEd(){if(ed)ed.cancel();oc.clearRect(0,0,ov.width,ov.height)}
 // dashed measuring guides, shown only while a text box is being moved:
@@ -1524,8 +1550,11 @@ function inlineEditor(o){
   const k=ov.getBoundingClientRect().width/ov.width,fpx=o.fs*vp.scale*k,pl=(o.padL||0)*k,pt=(o.padT||0)*k;
   const w=document.createElement('div');
   w.style.cssText=`position:absolute;left:${o.left*k}px;top:${o.top*k}px;z-index:5;text-align:left;line-height:1.5`;
-  const t=document.createElement('textarea');
-  t.value=o.value||'';t.placeholder=o.placeholder||'';t.wrap=o.wrapW?'soft':'off';t.spellcheck=false;t.rows=1;
+  const SG=o.segs&&o.segs.length>=1&&!o.wrapW;
+  const t=document.createElement(SG?'div':'textarea');
+  if(SG){t.contentEditable='true';segsFill(t,o.segs);Object.defineProperty(t,'value',{get:()=>t.textContent.replace(/\n/g,''),set:v=>{t.textContent=v}});
+    t.addEventListener('paste',e=>{e.preventDefault();const tx=(e.clipboardData||window.clipboardData).getData('text').replace(/\r?\n/g,' ');document.execCommand('insertText',false,tx)})}
+  else{t.value=o.value||'';t.placeholder=o.placeholder||'';t.wrap=o.wrapW?'soft':'off';t.rows=1}t.spellcheck=false;
   t.style.cssText=`display:block;box-sizing:border-box;border:0;border-radius:0;outline:1px dashed #1e3a8a;margin:0;resize:none;overflow:hidden;white-space:${o.wrapW?'pre-wrap':'pre'};overflow-wrap:${o.wrapW?'break-word':'normal'};font-family:${thaiFirst(o.font||BASEFB,o.value)};line-height:1.5;font-size:${fpx}px;color:${o.color};background:${o.bg||'transparent'};padding:${pt}px 4px 0 ${pl}px`;
   let place=()=>{};
   const fit=()=>{if(o.wrapW){t.style.width=ww*k+'px';t.style.height='1px';t.style.height=Math.max(mh*k,t.scrollHeight)+'px';place();return}t.style.width='1px';t.style.height='1px';t.style.width=Math.max((o.minW||0)*k,t.scrollWidth+8,60)+'px';t.style.height=Math.max((o.minH||0)*k,t.scrollHeight)+'px'};
@@ -1535,7 +1564,7 @@ function inlineEditor(o){
   const bar=document.createElement('div');bar.style.cssText='position:absolute;left:0;top:100%;margin-top:4px;display:flex;gap:4px;line-height:1.4;white-space:nowrap';
   bar.onpointerdown=e=>e.preventDefault();bar.onmousedown=e=>e.preventDefault();
   let done=false;
-  const fin=ok=>{if(done)return;done=true;const v=t.value,bx={w:ww,h:t.offsetHeight/k,resized:rzd};ed=null;w.remove();oc.clearRect(0,0,ov.width,ov.height);if(ok)o.onDone(v,ox,oy,fs,bx);else if(o.onCancel)o.onCancel()};
+  const fin=ok=>{if(done)return;done=true;document.removeEventListener('selectionchange',boldUI);{const b=$('fbold');if(b)b.classList.remove('a')}const v=t.value,bx={w:ww,h:t.offsetHeight/k,resized:rzd,segs:SG?segsRead(t,o.font):null,bold:!SG&&t.style.fontWeight==='700'};ed=null;w.remove();oc.clearRect(0,0,ov.width,ov.height);if(ok)o.onDone(v,ox,oy,fs,bx);else if(o.onCancel)o.onCancel()};
   const mk=(txt,fn,c)=>{const x=document.createElement('button');x.type='button';x.textContent=txt;x.onclick=fn;if(c)x.className=c;return x};
   const mv=mk('✥ ย้าย',()=>{});mv.style.cssText='cursor:move;touch-action:none';
   mv.onpointerdown=e=>{e.preventDefault();mv.setPointerCapture(e.pointerId);const sx=e.clientX,sy=e.clientY,x0=ox,y0=oy;moving=true;gd();
@@ -1544,10 +1573,20 @@ function inlineEditor(o){
   bar.append(mv,mk('✓',()=>fin(true),'p'));
   if(o.del)bar.append(mk('🗑 ลบ',()=>{t.value='';fin(true)}));
   bar.append(mk('✕',()=>fin(false)));
-  t.oninput=()=>{const ff=thaiFirst(o.font||BASEFB,t.value);t.style.fontFamily=ff;fit();gd();if(o.font)loadFam(ff,o.fs,t.value).then(()=>{fit();gd()})};
+  t.oninput=()=>{if(SG){fit();gd();return}const ff=thaiFirst(o.font||BASEFB,t.value);t.style.fontFamily=ff;fit();gd();if(o.font)loadFam(ff,o.fs,t.value).then(()=>{fit();gd()})};
   t.onkeydown=e=>{if(e.isComposing)return;if(e.key=='Enter'&&!e.shiftKey){e.preventDefault();fin(true)}else if(e.key=='Escape')fin(false)};
   t.onblur=()=>setTimeout(()=>fin(true),0);
-  ed={commit:()=>fin(true),cancel:()=>fin(false),guides:gd,del:()=>{if(o.del){t.value='';fin(true)}else fin(false)},size:()=>fs,bump:d=>{fs=Math.round(Math.min(300,Math.max(1,fs+d))*10)/10;t.style.fontSize=fs*vp.scale*k+'px';fit();gd();return fs}};
+  if(o.bold&&!SG)t.style.fontWeight='700';
+  // ปุ่ม B: กล่องแก้ข้อความเดิม — เลือก(คลุมดำ)บางส่วน = หนา/ไม่หนาเฉพาะส่วนนั้น, ไม่ได้เลือก = ทั้งข้อความ; กล่องข้อความใหม่ = ทั้งข้อความ
+  const boldSt=()=>{if(!SG)return t.style.fontWeight==='700';const se=getSelection();if(se&&se.rangeCount&&!se.isCollapsed&&t.contains(se.anchorNode))return document.queryCommandState('bold');const sg=segsRead(t,o.font);return sg.length>0&&sg.every(x=>x.w)};
+  function boldUI(){const b=$('fbold');if(b)b.classList.toggle('a',boldSt())}
+  const boldT=()=>{if(!SG){t.style.fontWeight=t.style.fontWeight==='700'?'':'700';fit();boldUI();t.focus();return}
+    const se=getSelection(),part=se&&se.rangeCount&&!se.isCollapsed&&t.contains(se.anchorNode)&&t.contains(se.focusNode);
+    if(part){try{document.execCommand('styleWithCSS',false,true)}catch(e){}document.execCommand('bold')}
+    else{const sg=segsRead(t,o.font),on=!(sg.length&&sg.every(x=>x.w));sg.forEach(x=>{if(on)x.w=1;else delete x.w});segsFill(t,segsMerge(sg));try{const rg=document.createRange();rg.selectNodeContents(t);rg.collapse(false);se.removeAllRanges();se.addRange(rg)}catch(e){}}
+    fit();gd();boldUI();t.focus()};
+  document.addEventListener('selectionchange',boldUI);
+  ed={bold:boldT,commit:()=>fin(true),cancel:()=>fin(false),guides:gd,del:()=>{if(o.del){t.value='';fin(true)}else fin(false)},size:()=>fs,bump:d=>{fs=Math.round(Math.min(300,Math.max(1,fs+d))*10)/10;t.style.fontSize=fs*vp.scale*k+'px';fit();gd();return fs}};
   w.append(t,bar);
   if(o.wrapW){ // จุดจับ 4 มุม: ลากเพื่อขยาย/ย่อกล่อง (มุมซ้าย/บน ขยับตำแหน่งกล่องด้วย โดยมุมตรงข้ามอยู่กับที่)
     const hs=[];
@@ -1566,7 +1605,7 @@ function inlineEditor(o){
     place=()=>hs.forEach(h=>{h.style.left=(h.dx?t.offsetWidth:0)-9+'px';h.style.top=(h.dy?t.offsetHeight:0)-9+'px'})}
   // แผ่นปิดข้อความเดิม: วางแยกเฉพาะพื้นที่ข้อความเดิม ไม่ใช่ทั้งกล่องแก้ไข (กล่องแก้ไขโปร่งใส จะไม่ทับบรรทัดข้างบน/ล่าง)
   if(o.cover){const cvr=document.createElement('div');cvr.style.cssText=`position:absolute;left:${o.cover.x*k}px;top:${o.cover.y*k}px;width:${o.cover.w*k}px;height:${o.cover.h*k}px;background:${o.cover.c};z-index:4;pointer-events:none`;$('stage').append(cvr);new MutationObserver((m,ob)=>{if(!w.isConnected){cvr.remove();ob.disconnect()}}).observe($('stage'),{childList:true})}
-  $('stage').append(w);fit();gd();t.focus();{const n=t.value.length;try{t.setSelectionRange(n,n)}catch(e){}}
+  $('stage').append(w);fit();gd();t.focus();if(SG){try{const rg=document.createRange();rg.selectNodeContents(t);rg.collapse(false);const se=getSelection();se.removeAllRanges();se.addRange(rg)}catch(e){}}else{const n=t.value.length;try{t.setSelectionRange(n,n)}catch(e){}}
 }
 
 // ===== กู้ "สระอำ" ที่หายตอนดึงข้อความ: ไฟล์จาก Word บางไฟล์วาด ำ เป็น 2 ชิ้น (นิคหิต + า) และผูกชิ้นนิคหิตไว้กับ "ช่องว่างกว้าง 0"
@@ -1590,16 +1629,22 @@ async function openEd(h){
   // ฟอนต์ยึดตามข้อความต้นฉบับ: บรรทัดอังกฤษที่พิมพ์ไทยเพิ่ม ตัวอังกฤษต้องคงฟอนต์เดิม ไม่สลับฟอนต์ทั้งบรรทัด (ขนาด/ตำแหน่งจะเพี้ยน)
   const b=h.b,sm=sample(b),{x0,y0,w,hg}=sm,r=rectPts({x0,y0,x1:x0+w,y1:y0+hg}),f0=famOf(h.it),fam=NEEDTH.test(FIXTH(h.it.str))?thaiFirst(f0,FIXTH(h.it.str)):f0+',"NOTH"',us=userSize();
   showFont(h.it);
-  let fs=us||b.size;
-  if(!us){try{const fm=thaiFirst(fam,h.it.str);await loadFam(fm,fs,h.it.str);const m=document.createElement('canvas').getContext('2d');m.font=`${fs*10}px ${fm}`;const w0=m.measureText(h.it.str).width/10;if(w0>0&&h.it.width>0)fs*=Math.min(1.3,Math.max(.4,h.it.width/w0))}catch(e){}}
+  let fs=us||b.size,sg=null;
+  if($('fsel').value==='auto'&&h.it._segs&&h.it._segs.length>1){for(const q of h.it._segs)await prepFont(q.it);
+    const raw=h.it._segs.map(q=>({t:FIXTH(q.str),f:segFam(q.it,FIXTH(q.str)),it:q.it}));
+    // ปรับขนาดแต่ละช่วงให้กว้างเท่าต้นฉบับของช่วงนั้น (ฟอนต์ในเครื่องอาจกว้าง/แคบกว่าฟอนต์ในไฟล์)
+    if(!us){const m=document.createElement('canvas').getContext('2d');for(const q of raw){await loadFam(q.f,fs,q.t);const s0=FIXTH(q.it.str);m.font=`${fs*10}px ${q.f}`;const w0=m.measureText(s0).width/10;if(w0>0&&q.it.width>0&&s0.trim().length>1)q.z=Math.round(Math.min(1.3,Math.max(.4,q.it.width/w0))*100)/100}}
+    sg=segsMerge(raw);if(sg.length<2)sg=null;else for(const q of sg)await loadFam(q.f,fs,q.t)}
+  if(!us&&!sg){try{const fm=thaiFirst(fam,h.it.str);await loadFam(fm,fs,h.it.str);const m=document.createElement('canvas').getContext('2d');m.font=`${fs*10}px ${fm}`;const w0=m.measureText(h.it.str).width/10;
+    if(w0>0&&h.it.width>0)fs*=Math.min(1.3,Math.max(.4,h.it.width/w0))}catch(e){}}
   else await loadFam(fam,fs,h.it.str);
   // ตำแหน่งบรรทัดต้องคำนวณด้วยฟอนต์ชุดเดียวกับที่ใช้วาดจริง (thaiFirst) ไม่งั้นข้อความจะขยับขึ้น/ลงตอนคลิก
-  const bgc=hexc(sm.bg),tcc=$('fca').checked?hexc(sm.tc):$('fcl').value,ty=b.base-baseOff(fs*vp.scale,fam).off,top=Math.min(y0,ty);
-  inlineEditor({left:x0,top,fs,color:tcc,cover:{x:x0,y:y0,w,h:hg,c:bgc},font:fam,ref:b,value:FIXTH(h.it.str),del:true,minW:w,minH:hg,padL:b.x-x0,padT:ty-top,
-    onDone:(txt,dx,dy,fz)=>{fz=fz||fs;if(Math.abs(dx)<.5&&Math.abs(dy)<.5){dx=dy=0}// ข้อความไทยที่มีสระบน+วรรณยุกต์ (เช่น ติ้ง ที่ไฟล์บางไฟล์วางซ้อนกัน): คลิกแล้วกดออกโดยไม่แก้ ก็วาดใหม่ให้วรรณยุกต์ไม่ซ้อน
-      if(txt===FIXTH(h.it.str)&&!dx&&!dy&&fz===fs&&!THSTACK.test(txt))return;
+  const bgc=hexc(sm.bg),tcc=$('fca').checked?hexc(sm.tc):$('fcl').value,ty=b.base-(sg?segsOff(fs*vp.scale,sg,fam):baseOff(fs*vp.scale,fam).off),top=Math.min(y0,ty);
+  inlineEditor({left:x0,top,fs,color:tcc,cover:{x:x0,y:y0,w,h:hg,c:bgc},font:fam,segs:sg||[{t:FIXTH(h.it.str),f:fam}],ref:b,value:FIXTH(h.it.str),del:true,minW:w,minH:hg,padL:b.x-x0,padT:ty-top,
+    onDone:(txt,dx,dy,fz,bx)=>{fz=fz||fs;if(Math.abs(dx)<.5&&Math.abs(dy)<.5){dx=dy=0}const ns=bx&&segsUseful(bx.segs)?bx.segs:null;// ข้อความไทยที่มีสระบน+วรรณยุกต์ (เช่น ติ้ง ที่ไฟล์บางไฟล์วางซ้อนกัน): คลิกแล้วกดออกโดยไม่แก้ ก็วาดใหม่ให้วรรณยุกต์ไม่ซ้อน
+      if(txt===FIXTH(h.it.str)&&!dx&&!dy&&fz===fs&&!THSTACK.test(txt)&&JSON.stringify(ns)===JSON.stringify(sg))return;
       const pp=vp.convertToPdfPoint(b.x+dx,ty+dy);
-      pushH();annots.push({id:++aid,pg:pi,x:pp[0],y:pp[1],size:fz,size0:fs,color:tcc,fam,fam0:fam,text:txt,cover:{x:r.x,y:r.y,w:r.w,h:r.h,color:bgc}});selA=aid;selH=false;renderAnnots()}});
+      pushH();annots.push({id:++aid,pg:pi,x:pp[0],y:pp[1],size:fz,size0:fs,color:tcc,fam,fam0:fam,text:txt,segs:ns,cover:{x:r.x,y:r.y,w:r.w,h:r.h,color:bgc}});selA=aid;selH=false;renderAnnots()}});
 }
 
 
@@ -1740,7 +1785,7 @@ async function bake(D){
   for(const a of annots){const pg=D.getPage(a.pg);if(a.cm)addCmAnnot(D,pg,a.cm);if(a.mk)drawMark(pg,a.mk);
     if(a.im){const e=a.im.type=='image/png'?await D.embedPng(Uint8Array.from(atob(a.im.u.split(',')[1]),c=>c.charCodeAt(0))):await D.embedJpg(Uint8Array.from(atob(a.im.u.split(',')[1]),c=>c.charCodeAt(0)));if(annotOver(D,pg,a.im))imgAnnot(D,pg,e,a.im);else pg.drawImage(e,{x:a.im.x,y:a.im.y,width:a.im.w,height:a.im.h})}
     if(a.cover)pg.drawRectangle({x:a.cover.x,y:a.cover.y,width:a.cover.w,height:a.cover.h,color:rgbOf(a.cover.color)});
-    if(a.text&&a.text.trim()){const o=await txtPng(a.text,a.size,a.color,a.fam),im=await D.embedPng(o.buf);pg.drawImage(im,{x:a.x,y:a.y-o.h,width:o.w,height:o.h})}}
+    if(a.text&&a.text.trim()){const o=await txtPng(a.text,a.size,a.color,a.fam,a.segs,a.bold),im=await D.embedPng(o.buf);pg.drawImage(im,{x:a.x,y:a.y-o.h,width:o.w,height:o.h})}}
 }
 async function bakedBytes(){if(!bytes)return bytes;const f1=!wmAllDone&&tool=='wm';if(!annots.length&&!f1)return bytes;const D=await P.PDFDocument.load(bytes,{ignoreEncryption:true});await bake(D);if(f1)await wmStamp(D,true);return await D.save()}
 function covered(it){
@@ -1760,8 +1805,8 @@ function renderAnnots(){
     if(a.im){renderImg(a);return}
     if(!(a.text&&a.text.trim()))return;
     const q=vp.convertToViewportPoint(a.x,a.y),d=document.createElement('div');
-    d.className='an';d.textContent=a.text;d.dataset.id=a.id;
-    d.style.cssText=`position:absolute;left:${q[0]*k}px;top:${q[1]*k}px;z-index:3;white-space:pre;line-height:1.5;text-align:left;cursor:move;touch-action:none;font-family:${thaiFirst(a.fam,a.text)};font-size:${a.size*vp.scale*k}px;color:${a.color}${a.id===selA?';outline:1px dashed #1e3a8a;outline-offset:2px':''}`;
+    d.className='an';if(a.segs&&a.segs.length&&a.segs.map(x=>x.t).join('')===a.text)segsFill(d,a.segs);else d.textContent=a.text;d.dataset.id=a.id;
+    d.style.cssText=`position:absolute;left:${q[0]*k}px;top:${q[1]*k}px;z-index:3;white-space:pre;line-height:1.5;text-align:left;cursor:move;touch-action:none;font-family:${thaiFirst(a.fam,a.text)};font-size:${a.size*vp.scale*k}px;font-weight:${a.bold?700:'normal'};color:${a.color}${a.id===selA?';outline:1px dashed #1e3a8a;outline-offset:2px':''}`;
     d.onpointerdown=e=>{
       if(tool!='text'&&tool!='edit')return;
       e.stopPropagation();e.preventDefault();
@@ -1779,11 +1824,13 @@ function renderAnnots(){
 function editAnnot(a){selA=a.id;
   const q=vp.convertToViewportPoint(a.x,a.y),el=document.querySelector(`#stage .an[data-id="${a.id}"]`);
   if(el)el.style.visibility='hidden';
-  inlineEditor({left:q[0],top:q[1],fs:a.size,color:a.color,font:a.fam,bg:a.cover?a.cover.color:null,value:a.text,del:true,
+  const cq=a.cover?vp.convertToViewportRectangle([a.cover.x,a.cover.y,a.cover.x+a.cover.w,a.cover.y+a.cover.h]):null;
+  inlineEditor({left:q[0],top:q[1],fs:a.size,color:a.color,font:a.fam,segs:a.segs&&a.segs.map(x=>x.t).join('')===a.text?a.segs:null,bold:a.bold,cover:cq?{x:Math.min(cq[0],cq[2]),y:Math.min(cq[1],cq[3]),w:Math.abs(cq[2]-cq[0]),h:Math.abs(cq[3]-cq[1]),c:a.cover.color}:null,value:a.text,del:true,
     onCancel:()=>renderAnnots(),
-    onDone:(v,dx,dy,fz)=>{
-      const mv=Math.abs(dx)>=.5||Math.abs(dy)>=.5;fz=fz||a.size;
-      if(v===a.text&&!mv&&fz===a.size){renderAnnots();return}
+    onDone:(v,dx,dy,fz,bx)=>{
+      const mv=Math.abs(dx)>=.5||Math.abs(dy)>=.5;fz=fz||a.size;const ns=bx&&segsUseful(bx.segs)?bx.segs:null;
+      if(v===a.text&&!mv&&fz===a.size&&JSON.stringify(ns)===JSON.stringify(a.segs||null)&&!!bx.bold===!!a.bold){renderAnnots();return}
+      a.segs=ns;if(!ns)a.bold=!!bx.bold;
       pushH();a.size=fz;
       if(mv){const pp=vp.convertToPdfPoint(q[0]+dx,q[1]+dy);a.x=pp[0];a.y=pp[1]}
       a.text=v;if(!v.trim()&&!a.cover)annots=annots.filter(z=>z!==a);
@@ -2286,6 +2333,10 @@ function renderMark(a){
   $('fszup').onmousedown=$('fszdn').onmousedown=e=>e.preventDefault();
   let ckTm=0;$('ckt').addEventListener('change',()=>{clearTimeout(ckTm);if($('ckt').value){if(delMode)setDel(false);ckTm=setTimeout(()=>{$('ckt').value=''},10000)}});
   $('fszup').onclick=()=>step(1);$('fszdn').onclick=()=>step(-1);
+  $('fbold').onmousedown=e=>e.preventDefault();
+  $('fbold').onclick=()=>{if(ed&&ed.bold){ed.bold();return}const a=cur();if(!a)return;touch();
+    if(a.segs&&a.segs.length){const on=!a.segs.every(x=>x.w);a.segs=segsMerge(a.segs.map(x=>{const n={...x};if(on)n.w=1;else delete n.w;return n}))}else a.bold=!a.bold;
+    $('fbold').classList.toggle('a',a.segs&&a.segs.length?a.segs.every(x=>x.w):!!a.bold);redraw(a)};
   $('fdel').onclick=()=>{if(ed)closeEd();setDel(!delMode);if(delMode){clearTimeout(ckTm);$('ckt').value=''}};
 })();
 
