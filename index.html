@@ -1402,9 +1402,8 @@ function thaiFirst(fam,text){if(!fam||!text||!NEEDTH.test(text)||fam.includes('"
   return r.replace('"SPC",','"SPC",'+f+',')}
 // ===== บรรทัดที่มีหลายรูปแบบ (เช่น "9 ตุลาคม 2569" ตัวหนา + ข้อความต่อท้ายตัวปกติ): เก็บเป็นช่วงๆ แต่ละช่วงใช้ฟอนต์ของต้นฉบับตัวเอง
 // พิมพ์ต่อท้ายช่วงไหน ตัวอักษรที่พิมพ์ก็ได้รูปแบบ (หนา/บาง) ของช่วงนั้น
-function segFam(it,str){const f0=famOf(it);if(NEEDTH.test(str))return thaiFirst(f0,str);
-  // มีฟอนต์เดียวกับต้นฉบับในเครื่อง: ใช้ช่องว่างของฟอนต์นั้น (ช่องว่างจาก SPC กว้างกว่า ทำให้ข้อความยืดเลยเส้นใต้เดิม)
-  const fb=fbMap[it.fontName]||'';return(fb&&!/^"(FB|Sarabun)/.test(fb)?f0.replace('"SPC",',''):f0)+',"NOTH"'}
+// ต้องคง "SPC" ไว้หน้าฟอนต์ในไฟล์เสมอ: ฟอนต์จาก Word บางไฟล์ผูกช่องว่างไว้กับรูปนิคหิต (ํ) ถ้าไม่มี SPC ช่องว่างจะกลายเป็น ำ (เช่น ราคา → ราคำ)
+function segFam(it,str){const f0=famOf(it);return NEEDTH.test(str)?thaiFirst(f0,str):f0+',"NOTH"'}
 function segsMerge(sg){const o=[];for(const x of sg){if(!x.t)continue;const z=x.z||1,l=o[o.length-1];if(l&&l.f===x.f&&!!l.w===!!x.w&&Math.abs((l.z||1)-z)<.02)l.t+=x.t;else{const n={t:x.t,f:x.f};if(z!==1)n.z=z;if(x.w)n.w=1;o.push(n)}}return o}
 function segsOff(px,sg,fam){let m=baseOff(px,fam).off;for(const x of sg||[]){const z=x.z||1,q=baseOff(px*z,x.f);m=Math.max(m,q.off)}return m}
 function segsUseful(sg){return !!(sg&&sg.length&&(sg.length>1||sg.some(x=>x.w||(x.z&&x.z!==1))))}
