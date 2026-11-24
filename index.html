@@ -1276,7 +1276,7 @@ async function show(){
   applyZoom();
   $('empty').hidden=true;$('stage').hidden=false;rmClear();cmClear();
   await renderPageLayers(p);
-  pageObj=p;const tcn=await p.getTextContent();tstyles=tcn.styles||{};items=tcn.items.filter(i=>i.str&&i.str.trim());hlLines=null;xsc.clear();closeEd();
+  pageObj=p;const tcn=await p.getTextContent();tstyles=tcn.styles||{};items=tcn.items.filter(i=>i.str&&i.str.trim());try{await repairThaiItems(p,items)}catch(e){}hlLines=null;xsc.clear();closeEd();
   $('pg').textContent=`หน้า ${pi+1} / ${pdf.numPages}`;try{ftHint()}catch(e){}thSel();renderAnnots();wmPrev();sgClear();if(typeof swSync=='function')swSync();
 }
 // วาดหน้าทีละครั้ง: ถ้ามีการเรียก show() ซ้อนกัน (เช่นเปิดไฟล์แล้วกดลดขนาดทันที) ให้รอรอบก่อนเสร็จ จะได้ไม่ชนกันบน canvas เดียว
@@ -1349,7 +1349,14 @@ function hasLocalFont(name){try{const m=document.createElement('canvas').getCont
 async function prepFont(it){
   if(!it||fbMap[it.fontName])return;
   const key=it.fontName;fbMap[key]='"Sarabun"';
-  try{const ln=localThaiName(it);if(ln&&hasLocalFont(ln)){fbThai[key]=`"${ln}"`;fbMap[key]=`"${ln}"`;return}}catch(e){}
+  // ใช้ฟอนต์ในเครื่องที่ตรงทั้งชื่อและน้ำหนัก (เช่น CordiaNew-Bold → Cordia New Bold) เพื่อให้หน้าตาเหมือนต้นฉบับ ทั้งตัวหนา/ตัวเอียง
+  try{const lab=fontLabel(it),ln=localThaiName(it),bd=/bold|black|heavy|semibold|demi/i.test(lab),itl=/italic|oblique/i.test(lab);
+    const suf=bd&&itl?' Bold Italic':bd?' Bold':itl?' Italic':'',names=[lab,ln+suf,ln.replace(/ /g,'')+(suf?'-'+suf.trim().replace(/ /g,''):'')];
+    if(!suf)names.push(ln);const fam='LT_'+key.replace(/[^\w-]/g,'_');
+    let ok=false;try{const f=new FontFace(fam,[...new Set(names)].map(n=>`local("${n.replace(/"/g,'')}")`).join(','));await f.load();document.fonts.add(f);ok=true}catch(e){}
+    if(!ok&&suf&&hasLocalFont(ln)){/* ไม่มีตัวหนาในเครื่อง ใช้ตัวปกติชื่อเดียวกันแทน */try{const f=new FontFace(fam,`local("${ln}")`,{});await f.load();document.fonts.add(f);ok=true}catch(e){}}
+    if(!ok&&!suf&&hasLocalFont(ln)){fbThai[key]=`"${ln}"`;fbMap[key]=`"${ln}"`;return}
+    if(ok){fbThai[key]=`"${fam}"`;fbMap[key]=`"${fam}"`;return}}catch(e){}
   try{
     const th=items.filter(i=>i.fontName===key&&/[\u0E00-\u0E7F]/.test(i.str)).sort((a,b)=>b.str.length-a.str.length)[0]||it;
     const str=th.str.replace(/\s/g,'');if(!str)return;
@@ -1533,6 +1540,23 @@ function inlineEditor(o){
     mkh(0,0);mkh(1,0);mkh(0,1);mkh(1,1);
     place=()=>hs.forEach(h=>{h.style.left=(h.dx?t.offsetWidth:0)-9+'px';h.style.top=(h.dy?t.offsetHeight:0)-9+'px'})}
   $('stage').append(w);fit();gd();t.focus();{const n=t.value.length;try{t.setSelectionRange(n,n)}catch(e){}}
+}
+
+// ===== กู้ "สระอำ" ที่หายตอนดึงข้อความ: ไฟล์จาก Word บางไฟล์วาด ำ เป็น 2 ชิ้น (นิคหิต + า) และผูกชิ้นนิคหิตไว้กับ "ช่องว่างกว้าง 0"
+// pdf.js จึงอ่านได้แค่ "จากัด / สานักงาน" — ดูจากรายการตัวอักษรที่วาดจริงบนหน้า แล้วเติมกลับเป็น "จำกัด / สำนักงาน"
+async function repairThaiItems(p,its){
+  if(!its||!its.some(i=>/[฀-๿]/.test(i.str)))return;
+  const OP=(window.pdfjsLib&&pdfjsLib.OPS)||{showText:44,showSpacedText:45},ol=await p.getOperatorList(),tk=[];
+  for(let i=0;i<ol.fnArray.length;i++){const f=ol.fnArray[i];if(f!==OP.showText&&f!==OP.showSpacedText)continue;const g=ol.argsArray[i]&&ol.argsArray[i][0];if(!Array.isArray(g))continue;
+    for(const x of g){if(!x||typeof x!=='object')continue;const u=x.unicode||'';
+      if((u===' '||u==='')&&!(x.width>1))tk.push({p:'',r:'ํ'});else tk.push({p:u,r:u})}}
+  if(!tk.some(t=>t.r==='ํ'))return;
+  let plain='';const at=[];tk.forEach((t,k)=>{for(let j=0;j<t.p.length;j++)at.push(k);plain+=t.p});
+  const norm=x=>x.replace(/ํ([่-๋]?)า/g,'$1ำ').replace(/([่-๋])ํ/g,'ํ$1').replace(/ํ([่-๋]?)า/g,'$1ำ');
+  let cur=0;
+  for(const it of its){if(!/[฀-๿]/.test(it.str))continue;let k=plain.indexOf(it.str,cur);if(k<0)k=plain.indexOf(it.str);if(k<0)continue;cur=k+it.str.length;
+    const t0=at[k],t1=at[k+it.str.length-1];let r='';for(let q=t0;q<=t1;q++)r+=tk[q].r;
+    const fixed=norm(r),n=t=>(t.match(/ำ/g)||[]).length;if(fixed!==it.str&&!/ํ/.test(fixed)&&n(fixed)>n(it.str)&&fixed.replace(/ำ/g,'า')===it.str.replace(/ำ/g,'า'))it.str=fixed}
 }
 async function openEd(h){
   closeEd();await prepFont(h.it);
