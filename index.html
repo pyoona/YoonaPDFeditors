@@ -1386,7 +1386,10 @@ const NEEDTH=/[\u0E31\u0E33-\u0E37\u0E47-\u0E4D]/;
 // สระและวรรณยุกต์ไทยทุกตัว: บรรทัดที่มีตัวใดตัวหนึ่ง คลิกแล้วออก (เมนูแก้ไขข้อความ) จะถูกวาดใหม่ด้วยฟอนต์ที่วางสระถูกต้อง
 // สระ: ะ ั า ำ ิ ี ึ ื ุ ู ฺ เ แ โ ใ ไ ๅ ็ ฤ ฦ  วรรณยุกต์/เครื่องหมาย: ่ ้ ๊ ๋ ์ ํ ๎
 const THSTACK=/[\u0E24\u0E26\u0E30-\u0E3A\u0E40-\u0E45\u0E47-\u0E4E]/;
-function thaiFirst(fam,text){if(!fam||!text||!NEEDTH.test(text))return fam;const m=fam.match(/,?"FT[^"]*"/)||fam.match(/(?<="Noto Sans Thai"),"[^"]+"$/);if(!m)return fam;return fam.replace(m[0],'').replace('"SPC",','"SPC",'+m[0].replace(/^,/,'')+',')}
+function thaiFirst(fam,text){if(!fam||!text||!NEEDTH.test(text))return fam;const m=fam.match(/,?"FT[^"]*"/)||fam.match(/(?<="Noto Sans Thai"),"[^"]+"$/);if(!m)return fam;const f=m[0].replace(/^,/,''),r=fam.replace(m[0],'');
+  // ฟอนต์ในเครื่องที่ตรงกับต้นฉบับ (LT_ / ชื่อเดียวกัน): ใช้ช่องว่างของฟอนต์นั้นเอง ไม่ใช้ช่องว่างจาก SPC — ช่องว่างจะกว้างเท่าต้นฉบับ ขนาดตัวอักษรจึงไม่ถูกย่อ
+  if(!/^"FT/.test(f))return f+','+r;
+  return r.replace('"SPC",','"SPC",'+f+',')}
 function fontLabel(it){try{const f=pageObj.commonObjs.get(it.fontName);return String(f.name||'').replace(/^[A-Z]{6}\+/,'')||it.fontName}catch(e){return it.fontName}}
 function showFont(it){$('fi').textContent=$('fsel').value!=='auto'?'':it?'ฟอนต์ต้นฉบับ: '+fontLabel(it):'ไม่พบข้อความต้นฉบับ ใช้ Noto Sans Thai'}
 function nearest(x,y){let best=null,bd=1e12;for(const it of items){if(covered(it))continue;const b=box(it),dx=Math.max(b.x-x,0,x-(b.x+b.w)),dy=Math.max(b.t-y,0,y-b.b),d=Math.hypot(dx,dy);if(d<bd){bd=d;best=it}}return best}
