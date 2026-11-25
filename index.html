@@ -2006,7 +2006,7 @@ $('num').onclick=()=>edit(async D=>{
 $('pwb').onclick=async()=>{
   if(!need())return;const pw=$('pw').value;if(!pw)return alert('กรอกรหัสผ่านก่อน');
   if(!window.jspdf)return alert('โหลดไลบรารีเข้ารหัสไม่สำเร็จ กรุณารีเฟรชหน้า');
-  const btn=$('pwb');btn.disabled=true;btn.textContent='กำลังเข้ารหัส...';
+  const btn=$('pwb'),lbl=btn.textContent;btn.disabled=true;btn.textContent='กำลังเข้ารหัส...';
   try{
     const src=await pdfjsLib.getDocument({data:(await bakedBytes()).slice()}).promise;let doc=null;
     for(let i=1;i<=src.numPages;i++){
@@ -2017,9 +2017,11 @@ $('pwb').onclick=async()=>{
       else doc.addPage(f,o);
       doc.addImage(c.toDataURL('image/jpeg',0.92),'JPEG',0,0,v1.width,v1.height);
     }
-    await dl('protected.pdf',doc.output('arraybuffer'));
+    // ชื่อไฟล์ = ชื่อไฟล์เดิม + _protected
+    const nm=(($('f').dataset.name||'').replace(/\.pdf$/i,'').trim())||'file';
+    await dl(nm+'_protected.pdf',doc.output('arraybuffer'));
   }catch(e){alert('ตั้งรหัสผ่านไม่สำเร็จ: '+e.message)}
-  btn.disabled=false;btn.textContent='ใส่รหัสผ่านและบันทึก';
+  btn.disabled=false;btn.textContent=lbl;
 };
 
 // to images
