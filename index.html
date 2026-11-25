@@ -1278,7 +1278,10 @@ async function show(){
   applyZoom();
   $('empty').hidden=true;$('stage').hidden=false;rmClear();cmClear();
   await renderPageLayers(p);
-  pageObj=p;const tcn=await p.getTextContent();tstyles=tcn.styles||{};items=tcn.items.filter(i=>i.str&&i.str.trim());try{await repairThaiItems(p,items)}catch(e){}for(const i of items)if(/(?<=[\u0E00-\u0E7F])[\u00C9-\u00CD]/.test(i.str))BADCMAP[i.fontName]=1;for(const fn in BADCMAP)try{await loadOrigFont(p,fn)}catch(e){}hlLines=null;xsc.clear();closeEd();
+  pageObj=p;const tcn=await p.getTextContent();tstyles=tcn.styles||{};items=tcn.items.filter(i=>i.str&&i.str.trim());try{await repairThaiItems(p,items)}catch(e){}{// วรรณยุกต์ที่ถูกเก็บเป็น É Ê Ë Ì Í: บางเวอร์ชันของตัวอ่าน PDF แยกออกมาเป็นชิ้นเดี่ยวๆ (เช่น "รูปแบบที" | "É" | "ถูกต้อง") → แปลงเป็นวรรณยุกต์ไทยตั้งแต่ตอนโหลด
+  const thF=new Set(items.filter(i=>/[\u0E01-\u0E4F]/.test(i.str)).map(i=>i.fontName));
+  for(const i of items){if(/(?<=[\u0E00-\u0E7F])[\u00C9-\u00CD]/.test(i.str))BADCMAP[i.fontName]=1;
+    else if(thF.has(i.fontName)&&/^[\u00C9-\u00CD]+$/.test(i.str)){i.str=i.str.replace(/[\u00C9-\u00CD]/g,c=>String.fromCharCode(0x0E48+c.charCodeAt(0)-0xC9));BADCMAP[i.fontName]=1}}}for(const fn in BADCMAP)try{await loadOrigFont(p,fn)}catch(e){}hlLines=null;xsc.clear();closeEd();
   $('pg').textContent=`หน้า ${pi+1} / ${pdf.numPages}`;try{ftHint()}catch(e){}thSel();renderAnnots();wmPrev();sgClear();if(typeof swSync=='function')swSync();
 }
 // วาดหน้าทีละครั้ง: ถ้ามีการเรียก show() ซ้อนกัน (เช่นเปิดไฟล์แล้วกดลดขนาดทันที) ให้รอรอบก่อนเสร็จ จะได้ไม่ชนกันบน canvas เดียว
