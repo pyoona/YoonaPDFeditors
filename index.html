@@ -1278,7 +1278,7 @@ async function show(){
   applyZoom();
   $('empty').hidden=true;$('stage').hidden=false;rmClear();cmClear();
   await renderPageLayers(p);
-  pageObj=p;const tcn=await p.getTextContent();tstyles=tcn.styles||{};items=tcn.items.filter(i=>i.str&&i.str.trim());try{await repairThaiItems(p,items)}catch(e){}hlLines=null;xsc.clear();closeEd();
+  pageObj=p;const tcn=await p.getTextContent();tstyles=tcn.styles||{};items=tcn.items.filter(i=>i.str&&i.str.trim());try{await repairThaiItems(p,items)}catch(e){}for(const i of items)if(/(?<=[\u0E00-\u0E7F])[\u00C9-\u00CD]/.test(i.str))BADCMAP[i.fontName]=1;for(const fn in BADCMAP)try{await loadOrigFont(p,fn)}catch(e){}hlLines=null;xsc.clear();closeEd();
   $('pg').textContent=`หน้า ${pi+1} / ${pdf.numPages}`;try{ftHint()}catch(e){}thSel();renderAnnots();wmPrev();sgClear();if(typeof swSync=='function')swSync();
 }
 // วาดหน้าทีละครั้ง: ถ้ามีการเรียก show() ซ้อนกัน (เช่นเปิดไฟล์แล้วกดลดขนาดทันที) ให้รอรอบก่อนเสร็จ จะได้ไม่ชนกันบน canvas เดียว
@@ -1384,11 +1384,29 @@ async function prepFont(it){
     if(mt){const tn='FT'+key,s2=document.createElement('style');s2.textContent=mt[0].replace(/font-family:\s*'Sarabun'/,`font-family:'${tn}'`).replace(/@font-face\s*\{/,`@font-face{size-adjust:${(f*100).toFixed(1)}%;`);document.head.append(s2);fbThai[key]=`"${tn}"`}
   }catch(e){}
 }
+const BADCMAP={},OFNT={};let ofDoc=null,ofSrc=null;
+// ฟอนต์ที่ฝังในไฟล์ (เช่น AngsanaUPC Bold) มีตารางอักษรไทยที่ถูกต้องอยู่ในตัว — ดึงตัวไฟล์ฟอนต์เดิมออกมาใช้ตรงๆ ได้หน้าตาเหมือนต้นฉบับ
+async function loadOrigFont(pg,fn){
+  const key=fn+'|'+pi;if(key in OFNT)return;OFNT[key]=null;
+  let nm='';try{const fo=pg.commonObjs.get(fn);nm=String(fo&&fo.name||'').replace(/^\//,'')}catch(e){}if(!nm)return;
+  if(ofSrc!==bytes){ofDoc=await P.PDFDocument.load(bytes,{ignoreEncryption:true,updateMetadata:false});ofSrc=bytes}
+  const N=P.PDFName.of,D=ofDoc,res=D.getPage(pi).node.Resources(),fd=res&&res.lookupMaybe(N('Font'),P.PDFDict);if(!fd)return;
+  for(const [k,v] of fd.entries()){const f=D.context.lookupMaybe(v,P.PDFDict);if(!f)continue;const bf=f.get(N('BaseFont'));if(!bf||String(bf).replace(/^\//,'')!==nm)continue;
+    let d=f;const ds=f.lookupMaybe(N('DescendantFonts'),P.PDFArray);if(ds)d=D.context.lookupMaybe(ds.get(0),P.PDFDict)||f;
+    const de=d.lookupMaybe(N('FontDescriptor'),P.PDFDict);if(!de)return;const st=de.lookup(N('FontFile2'))||de.lookup(N('FontFile3'));if(!st)return;
+    const data=st instanceof P.PDFRawStream?P.decodePDFRawStream(st).decode():st.getContents();
+    const nmF='OF_'+fn+'_'+pi,ff=new FontFace(nmF,data);await ff.load();
+    // ใช้ได้เฉพาะเมื่อฟอนต์มีอักษรไทย (เช็คจากความกว้าง ก เทียบกับฟอนต์สำรอง)
+    document.fonts.add(ff);OFNT[key]='"'+nmF+'"';return}
+}
 function famOf(it){
   const sel=$('fsel').value;
   if(sel!=='auto')return `"${sel}",${BASEFB}`;
   if(!it)return BASEFB;
   const g=(tstyles[it.fontName]&&tstyles[it.fontName].fontFamily)||'sans-serif';
+  // ฟอนต์ในไฟล์ที่ผูกวรรณยุกต์ไว้ผิดช่อง (่ ้ ๊ ๋ ์ ถูกเก็บเป็น É Ê Ë Ì Í) ใช้แสดงวรรณยุกต์ที่แก้แล้วไม่ได้ → ข้ามไปใช้ฟอนต์ไทยในเครื่องแทน
+  // ถ้าได้ไฟล์ฟอนต์เดิมมาแล้ว ใช้ช่องว่างของฟอนต์เดิมเลย (ไม่ใช้ SPC) ระยะห่างจะเท่าต้นฉบับ
+  if(BADCMAP[it.fontName])return `${OFNT[it.fontName+'|'+pi]?OFNT[it.fontName+'|'+pi]+',':'"SPC",'}${fbMap[it.fontName]||'"Sarabun"'},${g},"Noto Sans Thai"${fbThai[it.fontName]?','+fbThai[it.fontName]:''}`;
   return `"SPC","${it.fontName}",${fbMap[it.fontName]||'"Sarabun"'},${g},"Noto Sans Thai"${fbThai[it.fontName]?','+fbThai[it.fontName]:''}`;
 }
 // text with tone marks / nikhahit: render the whole Thai run with one properly-shaped font so marks don't overlap
